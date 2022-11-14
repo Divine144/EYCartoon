@@ -8,39 +8,37 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.network.simple.SimpleChannel;
 
-public class ExampleHolder extends EntityCapability {
-    private int example;
+public class PlayerHolder extends EntityCapability {
 
-    protected ExampleHolder(Entity entity) {
+    private int blocksMinedCount;
+
+    protected PlayerHolder(Entity entity) {
         super(entity);
     }
 
-    public int getExample() {
-        return example;
+    public int getBlocksMinedCount() {
+        return blocksMinedCount;
     }
 
-    public void setExample(int example) {
-        this.example = example;
-        updateTracking();
+    public void addBlocksMined() {
+        ++this.blocksMinedCount;
     }
 
     @Override
     public CompoundTag serializeNBT(boolean savingToDisk) {
         CompoundTag tag = new CompoundTag();
-
-        tag.putInt("example", this.example);
-
+        tag.putInt("blocksMinedCount", this.blocksMinedCount);
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt, boolean readingFromDisk) {
-        this.example = nbt.getInt("example");
+        this.blocksMinedCount = nbt.getInt("blocksMinedCount");
     }
 
     @Override
     public EntityCapabilityStatusPacket createUpdatePacket() {
-        return new SimpleEntityCapabilityStatusPacket(this.entity.getId(), ExampleHolderAttacher.EXAMPLE_RL, this);
+        return new SimpleEntityCapabilityStatusPacket(this.entity.getId(), PlayerHolderAttacher.PLAYER_RL, this);
     }
 
     @Override

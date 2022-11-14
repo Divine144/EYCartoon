@@ -14,7 +14,6 @@ public class ElsaEntity extends PathfinderMob {
 
     @Override
     protected void registerGoals() {
-
         this.goalSelector.addGoal(0, new LookAtPlayerGoal(this, Player.class, 10F, 1.0F));
     }
 }

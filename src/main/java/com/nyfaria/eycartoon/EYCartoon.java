@@ -1,6 +1,6 @@
 package com.nyfaria.eycartoon;
 
-import com.nyfaria.eycartoon.cap.ExampleHolderAttacher;
+import com.nyfaria.eycartoon.cap.PlayerHolderAttacher;
 import com.nyfaria.eycartoon.config.ExampleClientConfig;
 import com.nyfaria.eycartoon.config.ExampleConfig;
 import com.nyfaria.eycartoon.datagen.*;
@@ -39,7 +39,7 @@ public class EYCartoon {
         BlockInit.BLOCKS.register(modBus);
         BlockInit.BLOCK_ENTITIES.register(modBus);
 
-        ExampleHolderAttacher.register();
+        PlayerHolderAttacher.register();
         GeckoLib.initialize();
     }
 
