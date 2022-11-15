@@ -84,7 +84,7 @@ public class CartoonBlock extends Block {
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
         if (player != null && !player.getAbilities().instabuild) {
             if (!player.level.isClientSide) {
-                initializeMaps(level); // Assign values to map
+                initializeMaps(level); // Assign values to maps
                 if (player.getRandom().nextIntBetweenInclusive(0, 100) >= 10) { // 90% chance -> Blocks mined progression++
                     PlayerHolderAttacher.getPlayerHolder(player).ifPresent(p -> {
                         p.addBlocksMined();

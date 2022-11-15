@@ -28,6 +28,10 @@ public class PlayerHolder extends EntityCapability {
         ++this.blocksMinedCount;
     }
 
+    public void setBlocksMined(int blocksMinedCount) {
+        this.blocksMinedCount = blocksMinedCount;
+    }
+
     public boolean hasUnlockedIceAbility() {
         return this.hasUnlockedIceAbility;
     }
