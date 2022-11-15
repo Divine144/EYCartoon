@@ -18,10 +18,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MinionBlock extends Block {
@@ -35,9 +32,9 @@ public class MinionBlock extends Block {
                                                            .filter(p -> p != Items.AIR)
                                                            .collect(Collectors.toList());
 
-    // Need to put items and entities depending on order and config, will do that later
-    private static final Map<Integer, Item> ITEMS = new LinkedHashMap<>();
-    private static final Map<Integer, LivingEntity> ENTITIES = new LinkedHashMap<>();
+    // Need to put items and entities depending on config order, setup config values later
+    private static final Map<Integer, Item> ITEMS = new HashMap<>();
+    private static final Map<Integer, LivingEntity> ENTITIES = new HashMap<>();
 
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
@@ -56,12 +53,12 @@ public class MinionBlock extends Block {
                             default -> 1;
                         };
                         if (item != null) {
-                            ItemStack stack = new ItemStack(ITEMS.get(p.getBlocksMinedCount()));
+                            ItemStack stack = new ItemStack(item);
                             stack.setCount(itemOrEntityCount);
                             setupItemPosition(stack, level, Vec3.atCenterOf(pos));
                         }
                         else if (entity != null) {
-                            spawnEntitiesOfType(ENTITIES.get(p.getBlocksMinedCount()), level, Vec3.atBottomCenterOf(pos.above()), itemOrEntityCount);
+                            spawnEntitiesOfType(entity, level, Vec3.atBottomCenterOf(pos.above()), itemOrEntityCount);
                         }
                     });
                 }

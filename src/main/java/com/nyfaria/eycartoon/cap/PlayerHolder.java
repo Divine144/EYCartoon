@@ -11,9 +11,13 @@ import net.minecraftforge.network.simple.SimpleChannel;
 public class PlayerHolder extends EntityCapability {
 
     private int blocksMinedCount;
+    private boolean hasUnlockedIceAbility;
+    private boolean canDoubleJump;
 
     protected PlayerHolder(Entity entity) {
         super(entity);
+        this.hasUnlockedIceAbility = false;
+        this.canDoubleJump = false;
     }
 
     public int getBlocksMinedCount() {
@@ -24,16 +28,36 @@ public class PlayerHolder extends EntityCapability {
         ++this.blocksMinedCount;
     }
 
+    public boolean hasUnlockedIceAbility() {
+        return this.hasUnlockedIceAbility;
+    }
+
+    public void enableIceAbility() {
+        this.hasUnlockedIceAbility = true;
+    }
+
+    public boolean isCanDoubleJump() {
+        return canDoubleJump;
+    }
+
+    public void setCanDoubleJump(boolean canDoubleJump) {
+        this.canDoubleJump = canDoubleJump;
+    }
+
     @Override
     public CompoundTag serializeNBT(boolean savingToDisk) {
         CompoundTag tag = new CompoundTag();
         tag.putInt("blocksMinedCount", this.blocksMinedCount);
+        tag.putBoolean("hasUnlockedIceAbility", this.hasUnlockedIceAbility);
+        tag.putBoolean("canDoubleJump", this.canDoubleJump);
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt, boolean readingFromDisk) {
         this.blocksMinedCount = nbt.getInt("blocksMinedCount");
+        this.hasUnlockedIceAbility = nbt.getBoolean("hasUnlockedIceAbility");
+        this.canDoubleJump = nbt.getBoolean("canDoubleJump");
     }
 
     @Override

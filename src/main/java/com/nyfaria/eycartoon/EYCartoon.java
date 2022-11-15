@@ -1,12 +1,10 @@
 package com.nyfaria.eycartoon;
 
 import com.nyfaria.eycartoon.cap.PlayerHolderAttacher;
-import com.nyfaria.eycartoon.config.ExampleClientConfig;
-import com.nyfaria.eycartoon.config.ExampleConfig;
+import com.nyfaria.eycartoon.config.EYCartoonClientConfig;
+import com.nyfaria.eycartoon.config.EYCartoonConfig;
 import com.nyfaria.eycartoon.datagen.*;
-import com.nyfaria.eycartoon.init.BlockInit;
-import com.nyfaria.eycartoon.init.EntityInit;
-import com.nyfaria.eycartoon.init.ItemInit;
+import com.nyfaria.eycartoon.init.*;
 import com.nyfaria.eycartoon.network.NetworkHandler;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -31,13 +29,15 @@ public class EYCartoon {
     public EYCartoon() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ExampleConfig.CONFIG_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ExampleClientConfig.CLIENT_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EYCartoonConfig.CONFIG_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, EYCartoonClientConfig.CLIENT_SPEC);
 
         ItemInit.ITEMS.register(modBus);
         EntityInit.ENTITIES.register(modBus);
         BlockInit.BLOCKS.register(modBus);
         BlockInit.BLOCK_ENTITIES.register(modBus);
+        MobEffectInit.MOB_EFFECTS.register(modBus);
+        AbilityInit.ABILITIES.register(modBus);
 
         PlayerHolderAttacher.register();
         GeckoLib.initialize();
