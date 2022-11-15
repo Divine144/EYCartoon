@@ -23,9 +23,46 @@ public class EYCartoonConfig {
     }
 
     public final Function<Level, GlobalPos> enableIceAbilityRedstonePos;
+    public final ForgeConfigSpec.IntValue minionLaunchedDropOrder;
+    public final ForgeConfigSpec.IntValue krabbyPattyDropOrder;
+    public final ForgeConfigSpec.IntValue cobbleStoneDropOrder;
+    public final ForgeConfigSpec.IntValue shreksFistsDropOrder;
+    public final ForgeConfigSpec.IntValue bossBabyDropOrder;
+    public final ForgeConfigSpec.IntValue zombieCowDropOrder;
+    public final ForgeConfigSpec.IntValue squidwardTraderDropOrder;
+    public final ForgeConfigSpec.IntValue pigWolfHorseDropOrder;
+    public final ForgeConfigSpec.IntValue cartoonRayDropOrder;
+    public final ForgeConfigSpec.IntValue mcqueenMobileDropOrder;
+    public final ForgeConfigSpec.IntValue buzzControlPanelDropOrder;
+    public final ForgeConfigSpec.IntValue ladybugYoYoDropOrder;
+    public final ForgeConfigSpec.IntValue skeletonsDropOrder;
+    public final ForgeConfigSpec.IntValue sonicCoinsDropOrder;
+    public final ForgeConfigSpec.IntValue sonicBootsDropOrder;
+    public final ForgeConfigSpec.IntValue petToothlessDropOrder;
+    public final ForgeConfigSpec.IntValue kingJulienCrownDropOrder;
+    public final ForgeConfigSpec.IntValue diamondsDropOrder;
+
     private EYCartoonConfig(ForgeConfigSpec.Builder builder) {
         builder.push("EYCartoon Config");
         enableIceAbilityRedstonePos = createRedstonePosEntry(builder, "Ice Ability", "unlocking the ice ability");
+        minionLaunchedDropOrder = builder.defineInRange("Minion Launcher Drop Order", 1, 1, 1000);
+        krabbyPattyDropOrder = builder.defineInRange("Krabby Patty Drop Order", 2, 1, 1000);
+        cobbleStoneDropOrder = builder.defineInRange("Cobblestone Drop Order", 3, 1, 1000);
+        shreksFistsDropOrder = builder.defineInRange("Shrek's Fists Drop Order", 5, 1, 1000);
+        bossBabyDropOrder = builder.defineInRange("Boss Baby Drop Order", 11, 1, 1000);
+        zombieCowDropOrder = builder.defineInRange("Zombie Cows Drop Order", 12, 1, 1000);
+        squidwardTraderDropOrder = builder.defineInRange("Squidward Trader Drop Order", 17, 1, 1000);
+        pigWolfHorseDropOrder = builder.defineInRange("Mobs (Pig, Horse, Wolf) Drop Order", 29, 1, 1000);
+        cartoonRayDropOrder = builder.defineInRange("Cartoon Ray Drop Order", 30, 1, 1000);
+        mcqueenMobileDropOrder = builder.defineInRange("McQueen Mobile Drop Order", 31, 1, 1000);
+        buzzControlPanelDropOrder = builder.defineInRange("Buzz's Control Panel Drop Order", 45, 1, 1000);
+        ladybugYoYoDropOrder = builder.defineInRange("Ladybug Yoyo Drop Order", 50, 1, 1000);
+        skeletonsDropOrder = builder.defineInRange("Skeletons Drop Order", 51, 1, 1000);
+        sonicCoinsDropOrder = builder.defineInRange("Sonic Coins Drop Order", 54, 1, 1000);
+        sonicBootsDropOrder = builder.defineInRange("Sonic Boots Drop Order", 55, 1, 1000);
+        petToothlessDropOrder = builder.defineInRange("Pet Toothless Drop Order", 60, 1, 1000);
+        kingJulienCrownDropOrder = builder.defineInRange("King Julien's Crown Drop Order", 70, 1, 1000);
+        diamondsDropOrder = builder.defineInRange("Diamonds Drop Order", 73, 1, 1000);
         builder.pop();
     }
 

@@ -18,7 +18,7 @@ public class ItemInit {
             () -> new SimpleAnimatedItem(new AnimatedItemProperties()
             .food(new FoodProperties.Builder()
                     .alwaysEat().nutrition(2).saturationMod(0.2F).meat()
-                    .effect(() -> new MobEffectInstance(MobEffectInit.FART_LEVITATION_EFFECT.get(), 10, 1, false, false), 1F).build())
+                    .effect(() -> new MobEffectInstance(MobEffectInit.FART_LEVITATION_EFFECT.get(), 200, 1, false, false), 1F).build())
             .tab(CreativeModeTab.TAB_FOOD)));
 
     public static final RegistryObject<Item> SONIC_COIN = ITEMS.register("sonic_coin",
