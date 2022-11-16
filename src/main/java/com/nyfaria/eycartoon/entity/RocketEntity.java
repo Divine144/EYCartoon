@@ -32,7 +32,7 @@ public class RocketEntity extends Arrow {
         if (this.level instanceof ServerLevel level) {
             BlockPos result = blockTrace(this, ClipContext.Fluid.NONE, 125, true).getBlockPos();
             if (this.tickCount % 5 == 0) {
-                level.sendParticles(new DustParticleOptions(DustParticleOptions.REDSTONE_PARTICLE_COLOR, 1.5F), result.getX(), result.getY(), result.getZ(), 2, 0, 0, 0, 0);
+                level.sendParticles(new DustParticleOptions(DustParticleOptions.REDSTONE_PARTICLE_COLOR, 1.5F), result.getX(), result.getY() + 1, result.getZ(), 2, 0, 0, 0, 0);
             }
         }
     }

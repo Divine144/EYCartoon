@@ -23,7 +23,7 @@ public class AirStrikeAbility extends Ability {
     @Override
     public void executePressed(ServerLevel level, ServerPlayer player) {
         if (player.getItemInHand(InteractionHand.MAIN_HAND).is(ItemInit.BUZZ_CONTROL_PANEL.get())) {
-            BlockHitResult result = HMUVectorUtils.blockTrace(player, ClipContext.Fluid.NONE, 50, false);
+            BlockHitResult result = HMUVectorUtils.blockTrace(player, ClipContext.Fluid.NONE, 30, false);
             if (result != null) {
                 BlockPos pos = result.getBlockPos();
                 for (int i = 0; i < 3; i++) {

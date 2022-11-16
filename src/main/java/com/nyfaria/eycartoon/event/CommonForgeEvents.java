@@ -9,13 +9,16 @@ import com.nyfaria.eycartoon.config.EYCartoonConfig;
 import com.nyfaria.eycartoon.init.ItemInit;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -75,6 +78,18 @@ public class CommonForgeEvents {
                         PlayerHolderAttacher.getPlayerHolder(player).ifPresent(PlayerHolder::enableIceAbility);
                     }
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onBlockBreak(BlockEvent.BreakEvent event) {
+        if (event.getPlayer() != null && !event.getPlayer().level.isClientSide) {
+            Player player = event.getPlayer();
+            BlockPos pos = event.getPos();
+            if (player.getMainHandItem().is(ItemInit.SHREKS_FIST.get())) {
+                if (player.level.getBlockState(event.getPos()).is(Blocks.BARRIER) && event.isCancelable()) event.setCanceled(true);
+                player.level.explode(player, pos.getX(), pos.getY(), pos.getZ(), 4.0F, Explosion.BlockInteraction.NONE);
             }
         }
     }

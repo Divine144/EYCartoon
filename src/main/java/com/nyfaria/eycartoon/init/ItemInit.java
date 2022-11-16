@@ -2,6 +2,7 @@ package com.nyfaria.eycartoon.init;
 
 import com.nyfaria.eycartoon.EYCartoon;
 import com.nyfaria.eycartoon.items.LadybugYoyoItem;
+import com.nyfaria.eycartoon.items.ShreksFistItem;
 import com.nyfaria.eycartoon.items.SpongebobSpatulaItem;
 import dev._100media.hundredmediageckolib.item.animated.AnimatedItemProperties;
 import dev._100media.hundredmediageckolib.item.animated.SimpleAnimatedItem;
@@ -32,6 +33,8 @@ public class ItemInit {
     public static final RegistryObject<Item> SPONGEBOB_SPATULA = ITEMS.register("spongebob_spatula", () -> new SpongebobSpatulaItem(new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
 
     public static final RegistryObject<Item> BUZZ_CONTROL_PANEL = ITEMS.register("buzz_control_panel", () -> new SimpleAnimatedItem(new AnimatedItemProperties().stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
+
+    public static final RegistryObject<Item> SHREKS_FIST = ITEMS.register("shreks_fist", () -> new ShreksFistItem(new Item.Properties().durability(1000).tab(CreativeModeTab.TAB_MISC)));
 
 
 }
