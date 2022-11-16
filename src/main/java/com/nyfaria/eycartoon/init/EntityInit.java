@@ -1,6 +1,7 @@
 package com.nyfaria.eycartoon.init;
 
 import com.nyfaria.eycartoon.entity.KrabbyPattyProjectileEntity;
+import com.nyfaria.eycartoon.entity.RocketEntity;
 import com.nyfaria.eycartoon.entity.ThrownYoyoEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -28,6 +29,7 @@ public class EntityInit {
 
     public static final RegistryObject<EntityType<ThrownYoyoEntity>> THROWN_YOYO_ENTITY = registerEntity("thrown_yoyo", () -> EntityType.Builder.<ThrownYoyoEntity>of(ThrownYoyoEntity::new, MobCategory.MISC).sized(0.5F, 0.5F));
     public static final RegistryObject<EntityType<KrabbyPattyProjectileEntity>> KRABBY_PATTY_PROJECTILE = registerEntity("krabby_projectile", () -> EntityType.Builder.<KrabbyPattyProjectileEntity>of(KrabbyPattyProjectileEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10));
+    public static final RegistryObject<EntityType<RocketEntity>> ROCKET_ENTITY = registerEntity("rocket_entity", () -> EntityType.Builder.of(RocketEntity::new, MobCategory.MISC).sized(0.7F, 0.7F).clientTrackingRange(4).updateInterval(10));
 
     private static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, Supplier<EntityType.Builder<T>> supplier) {
         return ENTITIES.register(name, () -> supplier.get().build(MODID + ":" + name));

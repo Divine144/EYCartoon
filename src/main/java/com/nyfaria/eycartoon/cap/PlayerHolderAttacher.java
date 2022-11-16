@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = EYCartoon.MODID)
 public class PlayerHolderAttacher extends CapabilityAttacher {
-    public static final Capability<PlayerHolder> PLAYER_CAPABILITY = getCapability(new CapabilityToken<>() {});
+    public static final Capability<PlayerHolder> PLAYER_CAPABILITY = getCapability(new CapabilityToken<>(){});
     public static final ResourceLocation PLAYER_RL = new ResourceLocation(EYCartoon.MODID, "example");
     private static final Class<PlayerHolder> CAPABILITY_CLASS = PlayerHolder.class;
 
