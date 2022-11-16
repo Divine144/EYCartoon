@@ -21,6 +21,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
@@ -53,9 +54,7 @@ public class ThrownYoyoEntity extends AbstractArrow {
     }
 
     public void tick() {
-        if (inGroundTime > 4) {
-            dealtDamage = true;
-        }
+        dealtDamage = (this.inGroundTime > 4) || (this.getOwner() != null && this.distanceTo(this.getOwner()) >= 10.0F);
         Entity entity = getOwner();
         if ((dealtDamage || isNoPhysics()) && entity != null) {
             if (!isAcceptibleReturnOwner()) {
@@ -86,6 +85,11 @@ public class ThrownYoyoEntity extends AbstractArrow {
         else {
             return false;
         }
+    }
+
+    @Override
+    protected void onHitBlock(BlockHitResult pResult) {
+        super.onHitBlock(pResult);
     }
 
     @Override
@@ -120,10 +124,10 @@ public class ThrownYoyoEntity extends AbstractArrow {
         dealtDamage = true;
         SoundEvent soundevent = SoundEvents.TRIDENT_HIT;
         if (target.hurt(damagesource, f)) {
-            target.setSecondsOnFire(3);
             if (target.getType() == EntityType.ENDERMAN) {
                 return;
             }
+            target.setSecondsOnFire(3);
             if (target instanceof LivingEntity livingTarget) {
                 if (owner instanceof LivingEntity) {
                     EnchantmentHelper.doPostHurtEffects(livingTarget, owner);

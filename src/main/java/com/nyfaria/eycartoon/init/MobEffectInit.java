@@ -9,6 +9,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class MobEffectInit {
+
     public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, EYCartoon.MODID);
 
     public static final RegistryObject<MobEffect> FART_LEVITATION_EFFECT = MOB_EFFECTS.register("fart_levitation", () -> new FartLevitationEffect(MobEffectCategory.HARMFUL, 3124687));

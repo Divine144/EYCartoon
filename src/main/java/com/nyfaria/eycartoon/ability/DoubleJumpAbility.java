@@ -17,9 +17,10 @@ public class DoubleJumpAbility extends Ability {
 
     @Override
     public void executePressed(ServerLevel level, ServerPlayer player) {
-        if (++pressedCount == 4) {
+        if (++pressedCount == 2) {
             PlayerHolderAttacher.getPlayerHolder(player).ifPresent(p -> {
                 if (p.isCanDoubleJump() && !player.isOnGround()) {
+                    player.hurtMarked = true;
                     player.jumpFromGround();
                     level.sendParticles(ParticleTypes.POOF, player.getX(), player.getY() - 1, player.getZ(), 4, 0, 0, 0, 0.1);
                     p.setCanDoubleJump(false);

@@ -80,6 +80,8 @@ public class CartoonBlock extends Block {
         return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
     }
 
+    // TODO: Fix Client-Server de-sync when a block is destroyed (currently the game thinks the block still exists on the server but doesn't appear on the client).
+    //  You also can't break it after you've broken it once
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
         if (player != null && !player.getAbilities().instabuild) {

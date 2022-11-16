@@ -20,7 +20,7 @@ public class ThrownYoyoRenderer extends EntityRenderer<ThrownYoyoEntity> {
         super(manager);
     }
 
-    // Might need to change some of these values to make it look better, this was code directly from a boomerang-type entity (in buildirl)
+    // TODO: Might need to change some of these values to make it look better, this was code directly from a boomerang-type entity (in buildirl)
     @Override
     public void render(ThrownYoyoEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight) {
         pMatrixStack.pushPose();

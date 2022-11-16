@@ -10,11 +10,18 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class FartLevitationEffect extends MobEffect {
 
+    private boolean isInfinite;
+
     public FartLevitationEffect(MobEffectCategory pCategory, int pColor) {
         super(pCategory, pColor);
     }
 
-    private static final MobEffectInstance LEVITATION = new MobEffectInstance(MobEffects.LEVITATION, 200, 0, false, false);
+    public FartLevitationEffect(MobEffectCategory pCategory, boolean isInfinite, int pColor) {
+        this(pCategory, pColor);
+        this.isInfinite = isInfinite;
+    }
+
+    private final MobEffectInstance LEVITATION = new MobEffectInstance(MobEffects.LEVITATION, this.isInfinite ? Integer.MAX_VALUE : 200, 0, false, false);
     int counter = 0;
 
     @Override

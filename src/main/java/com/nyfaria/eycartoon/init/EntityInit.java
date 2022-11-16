@@ -1,11 +1,13 @@
 package com.nyfaria.eycartoon.init;
 
+import com.nyfaria.eycartoon.entity.KrabbyPattyProjectileEntity;
 import com.nyfaria.eycartoon.entity.ThrownYoyoEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -25,6 +27,7 @@ public class EntityInit {
     private static final List<AttributesRegister<?>> attributeSuppliers = new ArrayList<>();
 
     public static final RegistryObject<EntityType<ThrownYoyoEntity>> THROWN_YOYO_ENTITY = registerEntity("thrown_yoyo", () -> EntityType.Builder.<ThrownYoyoEntity>of(ThrownYoyoEntity::new, MobCategory.MISC).sized(0.5F, 0.5F));
+    public static final RegistryObject<EntityType<KrabbyPattyProjectileEntity>> KRABBY_PATTY_PROJECTILE = registerEntity("krabby_projectile", () -> EntityType.Builder.<KrabbyPattyProjectileEntity>of(KrabbyPattyProjectileEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10));
 
     private static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, Supplier<EntityType.Builder<T>> supplier) {
         return ENTITIES.register(name, () -> supplier.get().build(MODID + ":" + name));
