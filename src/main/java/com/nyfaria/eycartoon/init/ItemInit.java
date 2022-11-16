@@ -1,6 +1,7 @@
 package com.nyfaria.eycartoon.init;
 
 import com.nyfaria.eycartoon.EYCartoon;
+import com.nyfaria.eycartoon.items.CartoonRayItem;
 import com.nyfaria.eycartoon.items.LadybugYoyoItem;
 import com.nyfaria.eycartoon.items.ShreksFistItem;
 import com.nyfaria.eycartoon.items.SpongebobSpatulaItem;
@@ -35,6 +36,8 @@ public class ItemInit {
     public static final RegistryObject<Item> BUZZ_CONTROL_PANEL = ITEMS.register("buzz_control_panel", () -> new SimpleAnimatedItem(new AnimatedItemProperties().stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
 
     public static final RegistryObject<Item> SHREKS_FIST = ITEMS.register("shreks_fist", () -> new ShreksFistItem(new Item.Properties().durability(1000).tab(CreativeModeTab.TAB_MISC)));
+
+    public static final RegistryObject<Item> CARTOON_RAY = ITEMS.register("2d_cartoon_ray", () -> new CartoonRayItem(new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
 
 
 }

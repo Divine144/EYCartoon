@@ -10,25 +10,24 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class FartLevitationEffect extends MobEffect {
 
-    private boolean isInfinite;
+    private MobEffectInstance levitation;
 
     public FartLevitationEffect(MobEffectCategory pCategory, int pColor) {
         super(pCategory, pColor);
+        levitation = new MobEffectInstance(MobEffects.LEVITATION, 200, 0, false, false);
     }
 
     public FartLevitationEffect(MobEffectCategory pCategory, boolean isInfinite, int pColor) {
         this(pCategory, pColor);
-        this.isInfinite = isInfinite;
+        levitation = new MobEffectInstance(MobEffects.LEVITATION, Integer.MAX_VALUE, 0, false, false);
     }
 
-    private final MobEffectInstance LEVITATION = new MobEffectInstance(MobEffects.LEVITATION, this.isInfinite ? Integer.MAX_VALUE : 200, 0, false, false);
     int counter = 0;
-
     @Override
     public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
         if (pLivingEntity.level instanceof ServerLevel level) {
             if (!pLivingEntity.hasEffect(MobEffects.LEVITATION)) {
-                pLivingEntity.addEffect(LEVITATION);
+                pLivingEntity.addEffect(levitation);
             }
             double dy = pLivingEntity.getY() - 0.3333;
             if (++counter % 20 == 0) {
