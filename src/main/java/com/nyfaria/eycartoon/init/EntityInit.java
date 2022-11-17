@@ -7,7 +7,6 @@ import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -34,7 +33,10 @@ public class EntityInit {
     public static final RegistryObject<EntityType<FlatPigEntity>> FLAT_PIG_ENTITY = registerEntity("flat_pig", () -> EntityType.Builder.of(FlatPigEntity::new, MobCategory.CREATURE).sized(0.9F, 0.9F).clientTrackingRange(10), Pig::createAttributes);
     public static final RegistryObject<EntityType<FlatWolfEntity>> FLAT_WOLF_ENTITY = registerEntity("flat_wolf", () -> EntityType.Builder.of(FlatWolfEntity::new, MobCategory.CREATURE).sized(0.6F, 0.85F).clientTrackingRange(10), Wolf::createAttributes);
     public static final RegistryObject<EntityType<SquidwardEntity>> SQUIDWARD_TRADER_ENTITY = registerEntity("squidward", () -> EntityType.Builder.of(SquidwardEntity::new, MobCategory.AMBIENT).sized(0.6F, 1.95F).clientTrackingRange(10), Villager::createAttributes);
+    public static final RegistryObject<EntityType<BossBabyEntity>> BOSS_BABY = registerEntity("boss_baby", () -> EntityType.Builder.<BossBabyEntity>of(BossBabyEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(10), BossBabyEntity::createAttributes);
     public static final RegistryObject<EntityType<ElsaEntity>> ELSA_ENTITY = registerEntity("elsa", () -> EntityType.Builder.of(ElsaEntity::new, MobCategory.MISC).sized(0.6F, 1.95F).clientTrackingRange(10), Mob::createMobAttributes);
+    public static final RegistryObject<EntityType<LargeSnowball>> LARGE_SNOWBALL = registerEntity("large_snowball", () -> EntityType.Builder.of(LargeSnowball::new, MobCategory.MISC).sized(0.75F, 0.75F).clientTrackingRange(4).updateInterval(10));
+    public static final RegistryObject<EntityType<MegaSnowGolemEntity>> MEGA_SNOW_GOLEM = registerEntity("mega_snow_golem", () -> EntityType.Builder.of(MegaSnowGolemEntity::new, MobCategory.CREATURE).sized(4.0F, 4.0F).clientTrackingRange(15), MegaSnowGolemEntity::createAttributes);
 
     private static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, Supplier<EntityType.Builder<T>> supplier) {
         return ENTITIES.register(name, () -> supplier.get().build(MODID + ":" + name));

@@ -23,6 +23,7 @@ public class EYCartoonConfig {
     }
 
     public final Function<Level, GlobalPos> enableIceAbilityRedstonePos;
+    public final Function<Level, GlobalPos> megaSnowGolemSpawnPos;
     public final ForgeConfigSpec.IntValue minionLaunchedDropOrder;
     public final ForgeConfigSpec.IntValue krabbyPattyDropOrder;
     public final ForgeConfigSpec.IntValue cobbleStoneDropOrder;
@@ -45,6 +46,7 @@ public class EYCartoonConfig {
     private EYCartoonConfig(ForgeConfigSpec.Builder builder) {
         builder.push("EYCartoon Config");
         enableIceAbilityRedstonePos = createRedstonePosEntry(builder, "Ice Ability", "unlocking the ice ability");
+        megaSnowGolemSpawnPos = createRedstonePosEntry(builder, "Mega Snow Golem Pos", "spawning the Mega Snow Golem");
         minionLaunchedDropOrder = builder.defineInRange("Minion Launcher Drop Order", 1, 1, 1000);
         krabbyPattyDropOrder = builder.defineInRange("Krabby Patty Drop Order", 2, 1, 1000);
         cobbleStoneDropOrder = builder.defineInRange("Cobblestone Drop Order", 3, 1, 1000);
@@ -68,11 +70,11 @@ public class EYCartoonConfig {
 
     private static Function<Level, GlobalPos> createRedstonePosEntry(ForgeConfigSpec.Builder builder, String name, String description) {
         ForgeConfigSpec.ConfigValue<String> posValue = builder
-                .comment("Block position in the form \"X,Y,Z\" of the redstone block to check for when " + description)
-                .define(name + "RedstonePos", "none", EYCartoonConfig::validateBlockPos);
+                .comment("Block position in the form \"X,Y,Z\" of the block to check for when " + description)
+                .define(name + "BlockPos", "none", EYCartoonConfig::validateBlockPos);
         ForgeConfigSpec.ConfigValue<String> dimensionValue = builder
-                .comment("Dimension of the redstone block to check for when " + description)
-                .define(name + "RedstoneDimension", Level.OVERWORLD.location().toString(),  EYCartoonConfig::validateDimension);
+                .comment("Dimension of the block to check for when " + description)
+                .define(name + "BlockDimension", Level.OVERWORLD.location().toString(),  EYCartoonConfig::validateDimension);
         return level -> getRedstonePos(level, posValue, dimensionValue);
     }
 

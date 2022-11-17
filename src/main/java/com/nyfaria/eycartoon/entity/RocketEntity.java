@@ -41,7 +41,7 @@ public class RocketEntity extends Arrow implements IAnimatable {
         super.tick();
         this.setDeltaMovement(0, -3, 0);
         if (this.level instanceof ServerLevel level) {
-            BlockPos result = blockTrace(this, ClipContext.Fluid.NONE, 125, true).getBlockPos().above();
+            BlockPos result = blockTrace(this, ClipContext.Fluid.NONE, 200, true).getBlockPos().above();
             if (this.tickCount % 5 == 0) {
                 level.sendParticles(new DustParticleOptions(DustParticleOptions.REDSTONE_PARTICLE_COLOR, 1.5F), result.getX(), result.getY(), result.getZ(), 2, 0, 0, 0, 0);
             }

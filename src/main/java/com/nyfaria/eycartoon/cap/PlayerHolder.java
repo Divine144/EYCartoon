@@ -13,11 +13,13 @@ public class PlayerHolder extends EntityCapability {
     private int blocksMinedCount;
     private boolean hasUnlockedIceAbility;
     private boolean canDoubleJump;
+    private boolean hasMegaGolemSpawned;
 
     protected PlayerHolder(Entity entity) {
         super(entity);
         this.hasUnlockedIceAbility = false;
         this.canDoubleJump = false;
+        this.hasMegaGolemSpawned = false;
     }
 
     public int getBlocksMinedCount() {
@@ -48,12 +50,21 @@ public class PlayerHolder extends EntityCapability {
         this.canDoubleJump = canDoubleJump;
     }
 
+    public boolean isHasMegaGolemSpawned() {
+        return this.hasMegaGolemSpawned;
+    }
+
+    public void setHasMegaGolemSpawned(boolean hasMegaGolemSpawned) {
+        this.hasMegaGolemSpawned = hasMegaGolemSpawned;
+    }
+
     @Override
     public CompoundTag serializeNBT(boolean savingToDisk) {
         CompoundTag tag = new CompoundTag();
         tag.putInt("blocksMinedCount", this.blocksMinedCount);
         tag.putBoolean("hasUnlockedIceAbility", this.hasUnlockedIceAbility);
         tag.putBoolean("canDoubleJump", this.canDoubleJump);
+        tag.putBoolean("hasMegaGolemSpawned", this.hasMegaGolemSpawned);
         return tag;
     }
 
@@ -62,6 +73,7 @@ public class PlayerHolder extends EntityCapability {
         this.blocksMinedCount = nbt.getInt("blocksMinedCount");
         this.hasUnlockedIceAbility = nbt.getBoolean("hasUnlockedIceAbility");
         this.canDoubleJump = nbt.getBoolean("canDoubleJump");
+        this.hasMegaGolemSpawned = nbt.getBoolean("hasMegaGolemSpawned");
     }
 
     @Override

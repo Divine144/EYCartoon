@@ -6,9 +6,13 @@ import com.nyfaria.eycartoon.EYCartoon;
 import com.nyfaria.eycartoon.cap.PlayerHolder;
 import com.nyfaria.eycartoon.cap.PlayerHolderAttacher;
 import com.nyfaria.eycartoon.config.EYCartoonConfig;
+import com.nyfaria.eycartoon.entity.MegaSnowGolemEntity;
 import com.nyfaria.eycartoon.init.BlockInit;
+import com.nyfaria.eycartoon.init.EntityInit;
 import com.nyfaria.eycartoon.init.ItemInit;
 import net.minecraft.Util;
+import net.minecraft.client.renderer.entity.DragonFireballRenderer;
+import net.minecraft.client.renderer.entity.ItemEntityRenderer;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.BlockPos;
@@ -17,6 +21,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -87,13 +92,25 @@ public class CommonForgeEvents {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.player != null && !event.player.level.isClientSide && event.phase == TickEvent.Phase.END) {
             Player player = event.player;
-            GlobalPos redstonePos = EYCartoonConfig.INSTANCE.enableIceAbilityRedstonePos.apply(player.level);
+            GlobalPos redstonePos = configInst().enableIceAbilityRedstonePos.apply(player.level);
             if (redstonePos != null && player.level.getServer() != null) {
                 ServerLevel otherDimLevel = player.level.getServer().getLevel(redstonePos.dimension());
                 if (otherDimLevel != null) {
                     boolean unlockedIce = PlayerHolderAttacher.getPlayerHolder(player).map(PlayerHolder::hasUnlockedIceAbility).orElse(false);
                     if (player.level.getBlockState(redstonePos.pos()).is(Blocks.REDSTONE_BLOCK) && !unlockedIce) {
                         PlayerHolderAttacher.getPlayerHolder(player).ifPresent(PlayerHolder::enableIceAbility);
+                    }
+                }
+            }
+            GlobalPos megaGolemPos = configInst().megaSnowGolemSpawnPos.apply(player.level);
+            if (megaGolemPos != null && player.level.getServer() != null) {
+                ServerLevel otherDimLevel = player.level.getServer().getLevel(megaGolemPos.dimension());
+                if (otherDimLevel != null) {
+                    boolean spawnedGolem = PlayerHolderAttacher.getPlayerHolder(player).map(PlayerHolder::isHasMegaGolemSpawned).orElse(false);
+                    if (megaGolemPos.pos().closerToCenterThan(player.position(), 2D) && !spawnedGolem) {
+                        PlayerHolderAttacher.getPlayerHolder(player).ifPresent(p -> p.setHasMegaGolemSpawned(true));
+                        MegaSnowGolemEntity megaSnowGolem = new MegaSnowGolemEntity(EntityInit.MEGA_SNOW_GOLEM.get(), player.level);
+                        player.level.addFreshEntity(megaSnowGolem);
                     }
                 }
             }
@@ -208,7 +225,7 @@ public class CommonForgeEvents {
             // ALL ZOMBIE ENTITIES ARE PLACEHOLDERS
             ENTITIES.put(configInst().bossBabyDropOrder.get(), EntityType.ZOMBIE.create(level));
             ENTITIES.put(configInst().zombieCowDropOrder.get(), EntityType.ZOMBIE.create(level));
-            ENTITIES.put(configInst().squidwardTraderDropOrder.get(), EntityType.ZOMBIE.create(level));
+            ENTITIES.put(configInst().squidwardTraderDropOrder.get(), EntityInit.SQUIDWARD_TRADER_ENTITY.get().create(level));
             ENTITIES.put(configInst().pigWolfHorseDropOrder.get(), EntityType.PIG.create(level));
             ENTITIES.put(configInst().mcqueenMobileDropOrder.get(), EntityType.ZOMBIE.create(level));
             ENTITIES.put(configInst().skeletonsDropOrder.get(), EntityType.SKELETON.create(level));

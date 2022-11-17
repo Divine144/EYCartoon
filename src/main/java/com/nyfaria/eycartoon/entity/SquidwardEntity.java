@@ -4,6 +4,7 @@ import com.nyfaria.eycartoon.init.BlockInit;
 import com.nyfaria.eycartoon.init.ItemInit;
 import com.nyfaria.eycartoon.init.ProfessionsInit;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.commands.SummonCommand;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -72,10 +73,10 @@ public class SquidwardEntity extends Villager implements IAnimatable {
     @Override
     public @NotNull MerchantOffers getOffers() {
         offers = new MerchantOffers();
-        offers.add(new MerchantOffer(new ItemStack(Items.DIAMOND, 10), new ItemStack(BlockInit.CASH_REGISTER_BLOCK.get().asItem()), 5, 1, 1.0f));
+        offers.add(new MerchantOffer(new ItemStack(Items.DIAMOND, 10), new ItemStack(BlockInit.CASH_REGISTER_BLOCK.get().asItem()), 1, 1, 1.0f));
         offers.add(new MerchantOffer(new ItemStack(Items.DIAMOND, 1), new ItemStack(ItemInit.KRABBY_PATTY.get()), 64, 1, 1.0f));
-        offers.add(new MerchantOffer(new ItemStack(Items.DIAMOND, 25), new ItemStack(ItemInit.SPONGEBOBS_TIE.get()), 5, 1, 1.0f));
-        offers.add(new MerchantOffer(new ItemStack(Items.DIAMOND, 15), new ItemStack(ItemInit.PATRICKS_UNDERWEAR.get()), 5, 1, 1.0f));
+        offers.add(new MerchantOffer(new ItemStack(Items.DIAMOND, 25), new ItemStack(ItemInit.SPONGEBOBS_TIE.get()), 1, 1, 1.0f));
+        offers.add(new MerchantOffer(new ItemStack(Items.DIAMOND, 15), new ItemStack(ItemInit.PATRICKS_UNDERWEAR.get()), 1, 1, 1.0f));
         return offers;
     }
 

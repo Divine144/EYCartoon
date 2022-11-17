@@ -9,6 +9,7 @@ import dev._100media.hundredmediageckolib.client.model.SimpleAnimatedGeoModel;
 import dev._100media.hundredmediamorphs.HundredMediaMorphsMod;
 import dev._100media.hundredmediamorphs.client.renderer.MorphRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,5 +28,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(EntityInit.FLAT_HORSE_ENTITY.get(), FlatHorseRenderer::new);
         event.registerEntityRenderer(EntityInit.FLAT_WOLF_ENTITY.get(), FlatWolfRenderer::new);
         event.registerEntityRenderer(EntityInit.ROCKET_ENTITY.get(), RocketRenderer::new);
+        event.registerEntityRenderer(EntityInit.LARGE_SNOWBALL.get(), context -> new ThrownItemRenderer<>(context, 3F, false));
+        event.registerEntityRenderer(EntityInit.COIN_PROJECTILE.get(), Coin);
     }
 }

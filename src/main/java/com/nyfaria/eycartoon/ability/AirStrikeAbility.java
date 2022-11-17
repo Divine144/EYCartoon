@@ -29,7 +29,7 @@ public class AirStrikeAbility extends Ability {
                 for (int i = 0; i < 3; i++) {
                     BlockPos randPos = pos.offset(player.getRandom().nextInt(3) + i + 1, 0, player.getRandom().nextInt(3) + i + 1);
                     RocketEntity entity = new RocketEntity(EntityInit.ROCKET_ENTITY.get(), level);
-                    entity.setPos(new Vec3(randPos.getX(), 75, randPos.getZ()));
+                    entity.setPos(new Vec3(randPos.getX(), player.getY() + 135, randPos.getZ()));
                     level.addFreshEntity(entity);
                 }
             }

@@ -14,8 +14,14 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class CoinProjectileEntity extends Arrow {
+public class CoinProjectileEntity extends Arrow implements IAnimatable {
+
+    protected final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     private Vec3 initialPosition;
 
@@ -86,5 +92,15 @@ public class CoinProjectileEntity extends Arrow {
 
     public void setInitialPosition(Vec3 position) {
         this.initialPosition = position;
+    }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return factory;
     }
 }
