@@ -6,6 +6,8 @@ import com.nyfaria.eycartoon.entity.RocketEntity;
 import com.nyfaria.eycartoon.entity.ThrownYoyoEntity;
 import com.nyfaria.eycartoon.init.EntityInit;
 import dev._100media.hundredmediageckolib.client.model.SimpleAnimatedGeoModel;
+import dev._100media.hundredmediamorphs.HundredMediaMorphsMod;
+import dev._100media.hundredmediamorphs.client.renderer.MorphRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;

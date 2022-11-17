@@ -59,7 +59,7 @@ public class KrabbyPattyProjectileEntity extends ThrowableItemProjectile {
         Entity entity = pResult.getEntity();
         if (entity instanceof LivingEntity entity1) {
             entity1.hurt(DamageSource.thrown(this, this.getOwner()), 0F);
-            entity1.addEffect(new MobEffectInstance(new FartLevitationEffect(MobEffectCategory.HARMFUL, true, 3124687), Integer.MAX_VALUE));
+
         }
     }
 

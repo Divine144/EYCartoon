@@ -10,6 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class FartLevitationEffect extends MobEffect {
 
+    private boolean isInfinite;
     private MobEffectInstance levitation;
 
     public FartLevitationEffect(MobEffectCategory pCategory, int pColor) {
@@ -17,16 +18,15 @@ public class FartLevitationEffect extends MobEffect {
         levitation = new MobEffectInstance(MobEffects.LEVITATION, 200, 0, false, false);
     }
 
-    public FartLevitationEffect(MobEffectCategory pCategory, boolean isInfinite, int pColor) {
-        this(pCategory, pColor);
-        levitation = new MobEffectInstance(MobEffects.LEVITATION, Integer.MAX_VALUE, 0, false, false);
-    }
-
     int counter = 0;
     @Override
     public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
+
         if (pLivingEntity.level instanceof ServerLevel level) {
             if (!pLivingEntity.hasEffect(MobEffects.LEVITATION)) {
+                if (this.isInfinite) {
+                    levitation = new MobEffectInstance(MobEffects.LEVITATION, Integer.MAX_VALUE, 0, false, false);
+                }
                 pLivingEntity.addEffect(levitation);
             }
             double dy = pLivingEntity.getY() - 0.3333;
@@ -40,5 +40,9 @@ public class FartLevitationEffect extends MobEffect {
     @Override
     public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
         return true;
+    }
+
+    public void setIsInfinite(boolean isInfinite) {
+        this.isInfinite = isInfinite;
     }
 }

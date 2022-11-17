@@ -18,16 +18,16 @@ public class ModBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         simpleBlock(BlockInit.CARTOON_BLOCK.get());
         simpleBlock(BlockInit.CASH_REGISTER_BLOCK.get());
-        // Stream.of(
-        //
-        //         )
-        //         .map(Supplier::get)
-        //         .forEach(this::simpleCubeBottomTopBlockState);
-        //
-        // Stream.of(
-        //
-        // ).map(Supplier::get)
-        //         .forEach(this::simpleBlock);
+    // Stream.of(
+    //
+    //         )
+    //         .map(Supplier::get)
+    //         .forEach(this::simpleCubeBottomTopBlockState);
+    //
+    // Stream.of(
+    //
+    // ).map(Supplier::get)
+    //         .forEach(this::simpleBlock);
     }
 
     protected void simpleCubeBottomTopBlockState(Block block) {

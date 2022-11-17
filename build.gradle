@@ -135,6 +135,9 @@ dependencies {
     // Capability Syncer
     hundredMedia.addJarJarDep('dev._100media.capabilitysyncer:capabilitysyncer', capabilitysyncer_version, capabilitysyncer_version_range, null, '1.19')
 
+    // 100 Media Morphs
+    hundredMedia.addJarJarDep('dev._100media.hundredmediamorphs:hundredmediamorphs', hundredmediamorphs_version, hundredmediamorphs_version_range, 'fat')
+
     // 100 Media Geckolib
     hundredMedia.addJarJarDep('dev._100media.hundredmediageckolib:hundredmediageckolib', hundredmediageckolib_version, hundredmediageckolib_version_range)
 
