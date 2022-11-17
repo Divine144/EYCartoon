@@ -29,6 +29,6 @@ public class ClientModEvents {
         event.registerEntityRenderer(EntityInit.FLAT_WOLF_ENTITY.get(), FlatWolfRenderer::new);
         event.registerEntityRenderer(EntityInit.ROCKET_ENTITY.get(), RocketRenderer::new);
         event.registerEntityRenderer(EntityInit.LARGE_SNOWBALL.get(), context -> new ThrownItemRenderer<>(context, 3F, false));
-        event.registerEntityRenderer(EntityInit.COIN_PROJECTILE.get(), Coin);
+        event.registerEntityRenderer(EntityInit.COIN_PROJECTILE.get(), CoinRenderer::new);
     }
 }
