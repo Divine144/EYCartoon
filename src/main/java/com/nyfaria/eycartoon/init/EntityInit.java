@@ -9,6 +9,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,9 +32,11 @@ public class EntityInit {
     public static final RegistryObject<EntityType<ThrownYoyoEntity>> THROWN_YOYO_ENTITY = registerEntity("thrown_yoyo", () -> EntityType.Builder.<ThrownYoyoEntity>of(ThrownYoyoEntity::new, MobCategory.MISC).sized(0.5F, 0.5F));
     public static final RegistryObject<EntityType<KrabbyPattyProjectileEntity>> KRABBY_PATTY_PROJECTILE = registerEntity("krabby_projectile", () -> EntityType.Builder.<KrabbyPattyProjectileEntity>of(KrabbyPattyProjectileEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10));
     public static final RegistryObject<EntityType<RocketEntity>> ROCKET_ENTITY = registerEntity("rocket_entity", () -> EntityType.Builder.of(RocketEntity::new, MobCategory.MISC).sized(0.7F, 0.7F).clientTrackingRange(4).updateInterval(10));
+    public static final RegistryObject<EntityType<CoinProjectileEntity>> COIN_PROJECTILE = registerEntity("coin_projectile", () -> EntityType.Builder.of(CoinProjectileEntity::new, MobCategory.MISC).sized(0.2F, 0.2F).clientTrackingRange(4).updateInterval(10));
     public static final RegistryObject<EntityType<FlatHorseEntity>> FLAT_HORSE_ENTITY = registerEntity("flat_horse", () -> EntityType.Builder.of(FlatHorseEntity::new, MobCategory.CREATURE).sized(1.3964844F, 1.6F).clientTrackingRange(10), Horse::createBaseHorseAttributes);
     public static final RegistryObject<EntityType<FlatPigEntity>> FLAT_PIG_ENTITY = registerEntity("flat_pig", () -> EntityType.Builder.of(FlatPigEntity::new, MobCategory.CREATURE).sized(0.9F, 0.9F).clientTrackingRange(10), Pig::createAttributes);
     public static final RegistryObject<EntityType<FlatWolfEntity>> FLAT_WOLF_ENTITY = registerEntity("flat_horse", () -> EntityType.Builder.of(FlatWolfEntity::new, MobCategory.CREATURE).sized(0.6F, 0.85F).clientTrackingRange(10), Wolf::createAttributes);
+    public static final RegistryObject<EntityType<SquidwardEntity>> SQUIDWARD_TRADER_ENTITY = registerEntity("squidward", () -> EntityType.Builder.of(SquidwardEntity::new, MobCategory.AMBIENT).sized(0.6F, 1.95F).clientTrackingRange(10), Villager::createAttributes);
 
     private static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, Supplier<EntityType.Builder<T>> supplier) {
         return ENTITIES.register(name, () -> supplier.get().build(MODID + ":" + name));

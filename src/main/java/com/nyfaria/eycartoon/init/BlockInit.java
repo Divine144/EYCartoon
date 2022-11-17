@@ -6,8 +6,6 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -21,12 +19,11 @@ import static com.nyfaria.eycartoon.EYCartoon.MODID;
 
 public class BlockInit {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
 
     public static final RegistryObject<CartoonBlock> CARTOON_BLOCK = registerBlock("cartoon_block",
             () -> new CartoonBlock(BlockBehaviour.Properties.of(Material.STONE).strength(0.2F)), CreativeModeTab.TAB_BUILDING_BLOCKS);
 
-    public static final RegistryObject<CashRegisterBlock> CASH_REGISTER_BLOCK = registerBlock("cash_register_block", () -> new CashRegisterBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(10F, 60.0F)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+    public static final RegistryObject<CashRegisterBlock> CASH_REGISTER_BLOCK = registerBlock("squidward's_cash_register", () -> new CashRegisterBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(10F, 60.0F)), CreativeModeTab.TAB_BUILDING_BLOCKS);
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

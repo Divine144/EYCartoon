@@ -1,7 +1,8 @@
 package com.nyfaria.eycartoon.block;
 
+import com.nyfaria.eycartoon.entity.CoinProjectileEntity;
 import com.nyfaria.eycartoon.init.BlockEntityInit;
-import com.nyfaria.hmutility.utils.HMUVectorUtils;
+import com.nyfaria.eycartoon.init.EntityInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class CashRegisterBlock extends BaseEntityBlock {
@@ -27,8 +29,21 @@ public class CashRegisterBlock extends BaseEntityBlock {
 
     private void tick(Level level, BlockPos blockPos, BlockState state, BlockEntity blockEntity) {
         if (!level.isClientSide) {
-            if (++timer % 10 == 0) {
-
+            if (++timer % 5 == 0) {
+                BlockPos relative = blockPos.relative(state.getValue(FACING), 1);
+                Vec3 relativeVec = new Vec3(relative.getX(), relative.getY(), relative.getZ());
+                CoinProjectileEntity entity = new CoinProjectileEntity(EntityInit.COIN_PROJECTILE.get(), level);
+                entity.setInitialPosition(relativeVec);
+                entity.setPos(relativeVec);
+                switch (state.getValue(FACING)) {
+                    case EAST: entity.shoot(10, 0, 0,1.6F, 0);
+                    case WEST: entity.shoot(-10, 0, 0, 1.6F, 0);
+                    case SOUTH: entity.shoot(0, 0, 10, 1.6F, 0);
+                    case NORTH: entity.shoot(0, 0, -10, 1.6F, 0);
+                    case UP: entity.shoot(0, 10, 0, 1.6F, 0);
+                    case DOWN: entity.shoot(0, -10, 0, 1.6F, 0);
+                }
+                level.addFreshEntity(entity);
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.nyfaria.eycartoon.datagen;
 
 import com.nyfaria.eycartoon.EYCartoon;
+import com.nyfaria.eycartoon.init.BlockInit;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -17,6 +18,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        simpleBlockItemModel(BlockInit.CARTOON_BLOCK.get());
+        simpleBlockItemModel(BlockInit.CASH_REGISTER_BLOCK.get());
         // Stream.of()
         //         .map(Supplier::get)
         //         .forEach(this::simpleHandHeldModel);

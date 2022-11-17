@@ -1,6 +1,7 @@
 package com.nyfaria.eycartoon.datagen;
 
 import com.nyfaria.eycartoon.EYCartoon;
+import com.nyfaria.eycartoon.init.BlockInit;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
@@ -15,7 +16,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-
+        simpleBlock(BlockInit.CARTOON_BLOCK.get());
+        simpleBlock(BlockInit.CASH_REGISTER_BLOCK.get());
         // Stream.of(
         //
         //         )
@@ -26,7 +28,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         //
         // ).map(Supplier::get)
         //         .forEach(this::simpleBlock);
-
     }
 
     protected void simpleCubeBottomTopBlockState(Block block) {

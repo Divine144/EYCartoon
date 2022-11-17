@@ -35,9 +35,11 @@ public class EYCartoon {
         ItemInit.ITEMS.register(modBus);
         EntityInit.ENTITIES.register(modBus);
         BlockInit.BLOCKS.register(modBus);
-        BlockInit.BLOCK_ENTITIES.register(modBus);
+        BlockEntityInit.BLOCK_ENTITIES.register(modBus);
         MobEffectInit.MOB_EFFECTS.register(modBus);
         AbilityInit.ABILITIES.register(modBus);
+        ProfessionsInit.POI_TYPES.register(modBus);
+        ProfessionsInit.VILLAGER_PROFESSIONS.register(modBus);
 
         PlayerHolderAttacher.register();
         GeckoLib.initialize();
@@ -46,6 +48,7 @@ public class EYCartoon {
     @SubscribeEvent
     public static void onCommonSetup(FMLCommonSetupEvent event) {
         NetworkHandler.register();
+        event.enqueueWork(ProfessionsInit::registerPOIs);
     }
 
     @SubscribeEvent
