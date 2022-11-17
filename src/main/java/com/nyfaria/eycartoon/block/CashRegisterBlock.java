@@ -4,6 +4,7 @@ import com.nyfaria.eycartoon.entity.CoinProjectileEntity;
 import com.nyfaria.eycartoon.init.BlockEntityInit;
 import com.nyfaria.eycartoon.init.EntityInit;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -23,6 +24,7 @@ public class CashRegisterBlock extends BaseEntityBlock {
 
     public CashRegisterBlock(Properties pProperties) {
         super(pProperties);
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
     int timer = 0;

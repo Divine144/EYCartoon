@@ -18,8 +18,19 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class RocketEntity extends Arrow {
+public class RocketEntity extends Arrow implements IAnimatable {
+
+    protected final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public RocketEntity(EntityType<? extends RocketEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -30,9 +41,10 @@ public class RocketEntity extends Arrow {
         super.tick();
         this.setDeltaMovement(0, -0.1, 0);
         if (this.level instanceof ServerLevel level) {
-            BlockPos result = blockTrace(this, ClipContext.Fluid.NONE, 125, true).getBlockPos();
+
+            BlockPos result = blockTrace(this, ClipContext.Fluid.NONE, 125, true).getBlockPos().above();
             if (this.tickCount % 5 == 0) {
-                level.sendParticles(new DustParticleOptions(DustParticleOptions.REDSTONE_PARTICLE_COLOR, 1.5F), result.getX(), result.getY() + 1, result.getZ(), 2, 0, 0, 0, 0);
+                level.sendParticles(new DustParticleOptions(DustParticleOptions.REDSTONE_PARTICLE_COLOR, 1.5F), result.getX(), result.getY(), result.getZ(), 2, 0, 0, 0, 0);
             }
         }
     }
@@ -99,5 +111,15 @@ public class RocketEntity extends Arrow {
         Vec3 end = new Vec3(livingEntity.getX() + look.x * (double) range, livingEntity.getY() + livingEntity.getEyeHeight() + look.y * (double) range, livingEntity.getZ() + look.z * (double) range);
         context = new ClipContext(start, end, ClipContext.Block.COLLIDER, rayTraceFluid, livingEntity);
         return level.clip(context);
+    }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<IAnimatable>(this, "controller", 0, p -> PlayState.STOP));
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return factory;
     }
 }

@@ -9,6 +9,8 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.LargeFireball;
+import net.minecraft.world.entity.projectile.Snowball;
+import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
@@ -27,7 +29,9 @@ public class SpongebobSpatulaItem extends Item {
             if (!pLevel.isClientSide) {
                 pStack.hurtAndBreak(1, player, entity -> entity.broadcastBreakEvent(player.getUsedItemHand()));
                 if (getUseDuration(pStack) - pTimeCharged >= 10) {
-                    KrabbyPattyProjectileEntity patty = new KrabbyPattyProjectileEntity(pLevel, player);
+                    Snowball patty = new Snowball(pLevel, player) {
+
+                    };
                     patty.setItem(new ItemStack(ItemInit.KRABBY_PATTY.get()));
                     patty.shootFromRotation(patty, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
                     pLevel.addFreshEntity(patty);

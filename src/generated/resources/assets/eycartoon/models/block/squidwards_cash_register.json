@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "eycartoon:block/squidwards_cash_register"
+  }
+}

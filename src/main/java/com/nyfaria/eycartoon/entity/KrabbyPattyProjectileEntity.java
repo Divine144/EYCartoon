@@ -13,6 +13,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -35,6 +36,11 @@ public class KrabbyPattyProjectileEntity extends ThrowableItemProjectile {
     @Override
     protected @NotNull Item getDefaultItem() {
         return ItemInit.KRABBY_PATTY.get();
+    }
+
+    @Override
+    protected ItemStack getItemRaw() {
+        return super.getItemRaw();
     }
 
     @Override

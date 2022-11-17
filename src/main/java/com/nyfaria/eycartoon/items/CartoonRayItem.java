@@ -41,9 +41,9 @@ public class CartoonRayItem extends Item {
                 if (entity instanceof Pig pig)
                     pig.convertTo(EntityInit.FLAT_PIG_ENTITY.get(), false);
                 else if (entity instanceof Wolf wolf)
-                    convertTo(EntityInit.FLAT_WOLF_ENTITY.get(), wolf);
+                    wolf.convertTo(EntityInit.FLAT_WOLF_ENTITY.get(), false);
                 else if (entity instanceof Horse horse)
-                    convertTo(EntityInit.FLAT_HORSE_ENTITY.get(), horse);
+                    horse.convertTo(EntityInit.FLAT_HORSE_ENTITY.get(), false);
             }
             for (double i = 0; i <= 20d; i += 0.1d) {
                 Vec3 traceVec2 = eyepos.add(look.x * i, look.y * i, look.z * i);
@@ -62,22 +62,5 @@ public class CartoonRayItem extends Item {
             }
         }
         return super.use(pLevel, pPlayer, pUsedHand);
-    }
-
-    private static void convertTo(EntityType<? extends Wolf> pEntityType, Wolf mobToConvert) {
-        Wolf t = pEntityType.create(mobToConvert.level);
-        if (t != null) {
-            t.setOwnerUUID(mobToConvert.getOwnerUUID());
-            t.convertTo(pEntityType, false);
-        }
-    }
-
-    private static void convertTo(EntityType<? extends Horse> entityType, Horse mobToConvert) {
-        Horse t = entityType.create(mobToConvert.level);
-        if (t != null) {
-            t.setOwnerUUID(mobToConvert.getOwnerUUID());
-            t.setTypeVariant(mobToConvert.getTypeVariant());
-            t.convertTo(entityType, true);
-        }
     }
 }

@@ -31,7 +31,7 @@ public class ItemInit {
 
     public static final RegistryObject<Item> LADYBUG_YOYO = ITEMS.register("ladybug_yoyo", () -> new LadybugYoyoItem(new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
 
-    public static final RegistryObject<Item> SPONGEBOB_SPATULA = ITEMS.register("spongebob_spatula", () -> new SpongebobSpatulaItem(new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
+    public static final RegistryObject<Item> SPONGEBOB_SPATULA = ITEMS.register("spongebobs_spatula", () -> new SpongebobSpatulaItem(new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
 
     public static final RegistryObject<Item> BUZZ_CONTROL_PANEL = ITEMS.register("buzz_control_panel", () -> new SimpleAnimatedItem(new AnimatedItemProperties().stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
 
@@ -39,9 +39,9 @@ public class ItemInit {
 
     public static final RegistryObject<Item> CARTOON_RAY = ITEMS.register("2d_cartoon_ray", () -> new CartoonRayItem(new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
 
-    public static final RegistryObject<Item> SPONGEBOBS_TIE = ITEMS.register("spongebob's_tie", () -> new SimpleAnimatedItem(new AnimatedItemProperties().stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
+    public static final RegistryObject<Item> SPONGEBOBS_TIE = ITEMS.register("spongebobs_tie", () -> new SimpleAnimatedItem(new AnimatedItemProperties().stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
 
-    public static final RegistryObject<Item> PATRICKS_UNDERWEAR = ITEMS.register("patrick's_underwear", () -> new SimpleAnimatedItem(new AnimatedItemProperties().stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
+    public static final RegistryObject<Item> PATRICKS_UNDERWEAR = ITEMS.register("patricks_underwear", () -> new SimpleAnimatedItem(new AnimatedItemProperties().stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
 
 
 }

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 public class NetworkHandler {
+
     private static final String PROTOCOL_VERSION = "1.0";
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(EYCartoon.MODID, "main"),

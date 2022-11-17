@@ -1,0 +1,121 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"walk": {
+			"animation_length": 1,
+			"bones": {
+				"head": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [-2.5, 0, 0],
+							"easing": "easeInOutQuad"
+						},
+						"1.0": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutQuad"
+						}
+					}
+				},
+				"leg1": {
+					"rotation": {
+						"0.0": {
+							"vector": [-42.5, 0, 0]
+						},
+						"0.5": {
+							"vector": [47.5, 0, 0],
+							"easing": "easeInOutQuad"
+						},
+						"1.0": {
+							"vector": [-42.5, 0, 0],
+							"easing": "easeInOutQuad"
+						}
+					}
+				},
+				"leg2": {
+					"rotation": {
+						"0.0": {
+							"vector": [47.5, 0, 0]
+						},
+						"0.5": {
+							"vector": [-42.5, 0, 0],
+							"easing": "easeInOutQuad"
+						},
+						"1.0": {
+							"vector": [47.5, 0, 0],
+							"easing": "easeInOutQuad"
+						}
+					}
+				},
+				"leg3": {
+					"rotation": {
+						"0.0": {
+							"vector": [47.5, 0, 0]
+						},
+						"0.5": {
+							"vector": [-42.5, 0, 0],
+							"easing": "easeInOutQuad"
+						},
+						"1.0": {
+							"vector": [47.5, 0, 0],
+							"easing": "easeInOutQuad"
+						}
+					}
+				},
+				"leg4": {
+					"rotation": {
+						"0.0": {
+							"vector": [-42.5, 0, 0]
+						},
+						"0.5": {
+							"vector": [47.5, 0, 0],
+							"easing": "easeInOutQuad"
+						},
+						"1.0": {
+							"vector": [-42.5, 0, 0],
+							"easing": "easeInOutQuad"
+						}
+					}
+				},
+				"tail": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [12.5, 0, 0],
+							"easing": "easeInOutQuad"
+						},
+						"1.0": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutQuad"
+						}
+					}
+				}
+			}
+		},
+		"idle": {
+			"animation_length": 4,
+			"bones": {
+				"head": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"2.0": {
+							"vector": [-5, 0, 0],
+							"easing": "easeInOutQuad"
+						},
+						"4.0": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutQuad"
+						}
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}
