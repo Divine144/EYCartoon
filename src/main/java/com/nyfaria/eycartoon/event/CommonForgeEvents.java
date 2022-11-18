@@ -223,11 +223,11 @@ public class CommonForgeEvents {
             ITEMS.put(configInst().diamondsDropOrder.get(), Items.DIAMOND);
 
             // ALL ZOMBIE ENTITIES ARE PLACEHOLDERS
-            ENTITIES.put(configInst().bossBabyDropOrder.get(), EntityType.ZOMBIE.create(level));
+            ENTITIES.put(configInst().bossBabyDropOrder.get(), EntityInit.BOSS_BABY.get().create(level));
             ENTITIES.put(configInst().zombieCowDropOrder.get(), EntityType.ZOMBIE.create(level));
             ENTITIES.put(configInst().squidwardTraderDropOrder.get(), EntityInit.SQUIDWARD_TRADER_ENTITY.get().create(level));
             ENTITIES.put(configInst().pigWolfHorseDropOrder.get(), EntityType.PIG.create(level));
-            ENTITIES.put(configInst().mcqueenMobileDropOrder.get(), EntityType.ZOMBIE.create(level));
+            ENTITIES.put(configInst().mcqueenMobileDropOrder.get(), EntityInit.LIGHTNING_MCQUEEN.get().create(level));
             ENTITIES.put(configInst().skeletonsDropOrder.get(), EntityType.SKELETON.create(level));
             ENTITIES.put(configInst().petToothlessDropOrder.get(), EntityType.ZOMBIE.create(level));
         }

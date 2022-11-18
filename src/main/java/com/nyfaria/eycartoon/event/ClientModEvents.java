@@ -2,6 +2,7 @@ package com.nyfaria.eycartoon.event;
 
 import com.nyfaria.eycartoon.EYCartoon;
 import com.nyfaria.eycartoon.client.renderer.*;
+import com.nyfaria.eycartoon.entity.LargeSnowball;
 import com.nyfaria.eycartoon.entity.RocketEntity;
 import com.nyfaria.eycartoon.entity.ThrownYoyoEntity;
 import com.nyfaria.eycartoon.init.EntityInit;
@@ -30,5 +31,8 @@ public class ClientModEvents {
         event.registerEntityRenderer(EntityInit.ROCKET_ENTITY.get(), RocketRenderer::new);
         event.registerEntityRenderer(EntityInit.LARGE_SNOWBALL.get(), context -> new ThrownItemRenderer<>(context, 3F, false));
         event.registerEntityRenderer(EntityInit.COIN_PROJECTILE.get(), CoinRenderer::new);
+        event.registerEntityRenderer(EntityInit.LIGHTNING_MCQUEEN.get(), LightningMCQueenRenderer::new);
+        event.registerEntityRenderer(EntityInit.BOSS_BABY.get(), BossBabyRenderer::new);
+        event.registerEntityRenderer(EntityInit.SPONGEBOB.get(), SpongebobRenderer::new);
     }
 }

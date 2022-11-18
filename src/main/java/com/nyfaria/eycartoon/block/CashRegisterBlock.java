@@ -39,8 +39,8 @@ public class CashRegisterBlock extends BaseEntityBlock {
                 entity.setPos(relativeVec);
                 System.out.println(state.getValue(FACING));
                 switch (state.getValue(FACING)) {
-                    case EAST, WEST -> entity.setPos(relativeVec.x, relativeVec.y, relativeVec.z + 0.5);
-                    case SOUTH, NORTH -> entity.setPos(relativeVec.x + 0.5, relativeVec.y, relativeVec.z);
+                    case EAST, WEST -> entity.setPos(relativeVec.x, relativeVec.y - 0.5, relativeVec.z + 0.5);
+                    case SOUTH, NORTH -> entity.setPos(relativeVec.x + 0.5, relativeVec.y - 0.5, relativeVec.z);
                 }
                 level.addFreshEntity(entity);
             }
@@ -83,6 +83,6 @@ public class CashRegisterBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
+        return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection());
     }
 }

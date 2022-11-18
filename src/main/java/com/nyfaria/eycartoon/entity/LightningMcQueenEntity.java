@@ -42,17 +42,7 @@ public class LightningMcQueenEntity extends Animal implements IAnimatable, Playe
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 5, this::predicate));
-    }
-
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("run", ILoopType.EDefaultLoopTypes.LOOP));
-            return PlayState.CONTINUE;
-        }
-        else {
-            return PlayState.STOP;
-        }
+        data.addAnimationController(new AnimationController<>(this, "controller", 5, p -> PlayState.CONTINUE));
     }
 
     @Override
@@ -81,6 +71,11 @@ public class LightningMcQueenEntity extends Animal implements IAnimatable, Playe
        else {
            return InteractionResult.SUCCESS;
        }
+    }
+
+    @Override
+    public boolean fireImmune() {
+        return true;
     }
 
     @Override

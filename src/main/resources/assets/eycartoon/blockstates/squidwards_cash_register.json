@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "eycartoon:block/squidwards_cash_register", "y" : 270},
+    "facing=east": { "model": "eycartoon:block/squidwards_cash_register", "y": 0},
+    "facing=south": { "model": "eycartoon:block/squidwards_cash_register", "y" : 90},
+    "facing=west": { "model": "eycartoon:block/squidwards_cash_register", "y": 180 }
+  }
+}
