@@ -32,7 +32,9 @@ public class EYCartoon {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EYCartoonConfig.CONFIG_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, EYCartoonClientConfig.CLIENT_SPEC);
 
+        MorphInit.MORPHS.register(modBus);
         ItemInit.ITEMS.register(modBus);
+
         EntityInit.ENTITIES.register(modBus);
         BlockInit.BLOCKS.register(modBus);
         BlockEntityInit.BLOCK_ENTITIES.register(modBus);

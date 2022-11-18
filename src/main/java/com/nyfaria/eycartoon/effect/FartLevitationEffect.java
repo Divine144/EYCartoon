@@ -29,8 +29,9 @@ public class FartLevitationEffect extends MobEffect {
                 }
                 pLivingEntity.addEffect(levitation);
             }
+
             double dy = pLivingEntity.getY() - 0.3333;
-            if (++counter % 20 == 0) {
+            if (++counter % 10 == 0) {
                 level.sendParticles(ParticleTypes.BUBBLE, pLivingEntity.getX(), dy, pLivingEntity.getZ(), 6, 0.2, 0.1, 0.2, 0.1);
             }
         }

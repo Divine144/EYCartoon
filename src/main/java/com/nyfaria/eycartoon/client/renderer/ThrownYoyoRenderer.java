@@ -3,6 +3,7 @@ package com.nyfaria.eycartoon.client.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import com.nyfaria.eycartoon.entity.ThrownYoyoEntity;
+import dev._100media.hundredmediageckolib.client.model.SimpleAnimatedGeoModel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -27,7 +28,6 @@ public class ThrownYoyoRenderer extends EntityRenderer<ThrownYoyoEntity> {
         //normal angle for a sword item to fly pointy-direction-out
         pMatrixStack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(pPartialTicks, pEntity.yRotO, pEntity.getYRot()) + 90.0F));
         pMatrixStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(pPartialTicks, pEntity.xRotO, pEntity.getXRot()) + 45.0F));
-
         //boomerang spin
         pMatrixStack.mulPose(Vector3f.XP.rotationDegrees(90));
         pMatrixStack.mulPose(Vector3f.ZN.rotationDegrees(360 * (((float)(pEntity.tickCount % ROTATION_INTERVAL) + pPartialTicks) / (float) ROTATION_INTERVAL)));

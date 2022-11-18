@@ -46,6 +46,11 @@ public class ToothlessEntity extends Animal implements IAnimatable {
         return super.mobInteract(pPlayer, pHand);
     }
 
+    @Override
+    public float getSpeed() {
+        return super.getSpeed();
+    }
+
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {

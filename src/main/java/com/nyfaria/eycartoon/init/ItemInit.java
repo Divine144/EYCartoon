@@ -2,10 +2,13 @@ package com.nyfaria.eycartoon.init;
 
 import com.nyfaria.eycartoon.EYCartoon;
 import com.nyfaria.eycartoon.items.*;
+import com.nyfaria.eycartoon.items.armor.SonicBootsArmorItem;
 import dev._100media.hundredmediageckolib.item.animated.AnimatedItemProperties;
 import dev._100media.hundredmediageckolib.item.animated.SimpleAnimatedItem;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
@@ -23,8 +26,10 @@ public class ItemInit {
             .tab(CreativeModeTab.TAB_FOOD)));
 
     public static final RegistryObject<Item> SONIC_COIN = ITEMS.register("sonic_coin",
-            () -> new SimpleAnimatedItem(new AnimatedItemProperties()
+            () -> new Item(new Item.Properties()
                     .food(new FoodProperties.Builder().alwaysEat().nutrition(0).build()).tab(CreativeModeTab.TAB_FOOD)));
+
+    public static final RegistryObject<Item> SONIC_BOOTS = ITEMS.register("sonic_boots", () -> new SonicBootsArmorItem(ArmorMaterials.GOLD, EquipmentSlot.FEET, new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
 
     public static final RegistryObject<Item> LADYBUG_YOYO = ITEMS.register("ladybug_yoyo", () -> new LadybugYoyoItem(new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
 
