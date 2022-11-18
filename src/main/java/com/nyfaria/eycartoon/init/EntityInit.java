@@ -22,6 +22,7 @@ import static com.nyfaria.eycartoon.EYCartoon.MODID;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = MODID)
 public class EntityInit {
+
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
     private static final List<AttributesRegister<?>> attributeSuppliers = new ArrayList<>();
 
@@ -37,6 +38,7 @@ public class EntityInit {
     public static final RegistryObject<EntityType<ElsaEntity>> ELSA_ENTITY = registerEntity("elsa", () -> EntityType.Builder.of(ElsaEntity::new, MobCategory.MISC).sized(0.6F, 1.95F).clientTrackingRange(10), Mob::createMobAttributes);
     public static final RegistryObject<EntityType<LargeSnowball>> LARGE_SNOWBALL = registerEntity("large_snowball", () -> EntityType.Builder.of(LargeSnowball::new, MobCategory.MISC).sized(0.75F, 0.75F).clientTrackingRange(4).updateInterval(10));
     public static final RegistryObject<EntityType<MegaSnowGolemEntity>> MEGA_SNOW_GOLEM = registerEntity("mega_snow_golem", () -> EntityType.Builder.of(MegaSnowGolemEntity::new, MobCategory.CREATURE).sized(4.0F, 4.0F).clientTrackingRange(15), MegaSnowGolemEntity::createAttributes);
+    public static final RegistryObject<EntityType<LightningMcQueenEntity>> LIGHTNING_MCQUEEN = registerEntity("lightning_mcqueen", () -> EntityType.Builder.of(LightningMcQueenEntity::new, MobCategory.MISC).sized(2.5F, 1.5F).clientTrackingRange(10), LightningMcQueenEntity::createAttributes);
 
     private static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, Supplier<EntityType.Builder<T>> supplier) {
         return ENTITIES.register(name, () -> supplier.get().build(MODID + ":" + name));

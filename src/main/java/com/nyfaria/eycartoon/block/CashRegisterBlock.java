@@ -31,19 +31,16 @@ public class CashRegisterBlock extends BaseEntityBlock {
 
     private void tick(Level level, BlockPos blockPos, BlockState state, BlockEntity blockEntity) {
         if (!level.isClientSide) {
-            if (++timer % 5 == 0) {
-                BlockPos relative = blockPos.relative(state.getValue(FACING), 1);
+            if (++timer % 3 == 0) {
+                BlockPos relative = blockPos.relative(state.getValue(FACING), 1).above();
                 Vec3 relativeVec = new Vec3(relative.getX(), relative.getY(), relative.getZ());
                 CoinProjectileEntity entity = new CoinProjectileEntity(EntityInit.COIN_PROJECTILE.get(), level);
-                entity.setInitialPosition(relativeVec);
+                entity.setInitialPosition(blockPos);
                 entity.setPos(relativeVec);
+                System.out.println(state.getValue(FACING));
                 switch (state.getValue(FACING)) {
-                    case EAST: entity.shoot(10, 0, 0,1.6F, 0);
-                    case WEST: entity.shoot(-10, 0, 0, 1.6F, 0);
-                    case SOUTH: entity.shoot(0, 0, 10, 1.6F, 0);
-                    case NORTH: entity.shoot(0, 0, -10, 1.6F, 0);
-                    case UP: entity.shoot(0, 10, 0, 1.6F, 0);
-                    case DOWN: entity.shoot(0, -10, 0, 1.6F, 0);
+                    case EAST, WEST -> entity.setPos(relativeVec.x, relativeVec.y, relativeVec.z + 0.5);
+                    case SOUTH, NORTH -> entity.setPos(relativeVec.x + 0.5, relativeVec.y, relativeVec.z);
                 }
                 level.addFreshEntity(entity);
             }

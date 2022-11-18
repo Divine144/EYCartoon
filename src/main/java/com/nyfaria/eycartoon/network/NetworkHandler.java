@@ -3,6 +3,7 @@ package com.nyfaria.eycartoon.network;
 import com.google.common.collect.ImmutableList;
 import com.nyfaria.eycartoon.EYCartoon;
 import com.nyfaria.eycartoon.cap.PlayerHolderAttacher;
+import com.nyfaria.eycartoon.network.packets.serverbound.DragonFlyPacket;
 import dev._100media.capabilitysyncer.network.SimpleEntityCapabilityStatusPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
@@ -25,6 +26,7 @@ public class NetworkHandler {
     public static void register() {
         List<BiConsumer<SimpleChannel, Integer>> packets = ImmutableList.<BiConsumer<SimpleChannel, Integer>>builder()
                 .add(SimpleEntityCapabilityStatusPacket::register)
+                .add(DragonFlyPacket::register)
                 .build();
 
         packets.forEach(consumer -> consumer.accept(INSTANCE, getNextId()));
