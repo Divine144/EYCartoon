@@ -10,4 +10,4 @@ import net.minecraftforge.registries.RegistryObject;
 public class MorphInit {
     public static final DeferredRegister<Morph> MORPHS = DeferredRegister.create(HMMMorphInit.MORPHS.getRegistryKey(), EYCartoon.MODID);
 
-    public static final RegistryObject<Morph> PLAYER_SPINNING = MORPHS.register("player_spinning", () -> new AdvancedGeoPlayerMorph(new Morph.Properties<>().maxHealth(20)));}
+    public static final RegistryObject<Morph> PLAYER_SPINNING = MORPHS.register("player_spinning", () -> new Morph(new Morph.Properties<>().maxHealth(20)));}

@@ -42,6 +42,7 @@ public class EYCartoon {
         AbilityInit.ABILITIES.register(modBus);
         ProfessionsInit.POI_TYPES.register(modBus);
         ProfessionsInit.VILLAGER_PROFESSIONS.register(modBus);
+        AnimationInit.ANIMATIONS.register(modBus);
 
         PlayerHolderAttacher.register();
         GeckoLib.initialize();

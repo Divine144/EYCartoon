@@ -27,7 +27,7 @@ public class SpinAnimatable extends SimpleAnimatable {
             controller.setAnimation(holder.getCurrentMotionAnimation().getAnimations(player).toGeckolibBuilder());
         }
         else {
-            controller.setAnimation(new AnimationBuilder().addAnimation("spin", ILoopType.EDefaultLoopTypes.LOOP));
+            return PlayState.STOP;
         }
         return super.animationEvent(event);
     }
