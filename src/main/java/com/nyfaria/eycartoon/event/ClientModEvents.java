@@ -5,7 +5,10 @@ import com.nyfaria.eycartoon.client.animatable.SpinAnimatable;
 import com.nyfaria.eycartoon.client.renderer.*;
 import com.nyfaria.eycartoon.init.EntityInit;
 import com.nyfaria.eycartoon.init.MorphInit;
+import com.nyfaria.eycartoon.items.armor.JulienCrownArmorItem;
+import com.nyfaria.eycartoon.items.armor.PlayerLemurFeetArmorItem;
 import com.nyfaria.eycartoon.items.armor.SonicBootsArmorItem;
+import dev._100media.hundredmediageckolib.client.animatable.SimpleAnimatable;
 import dev._100media.hundredmediageckolib.client.model.SimpleGeoPlayerModel;
 import dev._100media.hundredmediageckolib.client.renderer.GeoPlayerRenderer;
 import dev._100media.hundredmediamorphs.client.model.AdvancedGeoPlayerModel;
@@ -46,5 +49,7 @@ public class ClientModEvents {
     @SubscribeEvent
     public static void initLayers(final EntityRenderersEvent.AddLayers event) {
         GeoArmorRenderer.registerArmorRenderer(SonicBootsArmorItem.class, SonicBootsArmorRenderer::new);
+        GeoArmorRenderer.registerArmorRenderer(JulienCrownArmorItem.class, JulienCrownArmorRenderer::new);
+        GeoArmorRenderer.registerArmorRenderer(PlayerLemurFeetArmorItem.class, PlayerLemurFeetArmorRenderer::new);
     }
 }

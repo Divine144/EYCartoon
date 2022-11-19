@@ -2,6 +2,8 @@ package com.nyfaria.eycartoon.init;
 
 import com.nyfaria.eycartoon.EYCartoon;
 import com.nyfaria.eycartoon.items.*;
+import com.nyfaria.eycartoon.items.armor.JulienCrownArmorItem;
+import com.nyfaria.eycartoon.items.armor.PlayerLemurFeetArmorItem;
 import com.nyfaria.eycartoon.items.armor.SonicBootsArmorItem;
 import dev._100media.hundredmediageckolib.item.animated.AnimatedItemProperties;
 import dev._100media.hundredmediageckolib.item.animated.SimpleAnimatedItem;
@@ -45,5 +47,8 @@ public class ItemInit {
 
     public static final RegistryObject<Item> PATRICKS_UNDERWEAR = ITEMS.register("patricks_underwear", () -> new SimpleAnimatedItem(new AnimatedItemProperties().stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
 
+    public static final RegistryObject<Item> JULIENS_CROWN = ITEMS.register("julien_crown", () -> new JulienCrownArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.HEAD, new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
+
+    public static final RegistryObject<Item> LEMUR_FEET = ITEMS.register("player_lemur_feet", () -> new PlayerLemurFeetArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.FEET, new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
 
 }

@@ -18,8 +18,6 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        simpleBlockItemModel(BlockInit.CARTOON_BLOCK.get());
-        simpleBlockItemModel(BlockInit.CASH_REGISTER_BLOCK.get());
         // Stream.of()
         //         .map(Supplier::get)
         //         .forEach(this::simpleHandHeldModel);

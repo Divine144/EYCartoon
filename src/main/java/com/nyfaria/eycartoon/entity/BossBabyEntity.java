@@ -85,7 +85,7 @@ public class BossBabyEntity extends PathfinderMob implements IAnimatable {
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Spider.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MegaSnowGolemEntity.class, true));
         this.goalSelector.addGoal(0, new BossBabyFollowGoal(this, this.getOwner(), 1.0F, 12F, 2F, false));
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.3F, false) {
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.1F, false) {
             @Override
             protected void checkAndPerformAttack(LivingEntity pEnemy, double pDistToEnemySqr) {
                 double d0 = this.getAttackReachSqr(pEnemy);

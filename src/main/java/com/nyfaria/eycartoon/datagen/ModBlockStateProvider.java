@@ -16,8 +16,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        simpleBlock(BlockInit.CARTOON_BLOCK.get());
-        simpleBlock(BlockInit.CASH_REGISTER_BLOCK.get());
     // Stream.of(
     //
     //         )

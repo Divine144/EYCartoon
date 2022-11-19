@@ -10,6 +10,8 @@ import com.nyfaria.eycartoon.entity.MegaSnowGolemEntity;
 import com.nyfaria.eycartoon.init.BlockInit;
 import com.nyfaria.eycartoon.init.EntityInit;
 import com.nyfaria.eycartoon.init.ItemInit;
+import com.nyfaria.eycartoon.init.MorphInit;
+import dev._100media.hundredmediamorphs.capability.MorphHolderAttacher;
 import net.minecraft.Util;
 import net.minecraft.client.renderer.entity.DragonFireballRenderer;
 import net.minecraft.client.renderer.entity.ItemEntityRenderer;
@@ -20,6 +22,7 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -112,6 +115,11 @@ public class CommonForgeEvents {
                         MegaSnowGolemEntity megaSnowGolem = new MegaSnowGolemEntity(EntityInit.MEGA_SNOW_GOLEM.get(), player.level);
                         player.level.addFreshEntity(megaSnowGolem);
                     }
+                }
+            }
+            if (!player.getItemBySlot(EquipmentSlot.HEAD).is(ItemInit.JULIENS_CROWN.get())) {
+                if (player.getItemBySlot(EquipmentSlot.FEET).is(ItemInit.LEMUR_FEET.get())) {
+                    player.setItemSlot(EquipmentSlot.FEET, ItemStack.EMPTY);
                 }
             }
         }
