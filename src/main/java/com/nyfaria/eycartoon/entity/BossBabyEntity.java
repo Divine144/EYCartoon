@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.monster.Zombie;
@@ -84,6 +86,22 @@ public class BossBabyEntity extends PathfinderMob implements IAnimatable {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Skeleton.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Spider.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MegaSnowGolemEntity.class, true));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, true) {
+
+            @Override
+            public boolean canUse() {
+                if (BossBabyEntity.this.getOwner() != null) {
+                    this.findTarget();
+                    return BossBabyEntity.this.getOwner() == null;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean canContinueToUse() {
+                return BossBabyEntity.this.getOwner() == null;
+            }
+        });
         this.goalSelector.addGoal(0, new BossBabyFollowGoal(this, this.getOwner(), 1.0F, 12F, 2F, false));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 0.4F, false) {
             @Override
