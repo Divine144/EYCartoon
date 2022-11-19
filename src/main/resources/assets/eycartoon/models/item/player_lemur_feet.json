@@ -1,6 +1,6 @@
 {
   "parent": "builtin/entity",
   "textures": {
-    "layer0": "minecraft:item/item_air"
+    "layer0": "minecraft:item/obsidian"
   }
 }

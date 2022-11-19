@@ -19,17 +19,20 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -37,6 +40,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -121,6 +125,97 @@ public class CommonForgeEvents {
                 if (player.getItemBySlot(EquipmentSlot.FEET).is(ItemInit.LEMUR_FEET.get())) {
                     player.setItemSlot(EquipmentSlot.FEET, ItemStack.EMPTY);
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onToolTipHover(ItemTooltipEvent event) {
+        ItemStack stack = event.getItemStack();
+        if (event.getEntity() != null) {
+            if (stack.is(Blocks.ICE.asItem())) {
+                stack.setHoverName(Component.literal("Elsa's Ice"));
+            }
+            else if (stack.is(Blocks.SLIME_BLOCK.asItem())) {
+                stack.setHoverName(Component.literal("Shrek's Boogers"));
+            }
+            else if (stack.is(Blocks.SPONGE.asItem())) {
+                stack.setHoverName(Component.literal("Spongebob's Mum"));
+            }
+            else if (stack.is(Blocks.RED_CONCRETE.asItem())) {
+                stack.setHoverName(Component.literal("Lightning McQueen's Paint"));
+            }
+            else if (stack.is(Blocks.BLUE_CONCRETE.asItem())) {
+                stack.setHoverName(Component.literal("Squidward's Home"));
+            }
+            else if (stack.is(Blocks.WHITE_CONCRETE.asItem()) || stack.is(Blocks.WHITE_GLAZED_TERRACOTTA.asItem())) {
+                stack.setHoverName(Component.literal("Mickey Mouse's Glove Fragment"));
+            }
+            else if (stack.is(Blocks.ORANGE_CONCRETE.asItem()) || stack.is(Blocks.ORANGE_GLAZED_TERRACOTTA.asItem())) {
+                stack.setHoverName(Component.literal("Garfield's Hairball"));
+            }
+            else if (stack.is(Blocks.MAGENTA_CONCRETE.asItem()) || stack.is(Blocks.MAGENTA_GLAZED_TERRACOTTA.asItem())) {
+                stack.setHoverName(Component.literal("Tinky Winky's Father"));
+            }
+            else if (stack.is(Blocks.LIGHT_BLUE_CONCRETE.asItem()) || stack.is(Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA.asItem())) {
+                stack.setHoverName(Component.literal("Sonic's Kid"));
+            }
+            else if (stack.is(Blocks.YELLOW_CONCRETE.asItem()) || stack.is(Blocks.YELLOW_GLAZED_TERRACOTTA.asItem())) {
+                stack.setHoverName(Component.literal("Jake the Dog"));
+            }
+            else if (stack.is(Blocks.LIME_CONCRETE.asItem()) || stack.is(Blocks.LIME_GLAZED_TERRACOTTA.asItem())) {
+                stack.setHoverName(Component.literal("Plankton's Hideout"));
+            }
+            else if (stack.is(Blocks.PINK_CONCRETE.asItem()) || stack.is(Blocks.PINK_GLAZED_TERRACOTTA.asItem())) {
+                stack.setHoverName(Component.literal("Amy's Skin"));
+            }
+            else if (stack.is(Blocks.GRAY_CONCRETE.asItem()) || stack.is(Blocks.GRAY_GLAZED_TERRACOTTA.asItem())) {
+                stack.setHoverName(Component.literal("Tom's Hairball"));
+            }
+            else if (stack.is(Blocks.LIGHT_GRAY_CONCRETE.asItem()) || stack.is(Blocks.LIGHT_GRAY_GLAZED_TERRACOTTA.asItem())) {
+                stack.setHoverName(Component.literal("Tom's Hair"));
+            }
+            else if (stack.is(Blocks.CYAN_CONCRETE.asItem()) || stack.is(Blocks.CYAN_GLAZED_TERRACOTTA.asItem())) {
+                stack.setHoverName(Component.literal("Cyan Innocent's Remains"));
+            }
+            else if (stack.is(Blocks.PURPLE_CONCRETE.asItem()) || stack.is(Blocks.PURPLE_GLAZED_TERRACOTTA.asItem())) {
+                stack.setHoverName(Component.literal("Purple Guy's Phone"));
+            }
+            else if (stack.is(Blocks.BROWN_CONCRETE.asItem()) || stack.is(Blocks.BROWN_GLAZED_TERRACOTTA.asItem())) {
+                stack.setHoverName(Component.literal("Poop"));
+            }
+            else if (stack.is(Blocks.GREEN_CONCRETE.asItem()) || stack.is(Blocks.GREEN_GLAZED_TERRACOTTA.asItem())) {
+                stack.setHoverName(Component.literal("Shrek's Poop"));
+            }
+            else if (stack.is(Blocks.BLACK_CONCRETE.asItem()) || stack.is(Blocks.BLACK_GLAZED_TERRACOTTA.asItem())) {
+                stack.setHoverName(Component.literal("Ladybug's Yoyo except its all black and its a cube"));
+            }
+
+            else if (stack.is(Items.CARROT)) {
+                stack.setHoverName(Component.literal("Olaf's Nose"));
+            }
+            else if (stack.is(Items.GOLDEN_APPLE)) {
+                stack.setHoverName(Component.literal("Spongebob Infused Apple"));
+            }
+            else if (stack.is(Items.TOTEM_OF_UNDYING)) {
+                stack.setHoverName(Component.literal("Ugly Minion"));
+            }
+            else if (stack.is(Items.STICK)) {
+                stack.setHoverName(Component.literal("Spongebob's Legs"));
+            }
+            else if (stack.is(Items.LEATHER_BOOTS) && stack.getItem() instanceof DyeableLeatherItem item && item.getColor(stack) == 3949738) {
+                stack.setHoverName(Component.literal("Sonic Boots"));
+            }
+            else if (stack.is(Items.POTION)) {
+                var potion = PotionUtils.getPotion(stack);
+                if (!potion.getEffects().isEmpty()) {
+                    if (potion.getEffects().get(0).getEffect() == MobEffects.MOVEMENT_SPEED && potion.getEffects().get(0).getAmplifier() == 1) {
+                        stack.setHoverName(Component.literal("Sonic's Pee"));
+                    }
+                }
+            }
+            else if (stack.is(Items.INK_SAC)) {
+                stack.setHoverName(Component.literal("Squidward's Sac"));
             }
         }
     }

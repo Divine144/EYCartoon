@@ -1,6 +1,12 @@
 package com.nyfaria.eycartoon.items;
 
+import com.nyfaria.eycartoon.entity.LadyBugRenderer;
 import com.nyfaria.eycartoon.entity.ThrownYoyoEntity;
+import dev._100media.hundredmediageckolib.client.renderer.GeoToolRenderer;
+import dev._100media.hundredmediageckolib.item.animated.AnimatedItemProperties;
+import dev._100media.hundredmediageckolib.item.animated.IAnimatedItem;
+import dev._100media.hundredmediageckolib.item.animated.SimpleAnimatedItem;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -13,9 +19,24 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.renderers.geo.GeoItemRenderer;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class LadybugYoyoItem extends Item {
+import java.util.function.Consumer;
+
+public class LadybugYoyoItem extends Item implements IAnimatable, IAnimatedItem {
+
+    protected AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public LadybugYoyoItem(Properties pProperties) {
         super(pProperties);
@@ -57,5 +78,37 @@ public class LadybugYoyoItem extends Item {
     @Override
     public @NotNull UseAnim getUseAnimation(ItemStack pStack) {
         return UseAnim.SPEAR;
+    }
+
+    @Override
+    public AnimatedItemProperties getAnimatedToolProperties() {
+        return new AnimatedItemProperties().animated().defaultDurability(500);
+    }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::animationEvent));
+    }
+
+    private <T extends IAnimatable> PlayState animationEvent(AnimationEvent<T> event) {
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("spin", ILoopType.EDefaultLoopTypes.LOOP));
+        return PlayState.CONTINUE;
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return factory;
+    }
+
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new IClientItemExtensions() {
+            private final LadyBugRenderer renderer = new LadyBugRenderer();
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return this.renderer;
+            }
+        });
     }
 }
