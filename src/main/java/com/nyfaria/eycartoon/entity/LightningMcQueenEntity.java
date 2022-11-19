@@ -82,7 +82,7 @@ public class LightningMcQueenEntity extends Animal implements IAnimatable, Playe
     public void tick() {
         super.tick();
         if (level.isClientSide) return;
-        if (tickCount % 5 == 0 && lastPosition != null && lastPosition.subtract(position()).lengthSqr() > 0.1f) {
+        if (lastPosition != null && lastPosition.subtract(position()).lengthSqr() > 0.1f) {
             BlockPos lastPos = new BlockPos(lastPosition);
             if (BaseFireBlock.canBePlacedAt(level, new BlockPos(lastPosition), Direction.NORTH)) {
                 BlockState state = BaseFireBlock.getState(level, lastPos);

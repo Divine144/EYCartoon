@@ -77,7 +77,7 @@ public class LadybugYoyoItem extends Item implements IAnimatable, IAnimatedItem 
 
     @Override
     public @NotNull UseAnim getUseAnimation(ItemStack pStack) {
-        return UseAnim.SPEAR;
+        return UseAnim.BOW;
     }
 
     @Override

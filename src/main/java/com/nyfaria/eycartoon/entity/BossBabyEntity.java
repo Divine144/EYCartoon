@@ -142,7 +142,7 @@ public class BossBabyEntity extends PathfinderMob implements IAnimatable {
 
     private <T extends IAnimatable> PlayState animationEvent(AnimationEvent<T> event) {
         if (this.getShouldHeadbutt()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("much", ILoopType.EDefaultLoopTypes.LOOP));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("much", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
             this.setShouldHeadbutt(false);
         }
         else if (event.isMoving()) {

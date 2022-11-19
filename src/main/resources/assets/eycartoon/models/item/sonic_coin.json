@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "eycartoon:item/sonic_coin",
-		"particle" : "minecraft:block/yellow_carpet"
+		"particle" : "minecraft:block/yellow_wool"
 	},
 	"elements": [
 		{

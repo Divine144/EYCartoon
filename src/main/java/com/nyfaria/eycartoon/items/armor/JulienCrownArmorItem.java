@@ -1,8 +1,15 @@
 package com.nyfaria.eycartoon.items.armor;
 
+import com.nyfaria.eycartoon.client.renderer.GeoItemRenderer;
+import com.nyfaria.eycartoon.entity.LadyBugRenderer;
 import com.nyfaria.eycartoon.init.ItemInit;
 import com.nyfaria.eycartoon.init.MorphInit;
+import dev._100media.hundredmediageckolib.client.renderer.GeoToolRenderer;
+import dev._100media.hundredmediageckolib.item.animated.AnimatedItemProperties;
+import dev._100media.hundredmediageckolib.item.animated.IAnimatedItem;
+import dev._100media.hundredmediageckolib.item.animated.SimpleAnimatedItem;
 import dev._100media.hundredmediamorphs.capability.MorphHolderAttacher;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -10,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.controller.AnimationController;
@@ -18,7 +26,9 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.item.GeoArmorItem;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class JulienCrownArmorItem extends GeoArmorItem implements IAnimatable {
+import java.util.function.Consumer;
+
+public class JulienCrownArmorItem extends GeoArmorItem implements IAnimatable, IAnimatedItem {
 
     protected final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -44,5 +54,22 @@ public class JulienCrownArmorItem extends GeoArmorItem implements IAnimatable {
     @Override
     public AnimationFactory getFactory() {
         return factory;
+    }
+
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new IClientItemExtensions() {
+            private final GeoItemRenderer<JulienCrownArmorItem> renderer = new GeoItemRenderer<>();
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return this.renderer;
+            }
+        });
+    }
+
+    @Override
+    public AnimatedItemProperties getAnimatedToolProperties() {
+        return new AnimatedItemProperties();
     }
 }
