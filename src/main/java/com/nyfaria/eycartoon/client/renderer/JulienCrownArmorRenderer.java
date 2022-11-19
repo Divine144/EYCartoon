@@ -17,5 +17,4 @@ public class JulienCrownArmorRenderer extends GeoArmorRenderer<JulienCrownArmorI
         rightBootBone = null;
         leftBootBone = null;
     }
-
 }

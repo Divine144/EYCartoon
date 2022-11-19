@@ -33,6 +33,8 @@ public class ItemInit {
 
     public static final RegistryObject<Item> SONIC_BOOTS = ITEMS.register("sonic_boots", () -> new SonicBootsArmorItem(ArmorMaterials.GOLD, EquipmentSlot.FEET, new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
 
+    public static final RegistryObject<Item> MINION_LAUNCHER = ITEMS.register("minion_launcher", () -> new MinionLauncherItem(new AnimatedItemProperties().durability(500).tab(CreativeModeTab.TAB_MISC)));
+
     public static final RegistryObject<Item> LADYBUG_YOYO = ITEMS.register("ladybug_yoyo", () -> new LadybugYoyoItem(new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
 
     public static final RegistryObject<Item> SPONGEBOB_SPATULA = ITEMS.register("spongebobs_spatula", () -> new SpongebobSpatulaItem(new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));

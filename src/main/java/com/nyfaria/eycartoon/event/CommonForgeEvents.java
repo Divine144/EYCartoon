@@ -6,6 +6,7 @@ import com.nyfaria.eycartoon.EYCartoon;
 import com.nyfaria.eycartoon.cap.PlayerHolder;
 import com.nyfaria.eycartoon.cap.PlayerHolderAttacher;
 import com.nyfaria.eycartoon.config.EYCartoonConfig;
+import com.nyfaria.eycartoon.entity.BossBabyEntity;
 import com.nyfaria.eycartoon.entity.MegaSnowGolemEntity;
 import com.nyfaria.eycartoon.init.BlockInit;
 import com.nyfaria.eycartoon.init.EntityInit;
@@ -242,7 +243,7 @@ public class CommonForgeEvents {
             if (level.getBlockState(pos).is(BlockInit.CARTOON_BLOCK.get())) {
                 if (!player.getAbilities().instabuild) {
                     if (!level.isClientSide) {
-                        initializeMaps(level); // Assign values to maps
+                        initializeMaps(player, level); // Assign values to maps
                         if (player.getRandom().nextIntBetweenInclusive(0, 100) >= 10) { // 90% chance -> Blocks mined progression++
                             PlayerHolderAttacher.getPlayerHolder(player).ifPresent(p -> {
                                 p.addBlocksMined();
@@ -310,7 +311,7 @@ public class CommonForgeEvents {
         return count;
     }
 
-    private static void initializeMaps(Level level) {
+    private static void initializeMaps(Player owner, Level level) {
         if (ITEMS.isEmpty() && ENTITIES.isEmpty()) {
             // ALL DIRT ITEMS ARE PLACEHOLDERS
             ITEMS.put(configInst().minionLaunchedDropOrder.get(), Items.DIRT);
@@ -326,7 +327,8 @@ public class CommonForgeEvents {
             ITEMS.put(configInst().diamondsDropOrder.get(), Items.DIAMOND);
 
             // ALL ZOMBIE ENTITIES ARE PLACEHOLDERS
-            ENTITIES.put(configInst().bossBabyDropOrder.get(), EntityInit.BOSS_BABY.get().create(level));
+            BossBabyEntity baby = new BossBabyEntity(EntityInit.BOSS_BABY.get(), level, owner);
+            ENTITIES.put(configInst().bossBabyDropOrder.get(), baby);
             ENTITIES.put(configInst().zombieCowDropOrder.get(), EntityType.ZOMBIE.create(level));
             ENTITIES.put(configInst().squidwardTraderDropOrder.get(), EntityInit.SQUIDWARD_TRADER_ENTITY.get().create(level));
             ENTITIES.put(configInst().pigWolfHorseDropOrder.get(), EntityType.PIG.create(level));

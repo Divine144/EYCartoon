@@ -2,9 +2,17 @@ package com.nyfaria.eycartoon.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import com.nyfaria.eycartoon.EYCartoon;
 import com.nyfaria.eycartoon.items.armor.PlayerLemurFeetArmorItem;
 import dev._100media.hundredmediageckolib.client.model.SimpleAnimatedGeoModel;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.geo.render.built.GeoBone;
+import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 public class PlayerLemurFeetArmorRenderer  extends GeoArmorRenderer<PlayerLemurFeetArmorItem> {
@@ -22,11 +30,10 @@ public class PlayerLemurFeetArmorRenderer  extends GeoArmorRenderer<PlayerLemurF
     }
 
     @Override
-    public void render(float partialTick, PoseStack poseStack, VertexConsumer buffer, int packedLight) {
+    public void render(GeoModel model, PlayerLemurFeetArmorItem animatable, float partialTick, RenderType type, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         poseStack.pushPose();
         poseStack.scale(5, 2, 5);
-        poseStack.translate(0, -0.8, 0);
-        super.render(partialTick, poseStack, buffer, packedLight);
+        super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, alpha);
         poseStack.popPose();
     }
 }
