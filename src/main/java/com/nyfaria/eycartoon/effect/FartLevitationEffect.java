@@ -22,9 +22,9 @@ public class FartLevitationEffect extends MobEffect {
     }
 
     int counter = 0;
+
     @Override
     public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
-
         if (pLivingEntity.level instanceof ServerLevel level) {
             if (!pLivingEntity.hasEffect(MobEffects.LEVITATION)) {
                 if (this.isInfinite) {

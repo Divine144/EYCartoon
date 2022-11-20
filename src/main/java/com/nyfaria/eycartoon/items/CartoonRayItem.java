@@ -24,13 +24,12 @@ import net.minecraft.world.phys.Vec3;
 
 public class CartoonRayItem extends SimpleAnimatedItem {
 
-
     public CartoonRayItem(AnimatedItemProperties pProperties) {
         super(pProperties);
     }
+
     private static final DustParticleOptions RED = new DustParticleOptions(DustParticleOptions.REDSTONE_PARTICLE_COLOR, 1.2F);
     private static final DustParticleOptions YELLOW = new DustParticleOptions(new Vector3f(Vec3.fromRGB24(14737920)), 1.2F);
-
     private static final DustParticleOptions ORANGE = new DustParticleOptions(new Vector3f(Vec3.fromRGB24(16753920)), 1.2F);
 
     @Override
