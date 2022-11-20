@@ -1,0 +1,20 @@
+{
+  "fart_one" : {
+    "subtitle": "sounds.eycartoon.minion_fart_one",
+    "sounds": [
+      "eycartoon:fart_one"
+    ]
+  },
+  "fart_two" : {
+    "subtitle": "sounds.eycartoon.minion_fart_two",
+    "sounds": [
+      "eycartoon:fart_two"
+    ]
+  },
+  "fart_three" : {
+    "subtitle": "sounds.eycartoon.minion_fart_three",
+    "sounds": [
+      "eycartoon:fart_three"
+    ]
+  }
+}

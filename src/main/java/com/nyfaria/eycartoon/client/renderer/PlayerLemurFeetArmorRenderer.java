@@ -15,7 +15,7 @@ import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
-public class PlayerLemurFeetArmorRenderer  extends GeoArmorRenderer<PlayerLemurFeetArmorItem> {
+public class PlayerLemurFeetArmorRenderer extends GeoArmorRenderer<PlayerLemurFeetArmorItem> {
 
     public PlayerLemurFeetArmorRenderer() {
         super(new SimpleAnimatedGeoModel<>(EYCartoon.MODID, "models/armor", "player_lemur_feet"));
@@ -25,14 +25,14 @@ public class PlayerLemurFeetArmorRenderer  extends GeoArmorRenderer<PlayerLemurF
         this.leftArmBone = null;
         this.rightLegBone = "armorLeftLeg";
         this.leftLegBone = "armorRightLeg";
-        rightBootBone = "armorLeftBoot";
-        leftBootBone = "armorRightBoot";
+        this.rightBootBone = "armorLeftBoot";
+        this.leftBootBone = "armorRightBoot";
     }
 
     @Override
     public void render(GeoModel model, PlayerLemurFeetArmorItem animatable, float partialTick, RenderType type, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         poseStack.pushPose();
-        poseStack.scale(5, 2, 5);
+        poseStack.scale(3, 2, 3);
         super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, alpha);
         poseStack.popPose();
     }

@@ -41,7 +41,7 @@ public class EntityInit {
     public static final RegistryObject<EntityType<LargeSnowball>> LARGE_SNOWBALL = registerEntity("large_snowball", () -> EntityType.Builder.of(LargeSnowball::new, MobCategory.MISC).sized(0.75F, 0.75F));
     public static final RegistryObject<EntityType<MegaSnowGolemEntity>> MEGA_SNOW_GOLEM = registerEntity("mega_snow_golem", () -> EntityType.Builder.of(MegaSnowGolemEntity::new, MobCategory.CREATURE).sized(2.0F, 3.0F).clientTrackingRange(15), MegaSnowGolemEntity::createAttributes);
     public static final RegistryObject<EntityType<LightningMcQueenEntity>> LIGHTNING_MCQUEEN = registerEntity("lightning_mcqueen", () -> EntityType.Builder.of(LightningMcQueenEntity::new, MobCategory.MISC).sized(2.5F, 1.5F).clientTrackingRange(10), LightningMcQueenEntity::createAttributes);
-    public static final RegistryObject<EntityType<ToothlessEntity>> TOOTHLESS_ENTITY = registerEntity("toothless", () -> EntityType.Builder.of(ToothlessEntity::new, MobCategory.CREATURE).sized(4.0f, 3.0f).clientTrackingRange(10), ToothlessEntity::createAttributes);
+    public static final RegistryObject<EntityType<ToothlessEntity>> TOOTHLESS_ENTITY = registerEntity("toothless", () -> EntityType.Builder.of(ToothlessEntity::new, MobCategory.CREATURE).sized(4.0f, 1.05f), ToothlessEntity::createMobAttributes);
 
     private static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, Supplier<EntityType.Builder<T>> supplier) {
         return ENTITIES.register(name, () -> supplier.get().build(MODID + ":" + name));

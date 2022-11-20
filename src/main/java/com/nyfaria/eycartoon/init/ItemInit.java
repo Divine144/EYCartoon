@@ -43,7 +43,7 @@ public class ItemInit {
 
     public static final RegistryObject<Item> SHREKS_FIST = ITEMS.register("shreks_fist", () -> new ShreksFistItem(new Item.Properties().durability(1000).tab(CreativeModeTab.TAB_MISC)));
 
-    public static final RegistryObject<Item> CARTOON_RAY = ITEMS.register("2d_cartoon_ray", () -> new CartoonRayItem(new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
+    public static final RegistryObject<Item> CARTOON_RAY = ITEMS.register("2d_cartoon_ray", () -> new CartoonRayItem(new AnimatedItemProperties().durability(500).tab(CreativeModeTab.TAB_MISC)));
 
     public static final RegistryObject<Item> SPONGEBOBS_TIE = ITEMS.register("spongebobs_tie", () -> new SimpleAnimatedItem(new AnimatedItemProperties().stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
 

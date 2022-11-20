@@ -3,6 +3,8 @@ package com.nyfaria.eycartoon.items;
 import com.mojang.math.Vector3f;
 import com.nyfaria.eycartoon.init.EntityInit;
 import com.nyfaria.hmutility.utils.HMUVectorUtils;
+import dev._100media.hundredmediageckolib.item.animated.AnimatedItemProperties;
+import dev._100media.hundredmediageckolib.item.animated.SimpleAnimatedItem;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -20,14 +22,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
-public class CartoonRayItem extends Item {
+public class CartoonRayItem extends SimpleAnimatedItem {
 
-    public CartoonRayItem(Properties pProperties) {
+
+    public CartoonRayItem(AnimatedItemProperties pProperties) {
         super(pProperties);
     }
-
     private static final DustParticleOptions RED = new DustParticleOptions(DustParticleOptions.REDSTONE_PARTICLE_COLOR, 1.2F);
     private static final DustParticleOptions YELLOW = new DustParticleOptions(new Vector3f(Vec3.fromRGB24(14737920)), 1.2F);
+
     private static final DustParticleOptions ORANGE = new DustParticleOptions(new Vector3f(Vec3.fromRGB24(16753920)), 1.2F);
 
     @Override

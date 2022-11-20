@@ -1,6 +1,7 @@
 package com.nyfaria.eycartoon.entity;
 
 import com.nyfaria.eycartoon.entity.goal.BossBabyFollowGoal;
+import com.nyfaria.eycartoon.entity.goal.BossBabyTargetOwnerGoal;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -86,24 +87,9 @@ public class BossBabyEntity extends PathfinderMob implements IAnimatable {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Skeleton.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Spider.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MegaSnowGolemEntity.class, true));
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, true) {
-
-            @Override
-            public boolean canUse() {
-                if (BossBabyEntity.this.getOwner() != null) {
-                    this.findTarget();
-                    return BossBabyEntity.this.getOwner() == null;
-                }
-                return false;
-            }
-
-            @Override
-            public boolean canContinueToUse() {
-                return BossBabyEntity.this.getOwner() == null;
-            }
-        });
-        this.goalSelector.addGoal(0, new BossBabyFollowGoal(this, this.getOwner(), 1.0F, 12F, 2F, false));
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 0.4F, false) {
+        this.goalSelector.addGoal(0, new BossBabyTargetOwnerGoal(this, false));
+        this.goalSelector.addGoal(1, new BossBabyFollowGoal(this, this.getOwner(), 0.6F, 12F, 2F, false));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 0.6F, false) {
             @Override
             protected void checkAndPerformAttack(LivingEntity pEnemy, double pDistToEnemySqr) {
                 double d0 = this.getAttackReachSqr(pEnemy);
@@ -115,14 +101,14 @@ public class BossBabyEntity extends PathfinderMob implements IAnimatable {
                 }
             }
         });
-        this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 10F));
-        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.4F));
+        this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 10F));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.6F));
 
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.ATTACK_KNOCKBACK, 5).add(Attributes.ATTACK_DAMAGE, 3);
+        return Mob.createMobAttributes().add(Attributes.ATTACK_KNOCKBACK, 5).add(Attributes.ATTACK_DAMAGE, 3).add(Attributes.MOVEMENT_SPEED, 0.3F);
     }
 
     @Nullable
@@ -138,6 +124,10 @@ public class BossBabyEntity extends PathfinderMob implements IAnimatable {
     @Nullable
     public UUID getOwnerUUID() {
         return this.entityData.get(DATA_OWNERUUID_ID).orElse(null);
+    }
+
+    public void setOwnerUUID(UUID ownerUUID) {
+        this.entityData.set(DATA_OWNERUUID_ID, Optional.of(ownerUUID));
     }
 
     public boolean getShouldHeadbutt() {

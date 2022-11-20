@@ -5,8 +5,12 @@ import dev._100media.capabilitysyncer.core.EntityCapability;
 import dev._100media.capabilitysyncer.network.EntityCapabilityStatusPacket;
 import dev._100media.capabilitysyncer.network.SimpleEntityCapabilityStatusPacket;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.IntTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.simple.SimpleChannel;
+import org.jetbrains.annotations.NotNull;
 
 public class PlayerHolder extends EntityCapability {
 
@@ -14,12 +18,15 @@ public class PlayerHolder extends EntityCapability {
     private boolean hasUnlockedIceAbility;
     private boolean canDoubleJump;
     private boolean hasMegaGolemSpawned;
+    private float baseSpeed;
+    private ItemStack previousBoots;
 
     protected PlayerHolder(Entity entity) {
         super(entity);
         this.hasUnlockedIceAbility = false;
         this.canDoubleJump = false;
         this.hasMegaGolemSpawned = false;
+        this.previousBoots = ItemStack.EMPTY;
     }
 
     public int getBlocksMinedCount() {
@@ -58,6 +65,22 @@ public class PlayerHolder extends EntityCapability {
         this.hasMegaGolemSpawned = hasMegaGolemSpawned;
     }
 
+    public float getBaseSpeed() {
+        return this.baseSpeed;
+    }
+
+    public void setBaseSpeed(float baseSpeed) {
+        this.baseSpeed = baseSpeed;
+    }
+
+    public @NotNull ItemStack getPreviousBoots() {
+        return this.previousBoots;
+    }
+
+    public void setPreviousBoots(ItemStack previousBoots) {
+        this.previousBoots = previousBoots;
+    }
+
     @Override
     public CompoundTag serializeNBT(boolean savingToDisk) {
         CompoundTag tag = new CompoundTag();
@@ -65,6 +88,7 @@ public class PlayerHolder extends EntityCapability {
         tag.putBoolean("hasUnlockedIceAbility", this.hasUnlockedIceAbility);
         tag.putBoolean("canDoubleJump", this.canDoubleJump);
         tag.putBoolean("hasMegaGolemSpawned", this.hasMegaGolemSpawned);
+        tag.put("previousBoots", this.previousBoots.save(new CompoundTag()));
         return tag;
     }
 
@@ -74,6 +98,9 @@ public class PlayerHolder extends EntityCapability {
         this.hasUnlockedIceAbility = nbt.getBoolean("hasUnlockedIceAbility");
         this.canDoubleJump = nbt.getBoolean("canDoubleJump");
         this.hasMegaGolemSpawned = nbt.getBoolean("hasMegaGolemSpawned");
+        if (nbt.get("previousBoots") instanceof CompoundTag tag) {
+            this.previousBoots = ItemStack.of(tag);
+        }
     }
 
     @Override

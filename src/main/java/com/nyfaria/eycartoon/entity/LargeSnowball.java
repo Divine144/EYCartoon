@@ -35,7 +35,7 @@ public class LargeSnowball extends Snowball {
 
     private static void createIceCage(Level level, BlockPos pos) {
         int xPos = pos.getX();
-        int yPos = pos.getY();
+        int yPos = pos.getY() + 1;
         int zPos = pos.getZ();
         for (int x = xPos; x < xPos + 3; ++x) {
             for (int y = yPos; y < yPos + 3; ++y) {

@@ -1,5 +1,8 @@
 package com.nyfaria.eycartoon.entity;
 
+import com.nyfaria.hmutility.utils.HMUVectorUtils;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -12,7 +15,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.FlintAndSteelItem;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -27,13 +35,14 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ToothlessEntity extends Animal implements IAnimatable {
+public class ToothlessEntity extends PathfinderMob implements IAnimatable {
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-
+    private static final EntityDataAccessor<Boolean> FLIGHT = SynchedEntityData.defineId(ToothlessEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> FLIGHT_TICKS = SynchedEntityData.defineId(ToothlessEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> WARP = SynchedEntityData.defineId(ToothlessEntity.class, EntityDataSerializers.BOOLEAN);
 
-    public ToothlessEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
+    public ToothlessEntity(EntityType<? extends ToothlessEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         maxUpStep = 1.5F;
     }
@@ -47,56 +56,55 @@ public class ToothlessEntity extends Animal implements IAnimatable {
     }
 
     @Override
-    public float getSpeed() {
-        return super.getSpeed();
-    }
-
-    @Nullable
-    @Override
-    public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        return null;
-    }
-
-    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        this.entityData.define(FLIGHT, false);
         this.entityData.define(WARP, false);
+        this.entityData.define(FLIGHT_TICKS, 0);
     }
 
     @Override
-    public void travel(Vec3 pTravelVector) {
-        if (this.isAlive()) {
-            Entity entity = getControllingPassenger();
-            if (this.isVehicle() && entity instanceof LivingEntity livingentity) {
-                this.fallDistance = 0;
-                this.setYRot(livingentity.getYRot());
-                this.yRotO = this.getYRot();
-                this.setXRot(livingentity.getXRot() * 0.5F);
-                this.setRot(this.getYRot(), this.getXRot());
-                this.yBodyRot = this.getYRot();
-                this.yHeadRot = this.yBodyRot;
-                float strafe = livingentity.xxa * 0.5F;
-                float forward = livingentity.zza;
-                if (forward <= 0.0F) {
-                    forward *= 0.25F;
-                }
-                this.flyingSpeed = this.getSpeed();
-                if (this.isControlledByLocalInstance()) {
-                    this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
-                    this.flyingSpeed = this.getSpeed();
-                    super.travel(new Vec3(strafe, pTravelVector.y, forward));
-                }
-                else if (livingentity instanceof Player){
-                    this.setDeltaMovement(Vec3.ZERO);
-                }
-                this.calculateEntityAnimation(this, false);
+    public void tick() {
+        super.tick();
+        if (!this.level.isClientSide && isWarp()) {
+            BlockHitResult hr = HMUVectorUtils.blockTrace(this, ClipContext.Fluid.NONE, 200, false);
+            BlockPos above = hr.getBlockPos();
+            BlockPos blockpos1 = above.relative(hr.getDirection());
+            if (BaseFireBlock.canBePlacedAt(level, blockpos1, this.getDirection())) {
+                BlockState state1 = BaseFireBlock.getState(level, above);
+                level.setBlock(above, state1, 11);
             }
         }
     }
 
+    public void setFlightTicks(int ticks) {
+        this.entityData.set(FLIGHT_TICKS, ticks);
+    }
+
+    public int getFlightTicks() {
+        return this.entityData.get(FLIGHT_TICKS);
+    }
+
+    public void setFlight(boolean flight) {
+        this.entityData.set(FLIGHT, flight);
+        setFlightTicks(flight ? 53 : 17);
+    }
+
+    public boolean canFly() {
+        return this.entityData.get(FLIGHT);
+    }
+
+    public boolean isWarp() {
+        return this.entityData.get(WARP);
+    }
+
+    public void setWarp(boolean warp) {
+        this.entityData.set(WARP, warp);
+    }
+
     @Override
-    protected boolean canAddPassenger(Entity pPassenger) {
-        return getPassengers().isEmpty();
+    protected boolean canAddPassenger(Entity passenger) {
+        return passenger instanceof Player && getPassengers().isEmpty();
     }
 
     @Override
@@ -104,10 +112,20 @@ public class ToothlessEntity extends Animal implements IAnimatable {
         data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
     }
 
+    private <T extends IAnimatable> PlayState predicate(AnimationEvent<T> tAnimationEvent) {
+        if (!isVehicle()) {
+            tAnimationEvent.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
+        }
+        else {
+            tAnimationEvent.getController().setAnimation(new AnimationBuilder().addAnimation("fly", ILoopType.EDefaultLoopTypes.LOOP));
+        }
+        return PlayState.CONTINUE;
+    }
+
+    @Nullable
     @Override
-    public Entity getControllingPassenger() {
-        List<Entity> list = this.getPassengers();
-        return list.isEmpty() ? null : list.get(0);
+    public Player getControllingPassenger() {
+        return (Player) getFirstPassenger();
     }
 
     @Override
@@ -120,8 +138,15 @@ public class ToothlessEntity extends Animal implements IAnimatable {
         return true;
     }
 
+
     @Override
     public boolean isNoGravity() {
+        return true;
+    }
+
+
+    @Override
+    public boolean isAlwaysTicking() {
         return true;
     }
 
@@ -135,42 +160,51 @@ public class ToothlessEntity extends Animal implements IAnimatable {
         this.positionRider(pPassenger, Entity::setPos);
     }
 
+
+    private void positionRider(Entity pPassenger, Entity.MoveFunction pCallback) {
+        if (this.hasPassenger(pPassenger)) {
+            double d0 = this.getY() + this.getPassengersRidingOffset() + pPassenger.getMyRidingOffset();
+            pCallback.accept(pPassenger, this.getX(), d0, this.getZ());
+        }
+    }
+
     @Override
     public double getPassengersRidingOffset() {
         return getBbHeight();
     }
 
     @Override
-    public boolean causeFallDamage(float pFallDistance, float pMultiplier, DamageSource pSource) {
-        return false;
-    }
+    public void travel(Vec3 pTravelVector) {
+        if (this.isAlive()) {
+            LivingEntity livingentity = this.getControllingPassenger();
+            if (this.isVehicle() && livingentity != null) {
+                this.fallDistance = 0;
+                this.setYRot(livingentity.getYRot());
+                this.yRotO = this.getYRot();
+                this.setXRot(livingentity.getXRot() * 0.5F);
+                this.setRot(this.getYRot(), this.getXRot());
+                this.yBodyRot = this.getYRot();
+                this.yHeadRot = this.yBodyRot;
+                float strafe = livingentity.xxa * 0.5F;
+                float forward = livingentity.zza;
+                if (forward <= 0.0F) {
+                    forward *= 0.25F;
+                }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 100D).add(Attributes.ATTACK_DAMAGE);
-    }
 
-    public boolean isWarp() {
-        return this.entityData.get(WARP);
-    }
+                this.flyingSpeed = this.getSpeed();
+                if (this.isControlledByLocalInstance()) {
+                    this.setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
+                    this.flyingSpeed = this.getSpeed();
+                    super.travel(new Vec3((double) strafe, pTravelVector.y, (double) forward));
+                } else if (livingentity instanceof Player) {
+                    this.setDeltaMovement(Vec3.ZERO);
+                }
 
-    public void setWarp(boolean warp) {
-        this.entityData.set(WARP, warp);
-    }
 
-    private <T extends IAnimatable> PlayState predicate(AnimationEvent<T> tAnimationEvent) {
-        if (!isVehicle()) {
-            tAnimationEvent.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
-        }
-        else {
-            tAnimationEvent.getController().setAnimation(new AnimationBuilder().addAnimation("fly",  ILoopType.EDefaultLoopTypes.LOOP));
-        }
-        return PlayState.CONTINUE;
-    }
-
-    private void positionRider(Entity pPassenger, Entity.MoveFunction pCallback) {
-        if (this.hasPassenger(pPassenger)) {
-            double d0 = this.getY() + this.getPassengersRidingOffset() + pPassenger.getMyRidingOffset();
-            pCallback.accept(pPassenger, this.getX(), d0, this.getZ());
+                this.calculateEntityAnimation(this, false);
+                this.tryCheckInsideBlocks();
+            }
         }
     }
 }

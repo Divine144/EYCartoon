@@ -2,7 +2,9 @@ package com.nyfaria.eycartoon.event;
 
 import com.nyfaria.eycartoon.EYCartoon;
 import com.nyfaria.eycartoon.client.animatable.SpinAnimatable;
+import com.nyfaria.eycartoon.client.model.ToothlessModel;
 import com.nyfaria.eycartoon.client.renderer.*;
+import com.nyfaria.eycartoon.init.AnimationInit;
 import com.nyfaria.eycartoon.init.EntityInit;
 import com.nyfaria.eycartoon.init.MorphInit;
 import com.nyfaria.eycartoon.items.armor.JulienCrownArmorItem;
@@ -45,6 +47,8 @@ public class ClientModEvents {
         event.registerEntityRenderer(EntityInit.LIGHTNING_MCQUEEN.get(), LightningMCQueenRenderer::new);
         event.registerEntityRenderer(EntityInit.BOSS_BABY.get(), BossBabyRenderer::new);
         event.registerEntityRenderer(EntityInit.SPONGEBOB.get(), SpongebobRenderer::new);
+        event.registerEntityRenderer(EntityInit.TOOTHLESS_ENTITY.get(), context -> new ToothlessRenderer(context, new ToothlessModel(EYCartoon.MODID, "toothless")));
+        event.registerEntityRenderer(EntityInit.MEGA_SNOW_GOLEM.get(), MegaSnowGolemEntityRenderer::new);
     }
 
     @SubscribeEvent

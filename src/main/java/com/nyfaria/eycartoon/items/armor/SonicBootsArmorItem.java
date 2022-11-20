@@ -1,6 +1,9 @@
 package com.nyfaria.eycartoon.items.armor;
 
+import com.nyfaria.eycartoon.cap.PlayerHolderAttacher;
+import com.nyfaria.eycartoon.init.AnimationInit;
 import com.nyfaria.eycartoon.init.MorphInit;
+import dev._100media.hundredmediamorphs.capability.AnimationHolderAttacher;
 import dev._100media.hundredmediamorphs.capability.MorphHolderAttacher;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -39,11 +42,17 @@ public class SonicBootsArmorItem extends GeoArmorItem implements IAnimatable {
         super.onArmorTick(stack, level, player);
         if (!level.isClientSide) {
             var speed = player.getAttribute(Attributes.MOVEMENT_SPEED);
+            var playerCapHolder = PlayerHolderAttacher.getPlayerHolderUnwrap(player);
             var morphHolder = MorphHolderAttacher.getMorphHolderUnwrap(player);
-            if (morphHolder != null && speed != null) {
+            var animationHolder = AnimationHolderAttacher.getAnimationHolderUnwrap(player);
+            if (playerCapHolder != null & morphHolder != null && animationHolder != null && speed != null) {
                 if (player.isSprinting()) {
+                    if (speedTimer == 0) {
+                        playerCapHolder.setBaseSpeed((float) speed.getBaseValue());
+                    }
                     if (morphHolder.getCurrentMorph() != MorphInit.PLAYER_SPINNING.get()) {
                         morphHolder.setCurrentMorph(MorphInit.PLAYER_SPINNING.get(), true);
+                        animationHolder.setCurrentMotionAnimation(AnimationInit.SPIN.get(), true, true);
                     }
                     if (speedTimer++ < 100) {
                         speed.setBaseValue(speed.getBaseValue() + (speedTimer / 50000));
@@ -61,8 +70,9 @@ public class SonicBootsArmorItem extends GeoArmorItem implements IAnimatable {
                 }
                 else {
                     speedTimer = 0;
-                    speed.setBaseValue(0.1F);
+                    speed.setBaseValue(playerCapHolder.getBaseSpeed() <= 0.0F ? 0.1F : playerCapHolder.getBaseSpeed());
                     morphHolder.setCurrentMorph(null, true);
+                    animationHolder.setCurrentMotionAnimation(null, true, true);
                 }
             }
         }

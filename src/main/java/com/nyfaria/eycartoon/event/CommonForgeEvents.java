@@ -122,9 +122,14 @@ public class CommonForgeEvents {
                     }
                 }
             }
+            if (player.getInventory().findSlotMatchingItem(new ItemStack(ItemInit.LEMUR_FEET.get())) != -1) {
+                player.getInventory().getItem(player.getInventory().findSlotMatchingItem(new ItemStack(ItemInit.LEMUR_FEET.get()))).shrink(1);
+            }
             if (!player.getItemBySlot(EquipmentSlot.HEAD).is(ItemInit.JULIENS_CROWN.get())) {
+                player.removeEffect(MobEffects.JUMP);
                 if (player.getItemBySlot(EquipmentSlot.FEET).is(ItemInit.LEMUR_FEET.get())) {
-                    player.setItemSlot(EquipmentSlot.FEET, ItemStack.EMPTY);
+                    player.setItemSlot(EquipmentSlot.FEET, PlayerHolderAttacher.getPlayerHolder(player).map(PlayerHolder::getPreviousBoots).orElse(ItemStack.EMPTY));
+                    PlayerHolderAttacher.getPlayerHolder(player).ifPresent(p -> p.setPreviousBoots(ItemStack.EMPTY));
                 }
             }
         }
@@ -314,7 +319,7 @@ public class CommonForgeEvents {
     private static void initializeMaps(Player owner, Level level) {
         if (ITEMS.isEmpty() && ENTITIES.isEmpty()) {
             // ALL DIRT ITEMS ARE PLACEHOLDERS
-            ITEMS.put(configInst().minionLaunchedDropOrder.get(), Items.DIRT);
+            ITEMS.put(configInst().minionLaunchedDropOrder.get(), ItemInit.MINION_LAUNCHER.get());
             ITEMS.put(configInst().krabbyPattyDropOrder.get(), ItemInit.KRABBY_PATTY.get());
             ITEMS.put(configInst().cobbleStoneDropOrder.get(), Items.COBBLESTONE);
             ITEMS.put(configInst().shreksFistsDropOrder.get(), ItemInit.SHREKS_FIST.get());
@@ -322,8 +327,8 @@ public class CommonForgeEvents {
             ITEMS.put(configInst().buzzControlPanelDropOrder.get(), ItemInit.BUZZ_CONTROL_PANEL.get());
             ITEMS.put(configInst().ladybugYoYoDropOrder.get(), ItemInit.LADYBUG_YOYO.get());
             ITEMS.put(configInst().sonicCoinsDropOrder.get(), ItemInit.SONIC_COIN.get());
-            ITEMS.put(configInst().sonicBootsDropOrder.get(), Items.DIRT);
-            ITEMS.put(configInst().kingJulienCrownDropOrder.get(), Items.DIRT);
+            ITEMS.put(configInst().sonicBootsDropOrder.get(), ItemInit.SONIC_BOOTS.get());
+            ITEMS.put(configInst().kingJulienCrownDropOrder.get(), ItemInit.JULIENS_CROWN.get());
             ITEMS.put(configInst().diamondsDropOrder.get(), Items.DIAMOND);
 
             // ALL ZOMBIE ENTITIES ARE PLACEHOLDERS
@@ -334,7 +339,7 @@ public class CommonForgeEvents {
             ENTITIES.put(configInst().pigWolfHorseDropOrder.get(), EntityType.PIG.create(level));
             ENTITIES.put(configInst().mcqueenMobileDropOrder.get(), EntityInit.LIGHTNING_MCQUEEN.get().create(level));
             ENTITIES.put(configInst().skeletonsDropOrder.get(), EntityType.SKELETON.create(level));
-            ENTITIES.put(configInst().petToothlessDropOrder.get(), EntityType.ZOMBIE.create(level));
+            ENTITIES.put(configInst().petToothlessDropOrder.get(), EntityInit.TOOTHLESS_ENTITY.get().create(level));
         }
     }
 

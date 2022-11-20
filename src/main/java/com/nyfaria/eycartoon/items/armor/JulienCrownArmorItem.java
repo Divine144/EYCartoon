@@ -1,14 +1,10 @@
 package com.nyfaria.eycartoon.items.armor;
 
+import com.nyfaria.eycartoon.cap.PlayerHolderAttacher;
 import com.nyfaria.eycartoon.client.renderer.GeoItemRenderer;
-import com.nyfaria.eycartoon.entity.LadyBugRenderer;
 import com.nyfaria.eycartoon.init.ItemInit;
-import com.nyfaria.eycartoon.init.MorphInit;
-import dev._100media.hundredmediageckolib.client.renderer.GeoToolRenderer;
 import dev._100media.hundredmediageckolib.item.animated.AnimatedItemProperties;
 import dev._100media.hundredmediageckolib.item.animated.IAnimatedItem;
-import dev._100media.hundredmediageckolib.item.animated.SimpleAnimatedItem;
-import dev._100media.hundredmediamorphs.capability.MorphHolderAttacher;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -16,7 +12,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -42,11 +37,15 @@ public class JulienCrownArmorItem extends GeoArmorItem implements IAnimatable, I
     }
 
     private static final MobEffectInstance JUMP_BOOST = new MobEffectInstance(MobEffects.JUMP, 200, 2, false, false);
+
     @Override
     public void onArmorTick(ItemStack stack, Level level, Player player) {
         super.onArmorTick(stack, level, player);
         if (!level.isClientSide) {
             player.addEffect(JUMP_BOOST);
+            if (!player.getItemBySlot(EquipmentSlot.FEET).is(ItemInit.LEMUR_FEET.get())) {
+                PlayerHolderAttacher.getPlayerHolder(player).ifPresent(p -> p.setPreviousBoots(player.getItemBySlot(EquipmentSlot.FEET)));
+            }
             player.setItemSlot(EquipmentSlot.FEET, new ItemStack(ItemInit.LEMUR_FEET.get()));
         }
     }

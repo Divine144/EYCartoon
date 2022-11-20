@@ -15,6 +15,8 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import javax.annotation.Nullable;
+
 @Mod.EventBusSubscriber(modid = EYCartoon.MODID)
 public class PlayerHolderAttacher extends CapabilityAttacher {
     public static final Capability<PlayerHolder> PLAYER_CAPABILITY = getCapability(new CapabilityToken<>(){});
@@ -22,6 +24,7 @@ public class PlayerHolderAttacher extends CapabilityAttacher {
     private static final Class<PlayerHolder> CAPABILITY_CLASS = PlayerHolder.class;
 
     @SuppressWarnings("ConstantConditions")
+    @Nullable
     public static PlayerHolder getPlayerHolderUnwrap(Entity player) {
         return getPlayerHolder(player).orElse(null);
     }
