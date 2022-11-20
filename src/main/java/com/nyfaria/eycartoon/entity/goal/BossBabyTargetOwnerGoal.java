@@ -18,11 +18,7 @@ public class BossBabyTargetOwnerGoal extends TargetGoal {
 
     @Override
     public boolean canUse() {
-        if (entity.getOwner() != null) {
-            this.findTarget();
-            return entity.getOwner() == null;
-        }
-        return false;
+        return entity.getOwner() == null;
     }
 
     @Override
@@ -40,5 +36,16 @@ public class BossBabyTargetOwnerGoal extends TargetGoal {
         if (target != null) {
             entity.setOwnerUUID(target.getUUID());
         }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        findTarget();
+    }
+
+    @Override
+    public boolean requiresUpdateEveryTick() {
+        return entity.getOwner() == null;
     }
 }

@@ -49,6 +49,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(EntityInit.SPONGEBOB.get(), SpongebobRenderer::new);
         event.registerEntityRenderer(EntityInit.TOOTHLESS_ENTITY.get(), context -> new ToothlessRenderer(context, new ToothlessModel(EYCartoon.MODID, "toothless")));
         event.registerEntityRenderer(EntityInit.MEGA_SNOW_GOLEM.get(), MegaSnowGolemEntityRenderer::new);
+        event.registerEntityRenderer(EntityInit.PLASMA_PROJECTILE.get(), PlasmaRayProjectileDummyRenderer::new);
     }
 
     @SubscribeEvent

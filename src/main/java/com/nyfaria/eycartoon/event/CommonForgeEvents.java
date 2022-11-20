@@ -7,6 +7,7 @@ import com.nyfaria.eycartoon.cap.PlayerHolder;
 import com.nyfaria.eycartoon.cap.PlayerHolderAttacher;
 import com.nyfaria.eycartoon.config.EYCartoonConfig;
 import com.nyfaria.eycartoon.entity.BossBabyEntity;
+import com.nyfaria.eycartoon.entity.LightningMcQueenEntity;
 import com.nyfaria.eycartoon.entity.MegaSnowGolemEntity;
 import com.nyfaria.eycartoon.init.BlockInit;
 import com.nyfaria.eycartoon.init.EntityInit;
@@ -23,6 +24,7 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -41,6 +43,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -131,6 +134,15 @@ public class CommonForgeEvents {
                     player.setItemSlot(EquipmentSlot.FEET, PlayerHolderAttacher.getPlayerHolder(player).map(PlayerHolder::getPreviousBoots).orElse(ItemStack.EMPTY));
                     PlayerHolderAttacher.getPlayerHolder(player).ifPresent(p -> p.setPreviousBoots(ItemStack.EMPTY));
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onDamage(LivingHurtEvent event) {
+        if (event.getEntity() instanceof Player player && !player.level.isClientSide && player.getVehicle() instanceof LightningMcQueenEntity) {
+            if (event.getSource() == DamageSource.IN_FIRE || event.getSource() == DamageSource.IN_FIRE) {
+                event.setCanceled(true);
             }
         }
     }

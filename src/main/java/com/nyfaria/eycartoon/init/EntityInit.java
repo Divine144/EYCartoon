@@ -30,6 +30,7 @@ public class EntityInit {
     public static final RegistryObject<EntityType<KrabbyPattyProjectileEntity>> KRABBY_PATTY_PROJECTILE = registerEntity("krabby_projectile", () -> EntityType.Builder.<KrabbyPattyProjectileEntity>of(KrabbyPattyProjectileEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4));
     public static final RegistryObject<EntityType<RocketEntity>> ROCKET_ENTITY = registerEntity("rocket", () -> EntityType.Builder.of(RocketEntity::new, MobCategory.MISC).sized(0.7F, 0.7F).clientTrackingRange(4));
     public static final RegistryObject<EntityType<MinionProjectileEntity>> MINION_PROJECTILE = registerEntity("minion", () -> EntityType.Builder.of(MinionProjectileEntity::new, MobCategory.MISC).sized(0.6F, 0.6F).clientTrackingRange(10));
+    public static final RegistryObject<EntityType<PlasmaProjectileEntity>> PLASMA_PROJECTILE = registerEntity("plasma",() -> EntityType.Builder.of(PlasmaProjectileEntity::new, MobCategory.MISC).sized(0.6F, 0.6F).clientTrackingRange(20));
     public static final RegistryObject<EntityType<CoinProjectileEntity>> COIN_PROJECTILE = registerEntity("coin", () -> EntityType.Builder.of(CoinProjectileEntity::new, MobCategory.MISC).sized(0.2F, 0.2F).clientTrackingRange(4));
     public static final RegistryObject<EntityType<FlatHorseEntity>> FLAT_HORSE_ENTITY = registerEntity("flat_horse", () -> EntityType.Builder.of(FlatHorseEntity::new, MobCategory.CREATURE).sized(1.3964844F, 1.6F).clientTrackingRange(10), Horse::createBaseHorseAttributes);
     public static final RegistryObject<EntityType<FlatPigEntity>> FLAT_PIG_ENTITY = registerEntity("flat_pig", () -> EntityType.Builder.of(FlatPigEntity::new, MobCategory.CREATURE).sized(0.9F, 0.9F).clientTrackingRange(10), Pig::createAttributes);
@@ -42,6 +43,7 @@ public class EntityInit {
     public static final RegistryObject<EntityType<MegaSnowGolemEntity>> MEGA_SNOW_GOLEM = registerEntity("mega_snow_golem", () -> EntityType.Builder.of(MegaSnowGolemEntity::new, MobCategory.CREATURE).sized(2.0F, 3.0F).clientTrackingRange(15), MegaSnowGolemEntity::createAttributes);
     public static final RegistryObject<EntityType<LightningMcQueenEntity>> LIGHTNING_MCQUEEN = registerEntity("lightning_mcqueen", () -> EntityType.Builder.of(LightningMcQueenEntity::new, MobCategory.MISC).sized(2.5F, 1.5F).clientTrackingRange(10), LightningMcQueenEntity::createAttributes);
     public static final RegistryObject<EntityType<ToothlessEntity>> TOOTHLESS_ENTITY = registerEntity("toothless", () -> EntityType.Builder.of(ToothlessEntity::new, MobCategory.CREATURE).sized(4.0f, 1.05f), ToothlessEntity::createMobAttributes);
+
 
     private static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, Supplier<EntityType.Builder<T>> supplier) {
         return ENTITIES.register(name, () -> supplier.get().build(MODID + ":" + name));

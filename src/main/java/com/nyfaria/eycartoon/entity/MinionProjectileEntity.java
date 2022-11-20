@@ -38,14 +38,16 @@ public class MinionProjectileEntity extends Arrow implements IAnimatable {
     public void tick() {
         super.tick();
         if (this.level.isClientSide) return;
-        if (this.tickCount % 50 == 0) {
-            this.level.explode(null, this.getX(), this.getY(), this.getZ(), 4.0F, Explosion.BlockInteraction.BREAK);
-            this.discard();
-        }
-        else {
-            Vec3 vector3d1 = this.getDeltaMovement();
-            double baseYOffset = 0.15D;
-            ((ServerLevel) this.level).sendParticles(YELLOW, this.getX() - vector3d1.x, this.getY() - (vector3d1.y + baseYOffset), this.getZ() - vector3d1.z, 1, 0, 0, 0, 0);
+        if (!(this instanceof PlasmaProjectileEntity)) {
+            if (this.tickCount % 50 == 0) {
+                this.level.explode(null, this.getX(), this.getY(), this.getZ(), 4.0F, Explosion.BlockInteraction.BREAK);
+                this.discard();
+            }
+            else {
+                Vec3 vector3d1 = this.getDeltaMovement();
+                double baseYOffset = 0.15D;
+                ((ServerLevel) this.level).sendParticles(YELLOW, this.getX() - vector3d1.x, this.getY() - (vector3d1.y + baseYOffset), this.getZ() - vector3d1.z, 1, 0, 0, 0, 0);
+            }
         }
     }
 

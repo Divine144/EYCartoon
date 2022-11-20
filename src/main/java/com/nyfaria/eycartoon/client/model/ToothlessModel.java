@@ -8,6 +8,7 @@ import software.bernie.geckolib3.core.processor.IBone;
 
 import javax.annotation.Nullable;
 
+@SuppressWarnings("removal")
 public class ToothlessModel extends SimpleGeoEntityModel<ToothlessEntity> {
 
     public ToothlessModel(String namespace, String name) {

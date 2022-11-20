@@ -33,12 +33,12 @@ public class EYCartoon {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, EYCartoonClientConfig.CLIENT_SPEC);
 
         MorphInit.MORPHS.register(modBus);
+        MobEffectInit.MOB_EFFECTS.register(modBus);
         ItemInit.ITEMS.register(modBus);
 
         EntityInit.ENTITIES.register(modBus);
         BlockInit.BLOCKS.register(modBus);
         BlockEntityInit.BLOCK_ENTITIES.register(modBus);
-        MobEffectInit.MOB_EFFECTS.register(modBus);
         AbilityInit.ABILITIES.register(modBus);
         ProfessionsInit.POI_TYPES.register(modBus);
         ProfessionsInit.VILLAGER_PROFESSIONS.register(modBus);

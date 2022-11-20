@@ -1,5 +1,6 @@
 package com.nyfaria.eycartoon.entity.goal;
 
+import com.nyfaria.eycartoon.entity.BossBabyEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -18,7 +19,7 @@ import java.util.EnumSet;
 
 public class BossBabyFollowGoal extends Goal {
 
-    private final Mob mob;
+    private final BossBabyEntity mob;
     private LivingEntity owner;
     private final LevelReader level;
     private final double speedModifier;
@@ -29,7 +30,7 @@ public class BossBabyFollowGoal extends Goal {
     private float oldWaterCost;
     private final boolean canFly;
 
-    public BossBabyFollowGoal(Mob pTamable, Player owner, double pSpeedModifier, float pStartDistance, float pStopDistance, boolean pCanFly) {
+    public BossBabyFollowGoal(BossBabyEntity pTamable, Player owner, double pSpeedModifier, float pStartDistance, float pStopDistance, boolean pCanFly) {
         this.mob = pTamable;
         this.owner = owner;
         this.level = pTamable.level;
@@ -49,9 +50,9 @@ public class BossBabyFollowGoal extends Goal {
      * method as well.
      */
     public boolean canUse() {
-        if (owner == null)
+        if (mob.getOwner() == null)
             return false;
-        LivingEntity livingentity = owner;
+        LivingEntity livingentity = mob.getOwner();
         if (livingentity.isSpectator()) {
             return false;
         } else if (this.mob.distanceToSqr(livingentity) < (double) (this.startDistance * this.startDistance)) {

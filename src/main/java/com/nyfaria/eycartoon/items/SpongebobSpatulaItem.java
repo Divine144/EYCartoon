@@ -48,7 +48,7 @@ public class SpongebobSpatulaItem extends Item {
                                 if (effect instanceof FartLevitationEffect effect1) {
                                     effect1.setIsInfinite(true);
                                 }
-                                entity1.addEffect(new MobEffectInstance(effect, Integer.MAX_VALUE, 0, false, false));
+                                entity1.addEffect(new MobEffectInstance(effect, Integer.MAX_VALUE, 0, false, false, false));
                             }
                         }
                     };

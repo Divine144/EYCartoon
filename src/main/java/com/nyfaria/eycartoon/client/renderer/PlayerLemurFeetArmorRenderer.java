@@ -32,7 +32,7 @@ public class PlayerLemurFeetArmorRenderer extends GeoArmorRenderer<PlayerLemurFe
     @Override
     public void render(GeoModel model, PlayerLemurFeetArmorItem animatable, float partialTick, RenderType type, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         poseStack.pushPose();
-        poseStack.scale(3, 2, 3);
+        poseStack.scale(4, 1.3f, 4);
         super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, alpha);
         poseStack.popPose();
     }
