@@ -1,7 +1,10 @@
 package com.nyfaria.eycartoon.effect;
 
+import com.nyfaria.eycartoon.init.SoundInit;
+import net.minecraft.Util;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -31,7 +34,8 @@ public class FartLevitationEffect extends MobEffect {
             }
 
             double dy = pLivingEntity.getY() - 0.3333;
-            if (++counter % 10 == 0) {
+            if (++counter % 20 == 0) {
+                level.playSound(null, pLivingEntity.blockPosition(), SoundInit.KRABBY_PATTY_FART.get(), SoundSource.PLAYERS, 1F, 1.0F);
                 level.sendParticles(ParticleTypes.BUBBLE, pLivingEntity.getX(), dy, pLivingEntity.getZ(), 6, 0.2, 0.1, 0.2, 0.1);
             }
         }

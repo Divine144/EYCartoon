@@ -16,5 +16,11 @@
     "sounds": [
       "eycartoon:fart_three"
     ]
+  },
+  "krabby_patty_fart" : {
+    "subtitle": "sounds.eycartoon.krabby_patty_fart",
+    "sounds": [
+      "eycartoon:krabby_patty_fart"
+    ]
   }
 }

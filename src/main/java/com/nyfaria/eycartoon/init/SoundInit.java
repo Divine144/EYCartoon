@@ -13,6 +13,7 @@ public class SoundInit {
     public static final RegistryObject<SoundEvent> FART_ONE = registerSound("fart_one");
     public static final RegistryObject<SoundEvent> FART_TWO = registerSound("fart_two");
     public static final RegistryObject<SoundEvent> FART_THREE = registerSound("fart_three");
+    public static final RegistryObject<SoundEvent> KRABBY_PATTY_FART = registerSound("krabby_patty_fart");
 
     protected static RegistryObject<SoundEvent> registerSound(String name) {
         return SOUNDS.register(name, () -> new SoundEvent(new ResourceLocation(EYCartoon.MODID, name)));
