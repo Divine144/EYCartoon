@@ -130,7 +130,7 @@ public class BossBabyFollowGoal extends Goal {
         } else if (!this.canTeleportTo(new BlockPos(pX, pY, pZ))) {
             return false;
         } else {
-            this.mob.moveTo((double) pX + 0.5D, (double) pY, (double) pZ + 0.5D, this.mob.getYRot(), this.mob.getXRot());
+            this.mob.moveTo((double) pX + 0.5D, pY, (double) pZ + 0.5D, this.mob.getYRot(), this.mob.getXRot());
             this.navigation.stop();
             return true;
         }

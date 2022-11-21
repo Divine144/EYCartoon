@@ -17,12 +17,14 @@ public class ClientForgeEvents {
         if (player != null && player.isPassenger() && player.getVehicle() instanceof ToothlessEntity pegasus) {
             if (player.input.jumping) {
                 pegasus.setYya(0.8f);
-            } else if (player.input.shiftKeyDown) {
+            }
+            else if (player.input.shiftKeyDown) {
                 if (!pegasus.isOnGround()) {
                     pegasus.setYya(-0.8f);
                     player.input.shiftKeyDown = false;
                 }
-            } else {
+            }
+            else {
                 pegasus.setYya(0);
             }
         }

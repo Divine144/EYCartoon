@@ -118,6 +118,9 @@ public class ToothlessEntity extends PathfinderMob implements IAnimatable {
         }
         else {
             tAnimationEvent.getController().setAnimation(new AnimationBuilder().addAnimation("fly", ILoopType.EDefaultLoopTypes.LOOP));
+            if (this.isWarp()) {
+                tAnimationEvent.getController().setAnimation(new AnimationBuilder().addAnimation("attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+            }
         }
         return PlayState.CONTINUE;
     }

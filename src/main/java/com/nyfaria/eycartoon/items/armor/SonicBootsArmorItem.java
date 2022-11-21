@@ -45,7 +45,7 @@ public class SonicBootsArmorItem extends GeoArmorItem implements IAnimatable {
             var playerCapHolder = PlayerHolderAttacher.getPlayerHolderUnwrap(player);
             var morphHolder = MorphHolderAttacher.getMorphHolderUnwrap(player);
             var animationHolder = AnimationHolderAttacher.getAnimationHolderUnwrap(player);
-            if (playerCapHolder != null & morphHolder != null && animationHolder != null && speed != null) {
+            if (playerCapHolder != null && morphHolder != null && animationHolder != null && speed != null) {
                 if (player.isSprinting()) {
                     if (speedTimer == 0) {
                         playerCapHolder.setBaseSpeed((float) speed.getBaseValue());
