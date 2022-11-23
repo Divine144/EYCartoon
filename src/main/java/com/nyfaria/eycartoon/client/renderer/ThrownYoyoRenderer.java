@@ -42,7 +42,7 @@ public class ThrownYoyoRenderer extends EntityRenderer<ThrownYoyoEntity> {
             pMatrixStack.mulPose(Vector3f.XN.rotationDegrees(360 * (((float) (pEntity.tickCount % ROTATION_INTERVAL) + pPartialTicks) / (float) ROTATION_INTERVAL)));
             Minecraft.getInstance().getItemRenderer().renderStatic(pEntity.getPickupItem(), ItemTransforms.TransformType.FIXED, pPackedLight, OverlayTexture.NO_OVERLAY, pMatrixStack, pBuffer, 0);
             pMatrixStack.popPose();
-            pMatrixStack.translate(0, -0.2, 0);
+            pMatrixStack.translate(0, -0.1, 0);
             int i = player.getMainArm() == HumanoidArm.RIGHT ? 1 : -1;
             ItemStack itemstack = player.getMainHandItem();
             if (!itemstack.canPerformAction(net.minecraftforge.common.ToolActions.FISHING_ROD_CAST)) {
@@ -61,7 +61,7 @@ public class ThrownYoyoRenderer extends EntityRenderer<ThrownYoyoEntity> {
             float f3;
             if ((this.entityRenderDispatcher.options == null || this.entityRenderDispatcher.options.getCameraType().isFirstPerson()) && player == Minecraft.getInstance().player) {
                 double d7 = 960.0D / (double) this.entityRenderDispatcher.options.fov().get().intValue();
-                Vec3 vec3 = this.entityRenderDispatcher.camera.getNearPlane().getPointOnPlane((float) i * -0.525F, 0F);
+                Vec3 vec3 = this.entityRenderDispatcher.camera.getNearPlane().getPointOnPlane((float) i * -0.45F, 0.1F);
                 vec3 = vec3.scale(d7);
                 vec3 = vec3.yRot(f1 * 0.5F);
                 vec3 = vec3.xRot(-f1 * 0.7F);

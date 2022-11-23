@@ -229,7 +229,7 @@ public class ToothlessEntity extends PathfinderMob implements IAnimatable {
             posY = livingEntity.getVehicle().getY();
         }
 
-        Vec3 start = new Vec3(livingEntity.getX(), posY + livingEntity.getEyeHeight(), livingEntity.getZ());
+        Vec3 start = new Vec3(livingEntity.getX(), posY + livingEntity.getEyeHeight() - 0.3, livingEntity.getZ());
         Vec3 look;
 
         if (!downOrFace) {

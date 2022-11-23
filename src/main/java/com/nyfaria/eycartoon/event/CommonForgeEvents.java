@@ -33,6 +33,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -303,7 +304,10 @@ public class CommonForgeEvents {
                                 dyableItem.setColor(new ItemStack(item), 3949738);
                             }
                             else if (item instanceof PotionItem) {
-                                PotionUtils.getPotion(new ItemStack(item)).getEffects().add(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2600, 1));
+
+                                PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRONG_SWIFTNESS);
+
+                                System.out.println(PotionUtils.getPotion(new ItemStack(item)).getEffects());
                             }
                             setupItemPosition(new ItemStack(item), level, Vec3.atCenterOf(pos));
                         }

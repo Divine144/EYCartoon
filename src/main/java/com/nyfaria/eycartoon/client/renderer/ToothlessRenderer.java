@@ -10,6 +10,9 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
@@ -18,6 +21,7 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 public class ToothlessRenderer extends GeoEntityRenderer<ToothlessEntity> {
 
     private boolean isLaserOn = false;
+    private ToothlessEntity currentRenderingEntity;
     private RenderType currentRenderType;
 
     public ToothlessRenderer(EntityRendererProvider.Context renderManager, AnimatedGeoModel<ToothlessEntity> modelProvider) {
@@ -33,6 +37,7 @@ public class ToothlessRenderer extends GeoEntityRenderer<ToothlessEntity> {
 
     @Override
     public void render(ToothlessEntity animatable, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        currentRenderingEntity = animatable;
         RenderType renderType = getRenderType(animatable, partialTick, poseStack, bufferSource, null, packedLight, getTextureLocation(animatable));
         this.currentRenderType = renderType;
         poseStack.pushPose();
@@ -49,9 +54,25 @@ public class ToothlessRenderer extends GeoEntityRenderer<ToothlessEntity> {
         super.renderRecursively(bone, stack, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
         if (bone.getName().equals("eye") && isLaserOn) {
             stack.pushPose();
-            stack.translate(-0.5,0.9,2.1);
-            stack.mulPose(Vector3f.XP.rotationDegrees(90));
-            BeaconRenderer.renderBeaconBeam(stack,getCurrentRTB(),BeaconRenderer.BEAM_LOCATION, Minecraft.getInstance().getPartialTick(), 1F,1,0,150, new float[]{0.4f,0,0.7f},0.5f,0.0f);
+            stack.translate(-0.5,1.4,2.1);
+            if (this.currentRenderingEntity != null) {
+                Player player = this.currentRenderingEntity.getControllingPassenger();
+                if (player != null) {
+                    if ((this.entityRenderDispatcher.options == null || !this.entityRenderDispatcher.options.getCameraType().isFirstPerson()) && player == Minecraft.getInstance().player) {
+                        stack.mulPose(Vector3f.XP.rotationDegrees(120));
+                    }
+                    else {
+                        stack.mulPose(Vector3f.XP.rotationDegrees(90));
+                    }
+                }
+                else {
+                    stack.mulPose(Vector3f.XP.rotationDegrees(90));
+                }
+            }
+            else {
+                stack.mulPose(Vector3f.XP.rotationDegrees(90));
+            }
+            BeaconRenderer.renderBeaconBeam(stack,getCurrentRTB(),BeaconRenderer.BEAM_LOCATION, Minecraft.getInstance().getPartialTick(), 1F,1,0,150, new float[]{0.4f,0,0.7f},0.3f,0.0f);
             stack.popPose();
         }
     }

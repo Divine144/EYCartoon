@@ -161,8 +161,9 @@ public class MegaSnowGolemEntity extends AbstractGolem implements RangedAttackMo
     private <T extends IAnimatable> PlayState attackEvent(AnimationEvent<T> event) {
         if (this.getShouldAttack()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("idle2", ILoopType.EDefaultLoopTypes.LOOP));
+            return PlayState.CONTINUE;
         }
-        return PlayState.CONTINUE;
+        return PlayState.STOP;
     }
 
     private <T extends IAnimatable> PlayState animationEvent(AnimationEvent<T> event) {
