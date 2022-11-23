@@ -10,11 +10,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import software.bernie.geckolib3.geo.render.built.GeoBone;
+import software.bernie.geckolib3.renderers.geo.GeoBlockRenderer;
 import software.bernie.geckolib3.renderers.geo.GeoProjectilesRenderer;
+import software.bernie.geckolib3.renderers.geo.layer.AbstractLayerGeo;
 
 public class PlasmaRayProjectileDummyRenderer extends GeoProjectilesRenderer<PlasmaProjectileEntity> {
     public PlasmaRayProjectileDummyRenderer(EntityRendererProvider.Context renderManager) {
-        super(renderManager, new SimpleGeoEntityModel<>(EYCartoon.MODID, "plasma"));
+        super(renderManager, new SimpleGeoEntityModel<>(EYCartoon.MODID, "minion"));
     }
 
     @Override

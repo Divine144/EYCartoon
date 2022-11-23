@@ -6,14 +6,18 @@ import com.nyfaria.eycartoon.init.SoundInit;
 import dev._100media.hundredmediageckolib.item.animated.AnimatedItemProperties;
 import dev._100media.hundredmediageckolib.item.animated.SimpleAnimatedItem;
 import net.minecraft.Util;
+import net.minecraft.client.renderer.entity.FishingHookRenderer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.LeadItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import software.bernie.geckolib3.network.ISyncable;
 
 import java.util.List;
 

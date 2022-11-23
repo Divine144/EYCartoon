@@ -1,10 +1,19 @@
 package com.nyfaria.eycartoon.event;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.nyfaria.eycartoon.EYCartoon;
 import com.nyfaria.eycartoon.entity.ToothlessEntity;
+import com.nyfaria.eycartoon.init.ItemInit;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.entity.layers.PlayerItemInHandLayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.MovementInputUpdateEvent;
+import net.minecraftforge.client.event.RenderArmEvent;
+import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 

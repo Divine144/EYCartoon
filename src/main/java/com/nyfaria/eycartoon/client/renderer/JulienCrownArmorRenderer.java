@@ -4,6 +4,7 @@ import com.nyfaria.eycartoon.EYCartoon;
 import com.nyfaria.eycartoon.items.armor.JulienCrownArmorItem;
 import dev._100media.hundredmediageckolib.client.model.SimpleAnimatedGeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
+import software.bernie.geckolib3.renderers.geo.GeoItemRenderer;
 
 public class JulienCrownArmorRenderer extends GeoArmorRenderer<JulienCrownArmorItem> {
 
@@ -16,5 +17,6 @@ public class JulienCrownArmorRenderer extends GeoArmorRenderer<JulienCrownArmorI
         leftLegBone = null;
         rightBootBone = null;
         leftBootBone = null;
+
     }
 }

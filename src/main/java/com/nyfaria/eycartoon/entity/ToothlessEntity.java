@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.RenderHandEvent;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -67,12 +68,14 @@ public class ToothlessEntity extends PathfinderMob implements IAnimatable {
     public void tick() {
         super.tick();
         if (!this.level.isClientSide && isWarp()) {
-            BlockHitResult hr = HMUVectorUtils.blockTrace(this, ClipContext.Fluid.NONE, 200, false);
-            BlockPos above = hr.getBlockPos();
-            BlockPos blockpos1 = above.relative(hr.getDirection());
-            if (BaseFireBlock.canBePlacedAt(level, blockpos1, this.getDirection())) {
-                BlockState state1 = BaseFireBlock.getState(level, above);
-                level.setBlock(above, state1, 11);
+            if (this.getControllingPassenger() != null) {
+                BlockHitResult hr = blockTrace(this.getControllingPassenger(), ClipContext.Fluid.NONE, 200, false);
+                BlockPos above = hr.getBlockPos();
+                BlockPos blockpos1 = above.relative(hr.getDirection());
+                if (BaseFireBlock.canBePlacedAt(level, blockpos1, Direction.NORTH)) {
+                    BlockState state1 = BaseFireBlock.getState(level, blockpos1);
+                    level.setBlock(blockpos1, state1, 11);
+                }
             }
         }
     }
@@ -110,6 +113,15 @@ public class ToothlessEntity extends PathfinderMob implements IAnimatable {
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
+        data.addAnimationController(new AnimationController<>(this, "controller_two", 0, this::openMouthPredicate));
+    }
+
+    private <T extends IAnimatable> PlayState openMouthPredicate(AnimationEvent<T> tAnimationEvent) {
+        if (this.isWarp()) {
+            tAnimationEvent.getController().setAnimation(new AnimationBuilder().addAnimation("opened mouth", ILoopType.EDefaultLoopTypes.LOOP));
+            return PlayState.CONTINUE;
+        }
+        return PlayState.STOP;
     }
 
     private <T extends IAnimatable> PlayState predicate(AnimationEvent<T> tAnimationEvent) {
@@ -118,9 +130,6 @@ public class ToothlessEntity extends PathfinderMob implements IAnimatable {
         }
         else {
             tAnimationEvent.getController().setAnimation(new AnimationBuilder().addAnimation("fly", ILoopType.EDefaultLoopTypes.LOOP));
-            if (this.isWarp()) {
-                tAnimationEvent.getController().setAnimation(new AnimationBuilder().addAnimation("attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-            }
         }
         return PlayState.CONTINUE;
     }
@@ -209,5 +218,27 @@ public class ToothlessEntity extends PathfinderMob implements IAnimatable {
                 this.tryCheckInsideBlocks();
             }
         }
+    }
+
+    public static BlockHitResult blockTrace(LivingEntity livingEntity, ClipContext.Fluid rayTraceFluid, int range, boolean downOrFace) {
+        Level level = livingEntity.level;
+        ClipContext context;
+
+        double posY = livingEntity.getY();
+        if (livingEntity.getVehicle() != null) {
+            posY = livingEntity.getVehicle().getY();
+        }
+
+        Vec3 start = new Vec3(livingEntity.getX(), posY + livingEntity.getEyeHeight(), livingEntity.getZ());
+        Vec3 look;
+
+        if (!downOrFace) {
+            look = livingEntity.getLookAngle();
+        } else {
+            look = new Vec3(0, -range, 0);
+        }
+        Vec3 end = new Vec3(livingEntity.getX() + look.x * (double) range, livingEntity.getY() + livingEntity.getEyeHeight() + look.y * (double) range, livingEntity.getZ() + look.z * (double) range);
+        context = new ClipContext(start, end, ClipContext.Block.COLLIDER, rayTraceFluid, livingEntity);
+        return level.clip(context);
     }
 }

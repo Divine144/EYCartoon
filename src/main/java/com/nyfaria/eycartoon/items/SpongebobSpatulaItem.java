@@ -45,9 +45,6 @@ public class SpongebobSpatulaItem extends Item {
                             if (entity instanceof LivingEntity entity1) {
                                 entity1.hurt(DamageSource.thrown(this, this.getOwner()), 0.5F);
                                 var effect = MobEffectInit.FART_LEVITATION_EFFECT.get();
-                                if (effect instanceof FartLevitationEffect effect1) {
-                                    effect1.setIsInfinite(true);
-                                }
                                 entity1.addEffect(new MobEffectInstance(effect, Integer.MAX_VALUE, 0, false, false, false));
                             }
                         }

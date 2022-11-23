@@ -74,6 +74,11 @@ public class LightningMcQueenEntity extends Animal implements IAnimatable, Playe
     }
 
     @Override
+    public boolean isInvulnerableTo(DamageSource pSource) {
+        return false;
+    }
+
+    @Override
     public boolean fireImmune() {
         return true;
     }
@@ -82,7 +87,7 @@ public class LightningMcQueenEntity extends Animal implements IAnimatable, Playe
     public void tick() {
         super.tick();
         if (level.isClientSide) return;
-        if (lastPosition != null && lastPosition.subtract(position()).lengthSqr() > 0.1f) {
+        if (lastPosition != null) {
             BlockPos lastPos = new BlockPos(lastPosition);
             if (BaseFireBlock.canBePlacedAt(level, new BlockPos(lastPosition), Direction.NORTH)) {
                 BlockState state = BaseFireBlock.getState(level, lastPos);
@@ -162,7 +167,7 @@ public class LightningMcQueenEntity extends Animal implements IAnimatable, Playe
 
     @Override
     public float getSpeed() {
-        return (float) getAttributeValue(Attributes.MOVEMENT_SPEED);
+        return (float) getAttributeValue(Attributes.MOVEMENT_SPEED) * 2.2F;
     }
 
     @Nullable

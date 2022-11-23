@@ -113,25 +113,73 @@
 				"up": {"uv": [2.5625, 0, 5, 2.5], "texture": "#0"},
 				"down": {"uv": [2.5625, 0, 5, 2.5], "texture": "#0"}
 			}
+		},
+		{
+			"from": [1.5, -6.8, 4.8],
+			"to": [7.3, 11, 10.2],
+			"faces": {
+				"north": {"uv": [5.8125, 11.375, 6.75, 13], "texture": "#0"},
+				"east": {"uv": [5.8125, 11.375, 6.75, 13], "texture": "#0"},
+				"south": {"uv": [5.8125, 11.375, 6.75, 13], "texture": "#0"},
+				"west": {"uv": [5.8125, 11.375, 6.75, 13], "texture": "#0"},
+				"up": {"uv": [5.8125, 11.375, 6.75, 13], "texture": "#0"},
+				"down": {"uv": [5.8125, 11.375, 6.75, 13], "texture": "#0"}
+			}
+		},
+		{
+			"from": [8.7, -6.8, 4.8],
+			"to": [14.5, 11, 10.2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0.7, 0, 0]},
+			"faces": {
+				"north": {"uv": [5.8125, 11.375, 6.75, 13], "texture": "#0"},
+				"east": {"uv": [5.8125, 11.375, 6.75, 13], "texture": "#0"},
+				"south": {"uv": [5.8125, 11.375, 6.75, 13], "texture": "#0"},
+				"west": {"uv": [5.8125, 11.375, 6.75, 13], "texture": "#0"},
+				"up": {"uv": [5.8125, 11.375, 6.75, 13], "texture": "#0"},
+				"down": {"uv": [5.8125, 11.375, 6.75, 13], "texture": "#0"}
+			}
 		}
 	],
 	"display": {
 		"firstperson_righthand": {
-			"translation": [-1, 0, 0.5],
-			"scale": [0.5, 0.5, 0.5]
+			"translation": [-2.5, 0, 0.5],
+			"scale": [0.51172, 0.49609, 0.51563]
 		},
 		"firstperson_lefthand": {
-			"translation": [-0.5, 0, 0.75],
-			"scale": [0.56, 0.55, 0.51]
+			"translation": [0, 0, 0.25],
+			"scale": [0.51953, 0.51953, 0.48438]
 		},
 		"ground": {
-			"translation": [0, 6, 0]
+			"translation": [0, 11.25, 0]
 		},
 		"gui": {
-			"translation": [0, 0.25, 0]
+			"translation": [0, -0.25, 0]
 		},
 		"fixed": {
-			"translation": [0, 0.5, 0]
+			"translation": [0, 0.25, 0]
 		}
-	}
+	},
+	"groups": [
+		0,
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		8,
+		{
+			"name": "bone",
+			"origin": [-4, 0.5, 0],
+			"color": 0,
+			"children": [9]
+		},
+		{
+			"name": "bone2",
+			"origin": [4.7, 0.5, 0],
+			"color": 0,
+			"children": [10]
+		}
+	]
 }

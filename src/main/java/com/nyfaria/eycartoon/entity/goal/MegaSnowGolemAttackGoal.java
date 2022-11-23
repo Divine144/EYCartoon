@@ -92,7 +92,6 @@ public class MegaSnowGolemAttackGoal extends Goal {
                 if (!flag) {
                     return;
                 }
-                this.mob.setShouldAttack(false);
                 float f = (float) Math.sqrt(d0) / this.attackRadius;
                 float f1 = Mth.clamp(f, 0.1F, 1.0F);
                 this.rangedAttackMob.performRangedAttack(this.target, f1);

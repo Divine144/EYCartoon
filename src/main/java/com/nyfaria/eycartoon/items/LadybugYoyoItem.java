@@ -2,13 +2,9 @@ package com.nyfaria.eycartoon.items;
 
 import com.nyfaria.eycartoon.entity.LadyBugRenderer;
 import com.nyfaria.eycartoon.entity.ThrownYoyoEntity;
-import dev._100media.hundredmediageckolib.client.renderer.GeoToolRenderer;
 import dev._100media.hundredmediageckolib.item.animated.AnimatedItemProperties;
 import dev._100media.hundredmediageckolib.item.animated.IAnimatedItem;
-import dev._100media.hundredmediageckolib.item.animated.SimpleAnimatedItem;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -29,7 +25,6 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.renderers.geo.GeoItemRenderer;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
@@ -56,12 +51,12 @@ public class LadybugYoyoItem extends Item implements IAnimatable, IAnimatedItem 
             if (getUseDuration(pStack) - pTimeLeft >= 10) {
                 pStack.hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(pEntityLiving.getUsedItemHand()));
                 ThrownYoyoEntity thrownyoYo = new ThrownYoyoEntity(pLevel, player, pStack);
+                thrownyoYo.setOwnerUUID(player.getUUID());
                 thrownyoYo.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.5F, 1.0F);
                 if (player.getAbilities().instabuild) {
                     thrownyoYo.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                 }
                 pLevel.addFreshEntity(thrownyoYo);
-                pLevel.playSound(null, thrownyoYo, SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0F, 1.0F);
                 if (!player.getAbilities().instabuild) {
                     player.getInventory().removeItem(pStack);
                 }

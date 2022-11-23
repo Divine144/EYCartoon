@@ -28,7 +28,7 @@ public class ItemInit {
             .tab(CreativeModeTab.TAB_FOOD)));
 
     public static final RegistryObject<Item> SONIC_COIN = ITEMS.register("sonic_coin",
-            () -> new Item(new Item.Properties()
+            () -> new SimpleAnimatedItem(new AnimatedItemProperties()
                     .food(new FoodProperties.Builder().alwaysEat().nutrition(0).build()).tab(CreativeModeTab.TAB_FOOD)));
 
     public static final RegistryObject<Item> SONIC_BOOTS = ITEMS.register("sonic_boots", () -> new SonicBootsArmorItem(ArmorMaterials.GOLD, EquipmentSlot.FEET, new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
@@ -41,7 +41,7 @@ public class ItemInit {
 
     public static final RegistryObject<Item> BUZZ_CONTROL_PANEL = ITEMS.register("buzz_control_panel", () -> new BuzzControlPanelItem(new AnimatedItemProperties().stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
 
-    public static final RegistryObject<Item> SHREKS_FIST = ITEMS.register("shreks_fist", () -> new ShreksFistItem(new Item.Properties().durability(1000).tab(CreativeModeTab.TAB_MISC)));
+    public static final RegistryObject<Item> SHREKS_FIST = ITEMS.register("shreks_fist", () -> new ShreksFistItem(new AnimatedItemProperties().durability(1000).tab(CreativeModeTab.TAB_MISC)));
 
     public static final RegistryObject<Item> CARTOON_RAY = ITEMS.register("2d_cartoon_ray", () -> new CartoonRayItem(new AnimatedItemProperties().durability(500).tab(CreativeModeTab.TAB_MISC)));
 

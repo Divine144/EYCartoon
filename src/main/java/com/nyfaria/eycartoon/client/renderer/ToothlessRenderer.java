@@ -47,7 +47,7 @@ public class ToothlessRenderer extends GeoEntityRenderer<ToothlessEntity> {
             rtb.getBuffer(currentRenderType).normal(red, green, blue);
         }
         super.renderRecursively(bone, stack, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-        if (bone.getName().equals("jaw") && isLaserOn) {
+        if (bone.getName().equals("eye") && isLaserOn) {
             stack.pushPose();
             stack.translate(-0.5,0.9,2.1);
             stack.mulPose(Vector3f.XP.rotationDegrees(90));

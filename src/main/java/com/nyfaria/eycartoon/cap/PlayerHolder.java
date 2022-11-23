@@ -49,6 +49,10 @@ public class PlayerHolder extends EntityCapability {
         this.hasUnlockedIceAbility = true;
     }
 
+    public void disableIceAbility() {
+        this.hasUnlockedIceAbility = false;
+    }
+
     public boolean isCanDoubleJump() {
         return canDoubleJump;
     }

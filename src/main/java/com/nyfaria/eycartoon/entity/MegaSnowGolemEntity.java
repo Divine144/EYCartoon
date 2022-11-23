@@ -10,6 +10,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,13 +23,16 @@ import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.AbstractGolem;
+import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.LeadItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -92,14 +96,9 @@ public class MegaSnowGolemEntity extends AbstractGolem implements RangedAttackMo
     public void aiStep() {
         super.aiStep();
         if (!this.level.isClientSide) {
-            int i = Mth.floor(this.getX());
-            int j = Mth.floor(this.getY());
-            int k = Mth.floor(this.getZ());
-            BlockPos blockpos = new BlockPos(i, j, k);
-            Biome biome = this.level.getBiome(blockpos).value();
-            if (biome.shouldSnowGolemBurn(blockpos)) {
-                this.hurt(DamageSource.ON_FIRE, 1.0F);
-            }
+            int i;
+            int j;
+            int k;
             if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {
                 return;
             }
@@ -151,6 +150,7 @@ public class MegaSnowGolemEntity extends AbstractGolem implements RangedAttackMo
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(this, "controller", 0, this::animationEvent));
+        data.addAnimationController(new AnimationController<>(this, "controller_2", 0, this::attackEvent));
     }
 
     @Override
@@ -158,11 +158,15 @@ public class MegaSnowGolemEntity extends AbstractGolem implements RangedAttackMo
         return factory;
     }
 
-    private <T extends IAnimatable> PlayState animationEvent(AnimationEvent<T> event) {
+    private <T extends IAnimatable> PlayState attackEvent(AnimationEvent<T> event) {
         if (this.getShouldAttack()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("idle2", ILoopType.EDefaultLoopTypes.LOOP));
         }
-        else if (event.isMoving()) {
+        return PlayState.CONTINUE;
+    }
+
+    private <T extends IAnimatable> PlayState animationEvent(AnimationEvent<T> event) {
+        if (event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP));
         }
         else {

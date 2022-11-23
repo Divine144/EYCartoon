@@ -1,6 +1,8 @@
 package com.nyfaria.eycartoon.entity;
 
 import com.nyfaria.eycartoon.init.EntityInit;
+import net.minecraft.client.renderer.entity.FishingHookRenderer;
+import net.minecraft.client.renderer.entity.LeashKnotRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -10,15 +12,13 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.LeadItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -29,11 +29,15 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.Optional;
+import java.util.UUID;
 
 public class ThrownYoyoEntity extends AbstractArrow {
 
     private static final EntityDataAccessor<Boolean> ID_FOIL = SynchedEntityData.defineId(ThrownYoyoEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<ItemStack> THROWN_ITEM = SynchedEntityData.defineId(ThrownYoyoEntity.class, EntityDataSerializers.ITEM_STACK);
+    private static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(ThrownYoyoEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+
     private boolean dealtDamage;
     public int clientSideReturnTridentTickCount;
 
@@ -43,14 +47,17 @@ public class ThrownYoyoEntity extends AbstractArrow {
 
     public ThrownYoyoEntity(Level level, LivingEntity owner, ItemStack stack) {
         super(EntityInit.THROWN_YOYO_ENTITY.get(), owner, level);
+        this.setOwner(owner);
         entityData.set(THROWN_ITEM, stack.copy());
         entityData.set(ID_FOIL, stack.hasFoil());
     }
 
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         entityData.define(ID_FOIL, false);
         entityData.define(THROWN_ITEM, ItemStack.EMPTY);
+        entityData.define(DATA_OWNERUUID_ID, Optional.empty());
     }
 
     public void tick() {
@@ -122,7 +129,6 @@ public class ThrownYoyoEntity extends AbstractArrow {
         Entity owner = getOwner();
         DamageSource damagesource = DamageSource.trident(this, (owner == null ? this : owner));
         dealtDamage = true;
-        SoundEvent soundevent = SoundEvents.TRIDENT_HIT;
         if (target.hurt(damagesource, f)) {
             if (target.getType() == EntityType.ENDERMAN) {
                 return;
@@ -138,7 +144,6 @@ public class ThrownYoyoEntity extends AbstractArrow {
             }
         }
         setDeltaMovement(getDeltaMovement().multiply(-0.01D, -0.1D, -0.01D));
-        this.playSound(soundevent, 1.0F, 1.0F);
     }
 
     @Override
@@ -156,18 +161,43 @@ public class ThrownYoyoEntity extends AbstractArrow {
 
     @Override
     public void readAdditionalSaveData(CompoundTag pCompound) {
-        super.readAdditionalSaveData(pCompound);
         if (pCompound.contains("thrownItem", 10)) {
             entityData.set(THROWN_ITEM, ItemStack.of(pCompound.getCompound("thrownItem")));
         }
+        if (pCompound.contains("Owner")) {
+            this.entityData.set(DATA_OWNERUUID_ID, Optional.of(pCompound.getUUID("Owner")));
+        }
         dealtDamage = pCompound.getBoolean("dealtDamage");
+        super.readAdditionalSaveData(pCompound);
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
-        super.addAdditionalSaveData(pCompound);
         pCompound.put("thrownItem", entityData.get(THROWN_ITEM).save(new CompoundTag()));
         pCompound.putBoolean("dealtDamage", dealtDamage);
+        if (this.getOwnerUUID() != null) {
+            pCompound.putUUID("Owner", this.getOwnerUUID());
+        }
+        super.addAdditionalSaveData(pCompound);
+    }
+
+    @Nullable
+    public Player getPlayerOwner() {
+        try {
+            UUID uuid = this.getOwnerUUID();
+            return uuid == null ? null : this.level.getPlayerByUUID(uuid);
+        } catch (IllegalArgumentException illegalargumentexception) {
+            return null;
+        }
+    }
+
+    @Nullable
+    public UUID getOwnerUUID() {
+        return this.entityData.get(DATA_OWNERUUID_ID).orElse(null);
+    }
+
+    public void setOwnerUUID(UUID ownerUUID) {
+        this.entityData.set(DATA_OWNERUUID_ID, Optional.of(ownerUUID));
     }
 
     @Override
