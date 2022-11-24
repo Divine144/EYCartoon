@@ -38,10 +38,10 @@ public class MixinHumanoidModel {
             this.leftArm.yRot = 0;
         }
         else if (useItem instanceof MinionLauncherItem) {
+            this.rightArm.yRot = -0.4F;
             this.leftArm.yRot = 0.80F;
+            this.rightArm.xRot = (-(float) Math.PI / 2F) + 0.2F;
             this.leftArm.xRot = (-(float) Math.PI / 2F) + 0.2F;
-            this.rightArm.yRot = -0.1F + this.head.yRot;
-            this.rightArm.xRot = (-(float) Math.PI / 2F) + this.head.xRot;
         }
     }
 
@@ -53,6 +53,12 @@ public class MixinHumanoidModel {
             this.leftArm.xRot = (-(float) Math.PI / 2F) + this.head.xRot;
             this.rightArm.xRot = 0;
             this.rightArm.yRot = 0;
+        }
+        else if (useItem instanceof MinionLauncherItem) {
+            this.rightArm.yRot = -0.4F;
+            this.leftArm.yRot = 0.80F;
+            this.rightArm.xRot = (-(float) Math.PI / 2F) + 0.2F;
+            this.leftArm.xRot = (-(float) Math.PI / 2F) + 0.2F;
         }
     }
 }
