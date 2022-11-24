@@ -77,9 +77,7 @@ public class MegaSnowGolemAttackGoal extends Goal {
             }
             else {
                 this.seeTime = 0;
-                this.mob.setShouldAttack(false);
             }
-
             if (!(d0 > (double) this.attackRadiusSqr) && this.seeTime >= 5) {
                 this.mob.getNavigation().stop();
             }
@@ -90,6 +88,7 @@ public class MegaSnowGolemAttackGoal extends Goal {
             this.mob.getLookControl().setLookAt(this.target, 30.0F, 30.0F);
             if (--this.attackTime == 0) {
                 if (!flag) {
+                    this.mob.setAttackAnimationTick(0);
                     return;
                 }
                 float f = (float) Math.sqrt(d0) / this.attackRadius;
@@ -100,9 +99,7 @@ public class MegaSnowGolemAttackGoal extends Goal {
             else if (this.attackTime < 0) {
                 this.attackTime = Mth.floor(Mth.lerp(Math.sqrt(d0) / (double) this.attackRadius, (double) this.attackIntervalMin, (double) this.attackIntervalMax));
             }
-            else {
-                this.mob.setShouldAttack(true);
-            }
+            this.mob.setAttackAnimationTick(this.attackTime);
         }
     }
 }

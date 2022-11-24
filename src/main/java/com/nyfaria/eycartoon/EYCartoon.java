@@ -34,9 +34,8 @@ public class EYCartoon {
 
         MorphInit.MORPHS.register(modBus);
         MobEffectInit.MOB_EFFECTS.register(modBus);
-        ItemInit.ITEMS.register(modBus);
-
         EntityInit.ENTITIES.register(modBus);
+        ItemInit.ITEMS.register(modBus);
         BlockInit.BLOCKS.register(modBus);
         BlockEntityInit.BLOCK_ENTITIES.register(modBus);
         AbilityInit.ABILITIES.register(modBus);

@@ -18,9 +18,12 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -32,12 +35,14 @@ import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -242,8 +247,8 @@ public class CommonForgeEvents {
         else if (stack.is(Items.STICK)) {
             stack.setHoverName(Component.literal("Spongebob's Legs"));
         }
-        else if (stack.is(Items.LEATHER_BOOTS) && stack.getItem() instanceof DyeableLeatherItem item && item.getColor(stack) == 3949738) {
-            stack.setHoverName(Component.literal("Sonic Boots"));
+        else if (stack.is(Items.LEATHER_BOOTS) && stack.getItem() instanceof DyeableLeatherItem item && item.getColor(stack) == 0x0000FF) {
+            stack.setHoverName(Component.literal("Sonic's Boots"));
         }
         else if (stack.is(Items.POTION)) {
             var potion = PotionUtils.getPotion(stack);
@@ -300,16 +305,14 @@ public class CommonForgeEvents {
                         }
                         else {
                             Item item = getRandomVanillaDrop(player.getRandom());
+                            ItemStack stack = new ItemStack(item);
                             if (item instanceof DyeableLeatherItem dyableItem) {
-                                dyableItem.setColor(new ItemStack(item), 3949738);
+                                dyableItem.setColor(stack, 0x0000FF);
                             }
                             else if (item instanceof PotionItem) {
-
-                                PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRONG_SWIFTNESS);
-
-                                System.out.println(PotionUtils.getPotion(new ItemStack(item)).getEffects());
+                                PotionUtils.setPotion(stack, Potions.STRONG_SWIFTNESS);
                             }
-                            setupItemPosition(new ItemStack(item), level, Vec3.atCenterOf(pos));
+                            setupItemPosition(stack, level, Vec3.atCenterOf(pos));
                         }
                     }
                     event.setCanceled(true);

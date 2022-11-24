@@ -11,6 +11,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorMaterials;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
@@ -52,5 +53,4 @@ public class ItemInit {
     public static final RegistryObject<Item> JULIENS_CROWN = ITEMS.register("julien_crown", () -> new JulienCrownArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.HEAD, new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
 
     public static final RegistryObject<Item> LEMUR_FEET = ITEMS.register("player_lemur_feet", () -> new PlayerLemurFeetArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.FEET, new Item.Properties().durability(500).tab(CreativeModeTab.TAB_MISC)));
-
 }

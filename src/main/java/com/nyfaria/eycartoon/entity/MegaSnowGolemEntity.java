@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -53,6 +54,7 @@ public class MegaSnowGolemEntity extends AbstractGolem implements RangedAttackMo
     private static final EntityDataAccessor<Boolean> SHOULD_ATTACK = SynchedEntityData.defineId(MegaSnowGolemEntity.class, EntityDataSerializers.BOOLEAN);
 
     protected final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private int attackAnimationTick;
 
     public MegaSnowGolemEntity(EntityType<? extends AbstractGolem> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -88,8 +90,19 @@ public class MegaSnowGolemEntity extends AbstractGolem implements RangedAttackMo
     @Override
     public void tick() {
         super.tick();
-        if (this.level.isClientSide) return;
-        if (this.getTarget() == null) this.setShouldAttack(false);
+        if (this.attackAnimationTick > 0) {
+            --this.attackAnimationTick;
+        }
+    }
+
+    @Override
+    public void handleEntityEvent(byte pId) {
+        if (pId == 4) {
+            this.attackAnimationTick = 20;
+        }
+        else {
+            super.handleEntityEvent(pId);
+        }
     }
 
     @Override
@@ -132,6 +145,11 @@ public class MegaSnowGolemEntity extends AbstractGolem implements RangedAttackMo
         this.level.addFreshEntity(snowball);
     }
 
+    public void setAttackAnimationTick(int attackAnimationTick) {
+        this.attackAnimationTick = attackAnimationTick;
+        this.level.broadcastEntityEvent(this, (byte) 4);
+    }
+
     @Nullable
     protected SoundEvent getAmbientSound() {
         return SoundEvents.SNOW_GOLEM_AMBIENT;
@@ -159,15 +177,15 @@ public class MegaSnowGolemEntity extends AbstractGolem implements RangedAttackMo
     }
 
     private <T extends IAnimatable> PlayState attackEvent(AnimationEvent<T> event) {
-        if (this.getShouldAttack()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle2", ILoopType.EDefaultLoopTypes.LOOP));
-            return PlayState.CONTINUE;
-        }
-        return PlayState.STOP;
+        return PlayState.CONTINUE;
+
     }
 
     private <T extends IAnimatable> PlayState animationEvent(AnimationEvent<T> event) {
-        if (event.isMoving()) {
+        if (this.attackAnimationTick > 0) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle2", ILoopType.EDefaultLoopTypes.LOOP));
+        }
+        else if (event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP));
         }
         else {
@@ -178,13 +196,5 @@ public class MegaSnowGolemEntity extends AbstractGolem implements RangedAttackMo
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 20.0D).add(Attributes.MOVEMENT_SPEED, 1D).add(Attributes.ATTACK_DAMAGE, 1D).add(Attributes.MOVEMENT_SPEED, 0.3F);
-    }
-
-    public boolean getShouldAttack() {
-        return this.entityData.get(SHOULD_ATTACK);
-    }
-
-    public void setShouldAttack(boolean shouldHeadbutt) {
-        this.entityData.set(SHOULD_ATTACK, shouldHeadbutt);
     }
 }

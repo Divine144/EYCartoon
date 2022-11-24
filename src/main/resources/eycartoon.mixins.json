@@ -6,6 +6,7 @@
   "mixins": [],
   "minVersion": "0.8.5",
   "client": [
-    "MixinBubbleParticleProvider"
+    "MixinBubbleParticleProvider",
+    "MixinHumanoidModel"
   ]
 }

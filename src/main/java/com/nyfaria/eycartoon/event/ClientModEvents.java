@@ -5,6 +5,7 @@ import com.nyfaria.eycartoon.client.animatable.SpinAnimatable;
 import com.nyfaria.eycartoon.client.model.ToothlessModel;
 import com.nyfaria.eycartoon.client.renderer.*;
 import com.nyfaria.eycartoon.init.AnimationInit;
+import com.nyfaria.eycartoon.init.BlockEntityInit;
 import com.nyfaria.eycartoon.init.EntityInit;
 import com.nyfaria.eycartoon.init.MorphInit;
 import com.nyfaria.eycartoon.items.armor.JulienCrownArmorItem;

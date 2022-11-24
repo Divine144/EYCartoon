@@ -26,7 +26,6 @@ public class BlockInit {
     public static final RegistryObject<CashRegisterBlock> CASH_REGISTER_BLOCK = registerBlock("squidwards_cash_register", () -> new CashRegisterBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).noOcclusion().strength(10F, 60.0F)), CreativeModeTab.TAB_BUILDING_BLOCKS);
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {
-
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn, tab);
         return toReturn;

@@ -7,11 +7,9 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -20,11 +18,13 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -43,6 +43,7 @@ import java.util.UUID;
 public class BossBabyEntity extends PathfinderMob implements IAnimatable {
 
     protected final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private int attackAnimationTick;
 
     private static final EntityDataAccessor<Boolean> SHOULD_HEADBUTT_ANIMATION = SynchedEntityData.defineId(BossBabyEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(BossBabyEntity.class, EntityDataSerializers.OPTIONAL_UUID);
@@ -82,6 +83,31 @@ public class BossBabyEntity extends PathfinderMob implements IAnimatable {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        if (this.attackAnimationTick > 0) {
+            --this.attackAnimationTick;
+        }
+    }
+
+    @Override
+    public boolean doHurtTarget(Entity pEntity) {
+        this.attackAnimationTick = 10;
+        this.level.broadcastEntityEvent(this, (byte)4);
+        return super.doHurtTarget(pEntity);
+    }
+
+    @Override
+    public void handleEntityEvent(byte pId) {
+        if (pId == 4) {
+            this.attackAnimationTick = 10;
+        }
+        else {
+            super.handleEntityEvent(pId);
+        }
+    }
+
+    @Override
     protected void registerGoals() {
         this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Zombie.class, true));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Skeleton.class, true));
@@ -95,7 +121,6 @@ public class BossBabyEntity extends PathfinderMob implements IAnimatable {
                 double d0 = this.getAttackReachSqr(pEnemy);
                 if (pDistToEnemySqr <= d0 && this.getTicksUntilNextAttack() <= 0) {
                     this.resetAttackCooldown();
-                    BossBabyEntity.this.setShouldHeadbutt(true);
                     this.mob.swing(InteractionHand.MAIN_HAND);
                     this.mob.doHurtTarget(pEnemy);
                 }
@@ -104,11 +129,10 @@ public class BossBabyEntity extends PathfinderMob implements IAnimatable {
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 10F));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.7F));
-
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.ATTACK_KNOCKBACK, 5).add(Attributes.ATTACK_DAMAGE, 3).add(Attributes.MOVEMENT_SPEED, 0.3F);
+        return Mob.createMobAttributes().add(Attributes.ATTACK_KNOCKBACK, 5).add(Attributes.KNOCKBACK_RESISTANCE, 1D).add(Attributes.ATTACK_DAMAGE, 3).add(Attributes.MOVEMENT_SPEED, 0.4F);
     }
 
     @Nullable
@@ -130,17 +154,10 @@ public class BossBabyEntity extends PathfinderMob implements IAnimatable {
         this.entityData.set(DATA_OWNERUUID_ID, Optional.of(ownerUUID));
     }
 
-    public boolean getShouldHeadbutt() {
-        return this.entityData.get(SHOULD_HEADBUTT_ANIMATION);
-    }
-
-    public void setShouldHeadbutt(boolean shouldHeadbutt) {
-        this.entityData.set(SHOULD_HEADBUTT_ANIMATION, shouldHeadbutt);
-    }
-
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(this, "controller", 0, this::animationEvent));
+        data.addAnimationController(new AnimationController<>(this, "attack_controller", 0, this::attackEvent));
     }
 
     @Override
@@ -148,10 +165,13 @@ public class BossBabyEntity extends PathfinderMob implements IAnimatable {
         return factory;
     }
 
+    private <T extends IAnimatable> PlayState attackEvent(AnimationEvent<T> event) {
+        return PlayState.STOP;
+    }
+
     private <T extends IAnimatable> PlayState animationEvent(AnimationEvent<T> event) {
-        if (this.getShouldHeadbutt()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("much", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-            this.setShouldHeadbutt(false);
+        if (this.attackAnimationTick > 0) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("much", ILoopType.EDefaultLoopTypes.LOOP));
         }
         else if (event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP));

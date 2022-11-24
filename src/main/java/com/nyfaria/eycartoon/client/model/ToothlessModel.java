@@ -18,7 +18,7 @@ public class ToothlessModel extends SimpleGeoEntityModel<ToothlessEntity> {
     @Override
     public void setLivingAnimations(ToothlessEntity entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
         super.setLivingAnimations(entity, uniqueID, customPredicate);
-        if(entity.getControllingPassenger() != null) {
+        if (entity.getControllingPassenger() != null) {
             Player player = entity.getControllingPassenger();
             IBone head = this.getAnimationProcessor().getBone("head");
             if (head != null) {

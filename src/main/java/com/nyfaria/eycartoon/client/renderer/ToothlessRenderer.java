@@ -56,14 +56,8 @@ public class ToothlessRenderer extends GeoEntityRenderer<ToothlessEntity> {
             stack.pushPose();
             stack.translate(-0.5,1.4,2.1);
             if (this.currentRenderingEntity != null) {
-                Player player = this.currentRenderingEntity.getControllingPassenger();
-                if (player != null) {
-                    if ((this.entityRenderDispatcher.options == null || !this.entityRenderDispatcher.options.getCameraType().isFirstPerson()) && player == Minecraft.getInstance().player) {
-                        stack.mulPose(Vector3f.XP.rotationDegrees(120));
-                    }
-                    else {
-                        stack.mulPose(Vector3f.XP.rotationDegrees(90));
-                    }
+                if ((this.entityRenderDispatcher.options == null || !this.entityRenderDispatcher.options.getCameraType().isFirstPerson())) {
+                    stack.mulPose(Vector3f.XP.rotationDegrees(120));
                 }
                 else {
                     stack.mulPose(Vector3f.XP.rotationDegrees(90));
