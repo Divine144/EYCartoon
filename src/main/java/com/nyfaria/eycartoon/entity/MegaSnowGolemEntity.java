@@ -100,6 +100,9 @@ public class MegaSnowGolemEntity extends AbstractGolem implements RangedAttackMo
         if (pId == 4) {
             this.attackAnimationTick = 20;
         }
+        else if (pId == 5) {
+            this.attackAnimationTick = 0;
+        }
         else {
             super.handleEntityEvent(pId);
         }
@@ -147,7 +150,12 @@ public class MegaSnowGolemEntity extends AbstractGolem implements RangedAttackMo
 
     public void setAttackAnimationTick(int attackAnimationTick) {
         this.attackAnimationTick = attackAnimationTick;
-        this.level.broadcastEntityEvent(this, (byte) 4);
+        if (attackAnimationTick > 0) {
+            this.level.broadcastEntityEvent(this, (byte) 4);
+        }
+        else {
+            this.level.broadcastEntityEvent(this, (byte) 5);
+        }
     }
 
     @Nullable

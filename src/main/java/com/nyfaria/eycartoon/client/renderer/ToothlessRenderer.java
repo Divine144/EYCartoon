@@ -54,9 +54,9 @@ public class ToothlessRenderer extends GeoEntityRenderer<ToothlessEntity> {
         super.renderRecursively(bone, stack, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
         if (bone.getName().equals("eye") && isLaserOn) {
             stack.pushPose();
-            stack.translate(-0.5,1.4,2.1);
-            if (this.currentRenderingEntity != null) {
-                if ((this.entityRenderDispatcher.options == null || !this.entityRenderDispatcher.options.getCameraType().isFirstPerson())) {
+            stack.translate(-0.5,1.3,2.1);
+            if (this.currentRenderingEntity != null && currentRenderingEntity.getControllingPassenger() != null) {
+                if ((this.entityRenderDispatcher.options == null || !this.entityRenderDispatcher.options.getCameraType().isFirstPerson() || (this.entityRenderDispatcher.options.getCameraType().isFirstPerson() && Minecraft.getInstance().player != currentRenderingEntity.getControllingPassenger()))) {
                     stack.mulPose(Vector3f.XP.rotationDegrees(120));
                 }
                 else {

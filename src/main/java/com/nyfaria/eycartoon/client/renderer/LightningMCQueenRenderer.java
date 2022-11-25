@@ -22,7 +22,7 @@ public class LightningMCQueenRenderer extends GeoEntityRenderer<LightningMcQueen
     @Override
     public void render(LightningMcQueenEntity animatable, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         poseStack.pushPose();
-        poseStack.scale(4.5F, 4.5F, 4.5F);
+        poseStack.scale(4.0F, 4.0F, 4.0F);
         super.render(animatable, entityYaw, partialTick, poseStack, bufferSource, packedLight);
         poseStack.popPose();
     }
