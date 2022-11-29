@@ -76,7 +76,7 @@ public class LightningMcQueenEntity extends Animal implements IAnimatable, Playe
 
     @Override
     public boolean isInvulnerableTo(DamageSource pSource) {
-        return true;
+        return pSource != DamageSource.OUT_OF_WORLD;
     }
 
     @Override

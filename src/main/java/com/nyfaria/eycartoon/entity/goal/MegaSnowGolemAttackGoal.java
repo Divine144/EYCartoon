@@ -100,7 +100,6 @@ public class MegaSnowGolemAttackGoal extends Goal {
             }
             if (this.seeTime > 0) {
                 this.mob.setAttackAnimationTick(this.attackTime);
-
             }
             else {
                 this.mob.setAttackAnimationTick(0);

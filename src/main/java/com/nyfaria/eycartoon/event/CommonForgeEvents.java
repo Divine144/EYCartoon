@@ -287,33 +287,38 @@ public class CommonForgeEvents {
                 if (!player.getAbilities().instabuild) {
                     if (!level.isClientSide) {
                         initializeMaps(player, level); // Assign values to maps
-                        if (player.getRandom().nextIntBetweenInclusive(0, 100) > 90) { // 10% chance -> Blocks mined progression++
-                            PlayerHolderAttacher.getPlayerHolder(player).ifPresent(p -> {
-                                p.addBlocksMined();
-                                Item item = ITEMS.get(p.getBlocksMinedCount());
-                                LivingEntity entity = ENTITIES.get(p.getBlocksMinedCount());
-                                int itemOrEntityCount = getCount(p.getBlocksMinedCount());
-                                if (item != null) {
-                                    ItemStack stack = new ItemStack(item);
-                                    stack.setCount(itemOrEntityCount);
-                                    setupItemPosition(stack, level, Vec3.atCenterOf(pos));
+                        PlayerHolderAttacher.getPlayerHolder(player).ifPresent(p -> {
+                            p.addBlocksMined();
+                            Item item = ITEMS.get(p.getBlocksMinedCount());
+                            LivingEntity entity = ENTITIES.get(p.getBlocksMinedCount());
+                            int itemOrEntityCount = getCount(p.getBlocksMinedCount());
+                            if (item != null) {
+                                ItemStack stack = new ItemStack(item);
+                                stack.setCount(itemOrEntityCount);
+                                setupItemPosition(stack, level, Vec3.atCenterOf(pos));
+                            }
+                            else if (entity != null) {
+                                if (configInst().pigWolfHorseDropOrder.get() == p.getBlocksMinedCount()) {
+                                    spawnEntitiesOfType(EntityType.PIG.create(level), level, Vec3.atBottomCenterOf(pos.above()), 1);
+                                    spawnEntitiesOfType(EntityType.WOLF.create(level), level, Vec3.atBottomCenterOf(pos.above()), 1);
+                                    spawnEntitiesOfType(EntityType.HORSE.create(level), level, Vec3.atBottomCenterOf(pos.above()), 1);
                                 }
-                                else if (entity != null) {
+                                else {
                                     spawnEntitiesOfType(entity, level, Vec3.atBottomCenterOf(pos.above()), itemOrEntityCount);
                                 }
-                            });
-                        }
-                        else {
-                            Item item = getRandomVanillaDrop(player.getRandom());
-                            ItemStack stack = new ItemStack(item);
-                            if (item instanceof DyeableLeatherItem dyableItem) {
-                                dyableItem.setColor(stack, 0x0000FF);
                             }
-                            else if (item instanceof PotionItem) {
-                                PotionUtils.setPotion(stack, Potions.STRONG_SWIFTNESS);
+                            else {
+                                Item randomVanillaDrop = getRandomVanillaDrop(player.getRandom());
+                                ItemStack stack = new ItemStack(randomVanillaDrop);
+                                if (randomVanillaDrop instanceof DyeableLeatherItem dyableItem) {
+                                    dyableItem.setColor(stack, 0x0000FF);
+                                }
+                                else if (randomVanillaDrop instanceof PotionItem) {
+                                    PotionUtils.setPotion(stack, Potions.STRONG_SWIFTNESS);
+                                }
+                                setupItemPosition(stack, level, Vec3.atCenterOf(pos));
                             }
-                            setupItemPosition(stack, level, Vec3.atCenterOf(pos));
-                        }
+                        });
                     }
                     event.setCanceled(true);
                 }

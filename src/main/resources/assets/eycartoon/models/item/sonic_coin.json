@@ -1,6 +1,9 @@
 {
   "credit": "Made with Blockbench",
   "parent": "builtin/entity",
+  "textures": {
+    "particle": "minecraft:block/gold_block"
+  },
   "display": {
     "thirdperson_righthand": {
       "translation": [
