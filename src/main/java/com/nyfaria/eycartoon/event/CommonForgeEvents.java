@@ -133,6 +133,7 @@ public class CommonForgeEvents {
                     if (megaGolemPos.pos().closerToCenterThan(player.position(), 2D) && !spawnedGolem) {
                         PlayerHolderAttacher.getPlayerHolder(player).ifPresent(p -> p.setHasMegaGolemSpawned(true));
                         MegaSnowGolemEntity megaSnowGolem = new MegaSnowGolemEntity(EntityInit.MEGA_SNOW_GOLEM.get(), player.level);
+                        megaSnowGolem.setPos(new Vec3(megaGolemPos.pos().getX(), megaGolemPos.pos().getY(), megaGolemPos.pos().getZ()));
                         player.level.addFreshEntity(megaSnowGolem);
                     }
                 }
@@ -310,7 +311,7 @@ public class CommonForgeEvents {
                             else {
                                 Item randomVanillaDrop = getRandomVanillaDrop(player.getRandom());
                                 ItemStack stack = new ItemStack(randomVanillaDrop);
-                                if (randomVanillaDrop instanceof DyeableLeatherItem dyableItem) {
+                                if (randomVanillaDrop.asItem() instanceof DyeableLeatherItem dyableItem) {
                                     dyableItem.setColor(stack, 0x0000FF);
                                 }
                                 else if (randomVanillaDrop instanceof PotionItem) {
@@ -372,7 +373,6 @@ public class CommonForgeEvents {
 
     private static void initializeMaps(Player owner, Level level) {
         if (ITEMS.isEmpty() && ENTITIES.isEmpty()) {
-            // ALL DIRT ITEMS ARE PLACEHOLDERS
             ITEMS.put(configInst().minionLaunchedDropOrder.get(), ItemInit.MINION_LAUNCHER.get());
             ITEMS.put(configInst().krabbyPattyDropOrder.get(), ItemInit.KRABBY_PATTY.get());
             ITEMS.put(configInst().cobbleStoneDropOrder.get(), Items.COBBLESTONE);
@@ -385,7 +385,6 @@ public class CommonForgeEvents {
             ITEMS.put(configInst().kingJulienCrownDropOrder.get(), ItemInit.JULIENS_CROWN.get());
             ITEMS.put(configInst().diamondsDropOrder.get(), Items.DIAMOND);
 
-            // ALL ZOMBIE ENTITIES ARE PLACEHOLDERS
             BossBabyEntity baby = new BossBabyEntity(EntityInit.BOSS_BABY.get(), level, owner);
             ENTITIES.put(configInst().bossBabyDropOrder.get(), baby);
             ENTITIES.put(configInst().zombieCowDropOrder.get(), EntityType.ZOMBIE.create(level));

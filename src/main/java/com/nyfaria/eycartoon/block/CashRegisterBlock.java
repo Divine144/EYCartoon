@@ -45,7 +45,6 @@ public class CashRegisterBlock extends BaseEntityBlock {
                 CoinProjectileEntity entity = new CoinProjectileEntity(EntityInit.COIN_PROJECTILE.get(), level);
                 entity.setInitialPosition(blockPos);
                 entity.setPos(relativeVec);
-                System.out.println(state.getValue(FACING));
                 switch (state.getValue(FACING)) {
                     case EAST, WEST -> entity.setPos(relativeVec.x, relativeVec.y - 0.5, relativeVec.z + 0.5);
                     case SOUTH, NORTH -> entity.setPos(relativeVec.x + 0.5, relativeVec.y - 0.5, relativeVec.z);
@@ -69,11 +68,8 @@ public class CashRegisterBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-
         return new CashRegisterBlockEntity(pPos, pState);
     }
-
-
 
     @Override
     @ParametersAreNonnullByDefault
@@ -103,7 +99,7 @@ public class CashRegisterBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+    protected void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
         pBuilder.add(FACING);
     }
@@ -111,7 +107,6 @@ public class CashRegisterBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-
         return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection());
     }
 }
